@@ -28,9 +28,11 @@ public class Refresher implements Runnable{
 	private StatusBar sb;
 	private Color[] layerColors;
 	private int zoom;
+	private Gui owner;
 
 
 	Refresher(Gui owner){
+		this.owner = owner;
 		this.upperLeft = owner.getUpperLeft();
 		this.layersToShow = owner.getLayers();
 		this.refToMappy = owner.getMappy();
@@ -45,8 +47,9 @@ public class Refresher implements Runnable{
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	public void run() {
+	public void run(){
 		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
+		owner.getWait().setVisible(false);
 		sb.setInfo("Fertig!");
 	}
 }

@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.53 2005/01/17 18:10:34 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.54 2005/01/17 21:01:18 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -48,6 +48,7 @@ public class Gui extends JFrame implements LayersIF{
 	private JToolBar zoomToolBar;
 	private JLabel zoomLabel;
 	private GridBagLayout layout;
+	private Dialog wait;
 	
 	
 	public Gui(Mappy mappy){
@@ -214,10 +215,21 @@ public class Gui extends JFrame implements LayersIF{
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 1, 2, 1, 2, 1d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 2, 3, 1, 1, 0d, 0d);
 		
+		setVisible(true);
+		
+		wait = new Dialog(this, "Bitte Warten", true);
+		Label waitLabel = new Label("Bitte haben sie einen Augenblick Geduld", Label.CENTER);
+		waitLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+		wait.add(waitLabel);
+		wait.setUndecorated(true);
+		wait.pack();
+		Point location = getLocation();
+		Dimension size = getSize();
+		wait.setLocation(location.x + size.width/2 - wait.getSize().width/2, location.y + size.height/2 - wait.getSize().height/2);
+		
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();
 		}
-		setVisible(true);
 	}
 	
 	/**
@@ -279,6 +291,7 @@ public class Gui extends JFrame implements LayersIF{
 		refresh.setEnabled(false);
 		Thread getData = new Thread(new Refresher(this));
 		getData.start();
+		wait.setVisible(true);
 	}
 
 	/**
@@ -350,5 +363,12 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	public Mappy getMappy() {
 		return mappy;
+	}
+
+	/**
+	 * @return
+	 */
+	public Dialog getWait() {
+		return wait;
 	}
 }
