@@ -20,7 +20,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.12 2004/12/21 13:46:34 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.13 2005/01/04 18:41:17 jesuzz Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -42,7 +42,7 @@ public class DBValues {
 			Statement stmt = this.con.createStatement();
 			String sql;
 			sql = "SELECT * " 
-				+ "FROM MapData " 
+				+ "FROM MapDataTransparent " 
 				+ "WHERE " 
 				+ "XFrom <= " + (int)p.x + " AND " + (int)p.x + " <= XTo "  
 				+ "AND YFrom <= " + (int)p.y + " AND " + (int)p.y + " <= YTo "
@@ -69,12 +69,12 @@ public class DBValues {
     	try {
     		Statement stmt = this.con.createStatement();
     		String sql = "";
-    		sql = "SELECT * FROM MapData WHERE " +
+    		sql = "SELECT * FROM MapDataTransparent WHERE " +
     			  "XFrom <= " + (int)start.getX() +
 				  "AND YFrom = " + (int)start.getY()
 				  + " AND Type = " + type;
     		
-    		sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
+    		sql = "SELECT * FROM MapDataTransparent WHERE ID = 196 LIMIT 1";
     		System.out.println (sql);
     		ResultSet res = stmt.executeQuery(sql);
     		res.next();

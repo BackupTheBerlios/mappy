@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.15 2004/12/21 13:44:39 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.16 2005/01/04 18:41:17 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -22,13 +22,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.metal.MetalBorders;
 
+//import server.MapLabel;
 import server.Mappy;
 
 
-public class Gui extends JFrame {
+public class Gui extends JFrame implements LayersIF {
 	private Mappy mappy;
-	private String[] layer = {"Wald", "Strasse", "Gewerbegebiet",
-			                  "Industriegebiet", "Wohnhäuser", "Schnaps"};
+	private String[] layer = ALLLAYERS;
 	private JList layers;
 	private JScrollPane layersScrollPane;
 	private JPanel status;
@@ -39,17 +39,19 @@ public class Gui extends JFrame {
 	private JButton deselect;
 	private ArrayList layerList;
 	private Point upperLeft;
-	private int[] layersToShow = {7, 8, 9, 10, 11, 12};
-	private MapLabel map;
+	private boolean[] layersToShow= new boolean[22];
+	private JLabel map;
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
 		this.mappy = mappy;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Build GUI
 		System.out.print("Building new GUI...");
 		setSize(500,500);
 		setNewLookAndFeel();
 		initComponents();
+
 	}
 	
 	/**
@@ -109,7 +111,7 @@ public class Gui extends JFrame {
 		upperLeft = IOHandler.getSavedStart();
 		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
 		
-		map = new MapLabel(layerList);
+		map = mappy.getMapLabel(layerList);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
 		
 		
@@ -142,7 +144,7 @@ public class Gui extends JFrame {
 	 */
 	protected void refreshAction() {
 		refresh.setEnabled(false);
-		map.refresh(mappy.getLayers(map.getSize(), upperLeft, layersToShow));
+		mappy.refresh(upperLeft, layersToShow);
 	}
 
 	/**
@@ -153,10 +155,10 @@ public class Gui extends JFrame {
 		refresh.setEnabled(true);
 		for (int i = 0; i < layersToShow.length; i++){
 			if (layers.isSelectedIndex(i)){
-				layersToShow[i] = 1;
+				layersToShow[i] = true;
 			}
 			else{
-				layersToShow[i] = 2;
+				layersToShow[i] = false;
 			}
 		}
 	}

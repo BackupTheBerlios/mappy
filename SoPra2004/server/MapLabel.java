@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package client;
+package server;
 
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
@@ -13,8 +13,6 @@ import java.util.ListIterator;
 
 import javax.swing.JLabel;
 
-import server.Layer;
-import server.Tile;
 
 /**
  * @author DrRSatzteil
