@@ -31,13 +31,13 @@ public class StatusBar extends JPanel {
 		
 		this.progress = progress;
 		position = new JLabel();
-		position.setFont(new Font("Verdana", Font.BOLD, 12));
+		position.setFont(new Font("Verdana", Font.PLAIN, 11));
 		zoom = new JLabel();
-		zoom.setFont(new Font("Verdana", Font.BOLD, 12));
+		zoom.setFont(new Font("Verdana", Font.PLAIN, 11));
 		info = new JLabel();
-		info.setFont(new Font("Verdana", Font.BOLD, 12));
+		info.setFont(new Font("Verdana", Font.PLAIN, 11));
 		state = new JLabel(" Fortschritt   ");
-		state.setFont(new Font ("Verdana", Font.BOLD, 12));
+		state.setFont(new Font ("Verdana", Font.PLAIN, 11));
 		
 		add(new JLabel(""));
 		add(new JLabel(""));

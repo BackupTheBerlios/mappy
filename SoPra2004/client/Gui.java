@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.47 2005/01/13 20:11:37 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.48 2005/01/14 01:20:45 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -76,6 +76,8 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	private void initComponents() {
 		
+		
+	
 		GridBagLayout layout = new GridBagLayout();
 		getContentPane().setLayout(layout);
 		
@@ -97,19 +99,19 @@ public class Gui extends JFrame implements LayersIF{
 		
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
-		refresh = new SelectionButton ("Button1.gif");
+		refresh = new SelectionButton ("refresh.gif", "refreshOver.gif");
 		refresh.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				refreshAction();
 			}			
 		});
-		chooseAll = new SelectionButton ("chooseAll.gif");
+		chooseAll = new SelectionButton ("chooseAll.gif", "chooseAllOver.gif");
 		chooseAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				chooseAllAction();
 			}			
 		});
-		deselect = new SelectionButton ("reset.gif");
+		deselect = new SelectionButton ("reset.gif", "resetOver.gif");
 		deselect.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				deselectAction();
@@ -118,7 +120,7 @@ public class Gui extends JFrame implements LayersIF{
 		zoomToolBar = new JToolBar();
 		zoomToolBar.setFloatable(false);
 		zoomLabel = new JLabel("Zoom: ");
-		zoomLabel.setFont(new Font("Verdana", Font.BOLD, 12));
+		zoomLabel.setFont(new Font("Verdana", Font.PLAIN, 11));
 		zoomSlider = new JSlider();
 		zoomSlider.setMinimum(100);
 		zoomSlider.setMaximum(200);

@@ -12,11 +12,12 @@ import javax.swing.JButton;
  *
  */
 public class SelectionButton extends JButton {
-	  public SelectionButton( String file )
+	  public SelectionButton( String file, String fileOver)
 	  {
 	    super( new ImageIcon(file) );
 	    setContentAreaFilled( false );
 	    setBorderPainted( false );
 	    setFocusPainted( false );
+	    this.setRolloverIcon(new ImageIcon(fileOver));
 	  }
 }

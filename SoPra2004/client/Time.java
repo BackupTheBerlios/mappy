@@ -23,7 +23,7 @@ import javax.swing.plaf.metal.MetalBorders;
 public class Time extends JLabel {
 	Time(){
 		setBorder(new MetalBorders.Flush3DBorder());
-		setFont(new Font("Verdana", Font.BOLD, 12));
+		setFont(new Font("Verdana", Font.PLAIN, 11));
 		refresh();
 		Wait w = new Wait ();
 		w.start();
