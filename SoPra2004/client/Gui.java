@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.38 2005/01/13 11:51:42 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.39 2005/01/13 12:02:57 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -51,7 +51,8 @@ public class Gui extends JFrame implements LayersIF{
 	private JProgressBar progress = new JProgressBar(0,1);
 	private Time date;
 	private JSlider zoomSlider;
-	private JLabel zoomLabel=new JLabel("Zoom: ");	
+	private JToolBar zoomToolBar;
+	private JLabel zoomLabel;	
 	
 	
 	public Gui(Mappy mappy){
@@ -114,18 +115,24 @@ public class Gui extends JFrame implements LayersIF{
 				deselectAction();
 			}
 		});
+		zoomToolBar = new JToolBar();
+		zoomToolBar.setFloatable(false);
+		zoomLabel = new JLabel("Zoom: ");
+		zoomLabel.setFont(new Font("Verdana", Font.BOLD, 12));
 		zoomSlider = new JSlider();
 		zoomSlider.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent ce){
 				zoomSliderChanged();
 			}
 		});
+		zoomToolBar.add(zoomLabel);
+		zoomToolBar.add(zoomSlider);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomSlider, 3, 2, 1, 1, 0d, 0d);
-		zoomLabel.setHorizontalAlignment(JLabel.RIGHT);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomLabel, 2, 2, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomToolBar, 2, 2, 1, 1, 0d, 0d);
+		//zoomLabel.setHorizontalAlignment(JLabel.RIGHT);
+		//LayoutManager.addComponent(getContentPane(), layout, (Component)zoomLabel, 2, 2, 1, 1, 0d, 0d);
 		
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
@@ -171,7 +178,7 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel.add(moveSouth, BorderLayout.SOUTH);
 		mapPanel.add(map, BorderLayout.CENTER);
 		//LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 2, 0d, 1d);
-		LayoutManager.addComponent(getContentPane(), layout, map, 1, 0, 3, 2, 1d, 1d);
+		LayoutManager.addComponent(getContentPane(), layout, map, 1, 0, 2, 2, 1d, 1d);
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);
@@ -187,8 +194,8 @@ public class Gui extends JFrame implements LayersIF{
 		sb.setPosition(upperLeft.x,upperLeft.y);
 		
 		date = new Time();
-		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 2, 1, 2, 1d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 2, 3, 2, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 1, 2, 1, 2, 1d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 2, 3, 1, 1, 0d, 0d);
 		
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();
