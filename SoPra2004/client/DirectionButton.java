@@ -5,6 +5,8 @@
  */
 package client;
 
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -17,6 +19,12 @@ import javax.swing.JButton;
 public class DirectionButton extends JButton{
 
 	  public DirectionButton( String file ){
+	  	super( new ImageIcon(file) );
+	    setContentAreaFilled( false );
+	    setBorderPainted( false );
+	    setFocusPainted( false );
+	  }
+	  public DirectionButton( URL file ){
 	  	super( new ImageIcon(file) );
 	    setContentAreaFilled( false );
 	    setBorderPainted( false );

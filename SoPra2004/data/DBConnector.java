@@ -24,7 +24,7 @@ public class DBConnector{
 		try {
 			Class.forName(jdbcDriver);
 		} catch (ClassNotFoundException e) {
-			System.err.println(e.getMessage());
+			System.err.println(e.getMessage()+ " not found");
 			System.exit(1);
 		}
 	}

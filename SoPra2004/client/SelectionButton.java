@@ -4,6 +4,8 @@
  */
 package client;
 
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -13,6 +15,15 @@ import javax.swing.JButton;
  */
 public class SelectionButton extends JButton {
 	  public SelectionButton( String file, String fileOver)
+
+	  {
+	    super( new ImageIcon(file) );
+	    setContentAreaFilled( false );
+	    setBorderPainted( false );
+	    setFocusPainted( false );
+	    this.setRolloverIcon(new ImageIcon(fileOver));
+	  }
+	  public SelectionButton( URL file, URL fileOver)
 	  {
 	    super( new ImageIcon(file) );
 	    setContentAreaFilled( false );

@@ -42,7 +42,7 @@ public class AboutDialog extends JDialog {
 		initComponents();
 	}
 	private void initComponents(){
-		uniIcon = new ImageIcon ("images" + File.separatorChar +  "aboutlogo.gif");
+		uniIcon = new ImageIcon (getClass().getResource("/images/aboutlogo.gif"));
 		uniLabel = new JLabel (uniIcon);
 		getContentPane().add(uniLabel, BorderLayout.CENTER);
 		mappyVersion = new JLabel("<html><p/<p/Endlich habe ich es geschafft.<p/Wir haben einen neuen about Dialog.<p/" +

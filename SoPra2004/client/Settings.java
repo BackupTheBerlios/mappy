@@ -175,7 +175,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 				dispose();
 			}
 		});
-		this.setIconImage(new ImageIcon("images/mappy_icon_15x15.gif").getImage());
+		this.setIconImage(new ImageIcon(getClass().getResource("images/mappy_icon_15x15.gif")).getImage());
 		this.init();
 	}
 	
@@ -235,7 +235,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		colorPanel.setLayout(layout);
 		int count=0;
 		
-		clickSound = new File("Blip.wav");
+		clickSound = new File(getClass().getResource("/Blip.wav").getFile());
 		try{
 			btClick = AudioPlayer.getStream(clickSound);
 		}

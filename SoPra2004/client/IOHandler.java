@@ -28,7 +28,6 @@ import javax.swing.JPanel;
  */
 
 
-//InputStream is = getClass().getResourceAsStream("/save/drivers.mpy").getFile; 
 public class IOHandler implements SettingsIF, LayersIF{
 	static Point getSavedStart(){
 		if(IOHandler.class.getResource("/save/start.mpy")!=null){

@@ -12,6 +12,8 @@ package client;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -48,13 +50,13 @@ public class Gui extends JFrame implements LayersIF{
 	private JLabel zoomLabel;
 	private GridBagLayout layout;
 	private Dialog wait;
-	private File clickSound=new File("Blip.wav");
-	private Clip btClick;
-	
+	private File clickSound=new File(getClass().getResource("/Blip.wav").getFile());
+	private Clip btClick;	
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
-		this.setIconImage(new ImageIcon("images/mappy_icon_15x15.gif").getImage());
+		ImageIcon icon=new ImageIcon(getClass().getResource("/images/mappy_icon_15x15.gif"));
+		this.setIconImage(icon.getImage());
 		this.mappy = mappy;
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter(){
@@ -101,21 +103,21 @@ public class Gui extends JFrame implements LayersIF{
 		
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
-		refresh = new SelectionButton ("images" + File.separatorChar + "refresh.gif", "images" + File.separatorChar + "refreshOver.gif");
+		refresh = new SelectionButton (getClass().getResource("/images/refresh.gif"), getClass().getResource("/images/refreshOver.gif"));
 		refresh.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				click();
 				refreshAction();
 			}			
 		});
-		chooseAll = new SelectionButton ("images" + File.separatorChar + "chooseAll.gif", "images" + File.separatorChar + "chooseAllOver.gif");
+		chooseAll = new SelectionButton (getClass().getResource("/images/chooseAll.gif"), getClass().getResource("/images/chooseAllOver.gif"));
 		chooseAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				click();
 				chooseAllAction();
 			}			
 		});
-		deselect = new SelectionButton ("images" + File.separatorChar + "reset.gif", "images" + File.separatorChar + "resetOver.gif");
+		deselect = new SelectionButton (getClass().getResource("/images/reset.gif"), getClass().getResource("/images/resetOver.gif"));
 		deselect.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				click();
@@ -155,10 +157,11 @@ public class Gui extends JFrame implements LayersIF{
 		map = mappy.getMapLabel();
 		map.setDoubleBuffered(true);
 		map.setSize(IOHandler.getSavedMapSize());
-		moveEast = new DirectionButton("images" + File.separatorChar + "east.gif");
-		moveWest = new DirectionButton("images" + File.separatorChar + "west.gif");
-		moveNorth = new DirectionButton("images" + File.separatorChar + "north.gif");
-		moveSouth = new DirectionButton("images" + File.separatorChar + "south.gif");
+		
+		moveEast = new DirectionButton(getClass().getResource("/images/east.gif"));
+		moveWest = new DirectionButton(getClass().getResource("/images/west.gif"));
+		moveNorth = new DirectionButton(getClass().getResource("/images/north.gif"));
+		moveSouth = new DirectionButton(getClass().getResource("/images/south.gif"));
 		moveEast.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				click();
