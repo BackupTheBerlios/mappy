@@ -10,9 +10,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -115,7 +118,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	/**
 	 * Panels for color preview
 	 */
-	JPanel[] jp=new JPanel[IOHandler.getSavedColorSettings().length];
+	JPanel[] jp = new JPanel[IOHandler.getSavedColorSettings().length];
 	/**
 	 * Comment for <code>dbScrollPane</code>
 	 */
@@ -162,8 +165,8 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	 */
 	GridBagLayout layout = new GridBagLayout();
 	
-	private File clickSound=new File("Blip.wav");
-	private Clip btClick=AudioPlayer.getStream(clickSound);
+	private File clickSound;
+	private Clip btClick;
 
 	public Settings (){
 		super("Einstellungen");
@@ -207,6 +210,21 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		LayoutManager.addComponent(dbPanel, layout, usrField, 1, 4, 1, 1, 0d, 0d);
 		
 		pwField.setText(dbSettings[4]);
+		pwField.addFocusListener(new FocusListener(){
+			boolean messageNotShown = true;
+			public void focusGained(FocusEvent arg0){
+				if(messageNotShown){
+					Toolkit.getDefaultToolkit().beep();
+					JOptionPane.showMessageDialog(null, "Passwörter auf der Festplatte" +
+					" zu speichern ist unsicher und geschieht ausdrücklich" +
+					" auf eigene Gefahr!", "Warnung", JOptionPane.WARNING_MESSAGE);
+					messageNotShown = false;
+				}
+				
+			}
+			public void focusLost(FocusEvent arg0) {
+			}
+		});
 		LayoutManager.addComponent(dbPanel, layout, pwLabel, 0, 5, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(dbPanel, layout, pwField, 1, 5, 1, 1, 0d, 0d);
 		
@@ -218,6 +236,15 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		colorPanel.setLayout(layout);
 		int count=0;
 		
+		clickSound = new File("Blip.wav");
+		try{
+			btClick = AudioPlayer.getStream(clickSound);
+		}
+		catch(SoundDisabledException e1){
+			System.err.println(e1.getMessage());
+		}
+		
+		
 		for(int i=0; i<savedColors.length;i++){
 			JLabel label=new JLabel(ALLLAYERS[i]);
 			jp[i]=new JPanel();
@@ -228,9 +255,11 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			
 			bt.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
+					if(btClick != null){
+						btClick.setFramePosition(0);
+						btClick.start();
+					}
 					changeLayerColor(bt.id);
-					btClick.start();
-					
 				}
 				
 			});
@@ -244,21 +273,15 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		
 		//sonstEinst init
 		sonstEinst.setLayout(layout);
+		soundCheckBox.setSelected(IOHandler.getSavedSoundSettings());
 		LayoutManager.addComponent(sonstEinst, layout, soundCheckBox, 1, 0, 1, 1, 0d, 0d);
-		/*ItemListener audioListener = new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if(soundCheckBox.isSelected()){
-					
-				}
-			}	
-		};*/
 		
 		//general init
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(jTabbedPane, BorderLayout.CENTER);
 		buttonPanel.add(saveBt);
 		buttonPanel.add(cancelBt);
-		resetBt.setEnabled(false);
+		resetBt.setEnabled(IOHandler.changesExist());
 		buttonPanel.add(resetBt);
 		
 		this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -281,10 +304,16 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			
 			Color[] colorSet=new Color[savedColors.length];
 			for(int i=0; i<colorSet.length;i++){
-				
 				colorSet[i]=jp[i].getBackground();
 			}
 			IOHandler.saveColorSettings(colorSet);
+			//Checks for the soundSettings and instantly disables sounds for this frame
+			boolean dontPlaySounds = soundCheckBox.isSelected();
+			IOHandler.saveSoundSettings(dontPlaySounds);
+			if(dontPlaySounds){
+				btClick = null;
+			}
+			resetBt.setEnabled(true);
 			}
 		});
 		cancelBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
@@ -292,12 +321,26 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		}
 		});
 		resetBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
-			init();
+			IOHandler.deleteColorSettings();
+			savedColors = IOHandler.getSavedColorSettings();
+			IOHandler.deleteDBSettings();
+			dbSettings = IOHandler.getSavedDbSettings();
+			for(int i = 0; i < jp.length; i++){
+				jp[i].setBackground(savedColors[i]);
+			}
+			urlField.setText(dbSettings[0]);
+			portField.setText(dbSettings[1]);
+			dbField.setText(dbSettings[2]);
+			usrField.setText(dbSettings[3]);
+			pwField.setText(dbSettings[4]);
+			IOHandler.deleteSoundSettings();
+			soundCheckBox.setSelected(IOHandler.getSavedSoundSettings());
+			resetBt.setEnabled(false);
 		}
 		});
 		this.addComponentListener(new java.awt.event.ComponentAdapter() {
 		      public void componentResized(ComponentEvent e) {
-		        this_componentResized(e);
+		        this_componentResized();
 		      }	
 		});
 
@@ -318,7 +361,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	 * 
 	 * @param e
 	 */
-	private void this_componentResized(ComponentEvent e) {
+	private void this_componentResized() {
 		Dimension size=this.getSize();
 		if(size.width<350)size.width=350;
 		if(size.height<550)size.height=550;

@@ -49,7 +49,7 @@ public class Gui extends JFrame implements LayersIF{
 	private GridBagLayout layout;
 	private Dialog wait;
 	private File clickSound=new File("Blip.wav");
-	private Clip btClick=AudioPlayer.getStream(clickSound);
+	private Clip btClick;
 	
 	
 	public Gui(Mappy mappy){
@@ -71,13 +71,19 @@ public class Gui extends JFrame implements LayersIF{
 	/**
 	 * 
 	 */
-	private void initComponents() {
+	private void initComponents(){
 		
 		layout = new GridBagLayout();
 		getContentPane().setLayout(layout);
 		
 		MenuBar mb = new MenuBar(this);
 		
+		try{
+			btClick = AudioPlayer.getStream(clickSound);
+		}
+		catch(SoundDisabledException e){
+			System.err.println(e.getMessage());
+		}
 		layers = new JList(layer);
 		layers.setFixedCellHeight(25);
 		layers.setFixedCellWidth(150);
