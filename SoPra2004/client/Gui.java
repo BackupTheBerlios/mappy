@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.36 2005/01/12 21:59:06 jesuzz Exp $
+ * $Id: Gui.java,v 1.37 2005/01/12 23:47:15 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -52,7 +52,7 @@ public class Gui extends JFrame implements LayersIF{
 	private JProgressBar progress = new JProgressBar(0,1);
 	private Time date;
 	private JSlider zoomSlider=new JSlider();
-	
+	private JLabel zoomLabel=new JLabel("Zoom: ");	
 	
 	
 	public Gui(Mappy mappy){
@@ -93,7 +93,7 @@ public class Gui extends JFrame implements LayersIF{
 		layersScrollPane = new JScrollPane(layers);
 		layersScrollPane.setWheelScrollingEnabled(true);
 		layersScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)layersScrollPane, 0, 0, 1, 1, 0d, 1d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)layersScrollPane, 0, 0, 1, 1, 1d, 1d);
 		
 		Legend legend = new Legend();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)legend, 1, 0, 1, 1, 0d, 1d);
@@ -121,7 +121,9 @@ public class Gui extends JFrame implements LayersIF{
 		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomSlider, 0, 4, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomSlider, 3, 2, 1, 1,0d, 0d);
+		zoomLabel.setHorizontalAlignment(JLabel.RIGHT);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomLabel, 2, 2, 1, 1,0d, 0d);
 		zoomSlider.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent ce){
 				if(zoom==zoomSlider.getValue()){
@@ -181,7 +183,7 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
 		mapPanel.add(moveSouth, BorderLayout.SOUTH);
 		mapPanel.add(map, BorderLayout.CENTER);
-		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 3, 1d, 1d);			
+		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 2, 0d, 1d);			
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);
