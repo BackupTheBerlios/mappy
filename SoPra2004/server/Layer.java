@@ -11,7 +11,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.12 2005/01/12 20:31:59 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.13 2005/01/12 20:51:29 drrsatzteil Exp $
  */
 public class Layer {
 	private BufferedImage map;
@@ -19,7 +19,7 @@ public class Layer {
 		
 	Layer(Dimension d, Point p, int layerId, DBValues DB) {
 		
-		map = new BufferedImage(d.width, d.height, BufferedImage.TRANSLUCENT);
+		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
 		this.d = d;
 		int tileWidth = 0;
 		int tileHeight = 0;

@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.32 2005/01/12 20:31:54 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.33 2005/01/12 20:51:29 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -127,7 +127,6 @@ public class Gui extends JFrame implements LayersIF {
 		layers.setSelectedIndices(layersToShow);
 		
 		map = mappy.getMapLabel();
-		map.setBackground(new Color(0x00000000));
 		map.setSize(IOHandler.getSavedMapSize());
 		mapPanel.setLayout(new BorderLayout());
 		moveEast=new DirectionButton("east.gif");
@@ -162,7 +161,7 @@ public class Gui extends JFrame implements LayersIF {
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
 		mapPanel.add(moveSouth, BorderLayout.SOUTH);
 		mapPanel.add(map, BorderLayout.CENTER);
-		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 3, 1d, 1d);			
+		LayoutManager.addComponent(getContentPane(), layout, map, 2, 0, 2, 3, 1d, 1d);			
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);
