@@ -175,7 +175,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 				dispose();
 			}
 		});
-		this.setIconImage(new ImageIcon(getClass().getResource("images/mappy_icon_15x15.gif")).getImage());
+		this.setIconImage(new ImageIcon(getClass().getResource("/images/mappy_icon_15x15.gif")).getImage());
 		this.init();
 	}
 	
