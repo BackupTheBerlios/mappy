@@ -113,10 +113,12 @@ public class MapPopup extends JPopupMenu{
 	protected void openInputDialog(){
 		if(owner.getMappy().pinExists(p) == null){
 			String name = JOptionPane.showInputDialog("Bitte Namen für Markierung eingeben");
-			if(name.length() == 0){
-				name = "Markierung";
+			if(name != null){
+				if(name.length() == 0){
+					name = "Markierung";
+				}
+				owner.getMappy().setPin(p, name, zoom);
 			}
-			owner.getMappy().setPin(p, name, zoom);
 		}
 	}
 }

@@ -175,15 +175,18 @@ public class Mappy{
 				Pin temp = (Pin)i.next();
 				if(temp.getName().equals(name)){
 					Point destination = temp.getPosition();
-					start.x = start.x - mapStart.x;
-					start.y = start.y - mapStart.y;
-					destination.x = destination.x - start.x - mapStart.x;
-					destination.y = destination.y - start.y - mapStart.y;
-					double aSquare = (start.x - destination.x)*(start.x - destination.x);
-					double bSquare = (start.y - destination.y)*(start.y - destination.y);
+					int sx = start.x - mapStart.x;
+					int sy = start.y - mapStart.y;
+					int dx = destination.x - mapStart.x;
+					int dy = destination.y - mapStart.y;
+					double aSquare = (sx - dx)*(sx - dx);
+					double bSquare = (sy - dy)*(sy - dy);
 					double cSquare = aSquare + bSquare;
 					double distanceInPixels = Math.sqrt(cSquare);
-					realDistance = (distanceInPixels * 0.5) * (4 - (zoom / 100));
+					if(zoom == 0){
+						zoom = 1;
+					}
+					realDistance = (distanceInPixels * Math.pow(0.5,1/100));
 					realD = (int)realDistance;
 				}
 			}
