@@ -44,4 +44,31 @@ public class IOHandler {
 			return new Point(5500,5500);
 		}
 	}
+	static int[] getSavedLayers(){
+		File path = new File ("save" + File.separatorChar + "layers.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream layers = new ObjectInputStream (file);
+				int[] layersToShow = (int[]) layers.readObject();
+				layers.close();
+				return layersToShow;
+			}
+			catch (IOException e) {
+				System.err.println ("Failed to load Layerlist");
+				return new int[0];
+			}
+			catch (ClassNotFoundException e) {
+				System.err.println ("Failed to load Layerlist");
+				return new int[0];
+			}
+		}
+		else{
+			System.err.println("Failed to load Layerlist");
+			return new int[0];
+		}
+	}
+	static void saveStartPoint(){
+		
+	}
 }
