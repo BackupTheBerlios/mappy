@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -166,6 +167,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 				dispose();
 			}
 		});
+		this.setIconImage(new ImageIcon("images/mappy_icon_15x15.gif").getImage());
 		this.init();
 	}
 	
@@ -174,6 +176,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	 * The method init sets up the content/components of the settings window
 	 */
 	private void init() {
+		
 		this.setSize(new Dimension(350,700));
 		//dbPanel init
 		dbPanel.setLayout(layout);
@@ -235,13 +238,13 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		//sonstEinst init
 		sonstEinst.setLayout(layout);
 		LayoutManager.addComponent(sonstEinst, layout, soundCheckBox, 1, 0, 1, 1, 0d, 0d);
-		ItemListener audioListener = new ItemListener(){
+		/*ItemListener audioListener = new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
 				if(soundCheckBox.isSelected()){
 					
 				}
 			}	
-		};
+		};*/
 		
 		//general init
 		this.getContentPane().setLayout(new BorderLayout());
@@ -264,7 +267,6 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		//Window Properties
 		 this.getContentPane().setPreferredSize(new Dimension(350,550));
 		 this.pack();
-		 this.setResizable(false);
 		 this.setVisible(true);
 		//Handler
 		saveBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
@@ -287,7 +289,11 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			init();
 		}
 		});
-		
+		this.addComponentListener(new java.awt.event.ComponentAdapter() {
+		      public void componentResized(ComponentEvent e) {
+		        this_componentResized(e);
+		      }	
+		});
 
 	}
 	/**
@@ -300,6 +306,18 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	              null, "Wähle neue Farbe für die Ebene", jp[i].getBackground() );
 	
 	jp[i].setBackground(newColor);
+	}
+	/**
+	 * Gives the JFrame a minimum size
+	 * 
+	 * @param e
+	 */
+	private void this_componentResized(ComponentEvent e) {
+		Dimension size=this.getSize();
+		if(size.width<350)size.width=350;
+		if(size.height<550)size.height=550;
+		this.setSize(size);
+		
 	}
 
 }

@@ -51,6 +51,7 @@ public class Gui extends JFrame implements LayersIF{
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
+		this.setIconImage(new ImageIcon("images/mappy_icon_15x15.gif").getImage());
 		this.mappy = mappy;
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter(){
@@ -248,7 +249,14 @@ public class Gui extends JFrame implements LayersIF{
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();
 		}
+	
+		this.addComponentListener(new java.awt.event.ComponentAdapter() {
+	      public void componentResized(ComponentEvent e) {
+	        this_componentResized(e);
+	      }	
+		});
 	}
+	
 
 	/**
 	 * @param x
@@ -414,5 +422,18 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	public void setRefreshEnabled(boolean b) {
 		refresh.setEnabled(b);
+	}
+	
+	/**
+	 * Gives the JFrame a minimum size
+	 * 
+	 * @param e
+	 */
+	private void this_componentResized(ComponentEvent e) {
+		Dimension size=this.getSize();
+		if(size.width<800)size.width=350;
+		if(size.height<550)size.height=550;
+		this.setSize(size);
+		
 	}
 }
