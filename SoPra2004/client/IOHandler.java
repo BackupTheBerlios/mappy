@@ -159,16 +159,16 @@ public class IOHandler {
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load ZoomFactor");
-				return 100;
+				return 0;
 			}
 			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load ZoomFactor");
-				return 100;
+				return 0;
 			}
 		}
 		else{
 			System.err.println("Failed to load ZoomFactor");
-			return 100;
+			return 0;
 		}
 	}
 	static void saveStartPoint (Point startPoint){

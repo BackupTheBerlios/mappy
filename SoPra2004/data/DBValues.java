@@ -18,7 +18,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.22 2005/01/14 19:46:36 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.23 2005/01/17 18:10:34 drrsatzteil Exp $
  */
 public class DBValues{
 	private DBConnector connector;
@@ -43,7 +43,6 @@ public class DBValues{
 	}
 	
 	public ArrayList getTiles(Point p, Dimension dim, int type){
-		System.out.println("getTiles Start!");
 		ArrayList tiles = null;
 		ResultSet r = null;
 		try{
@@ -73,7 +72,6 @@ public class DBValues{
 		catch (SQLException e) {
 			System.err.println("SQL Exception: " + e.getMessage());	
 		}
-		System.out.println("getTiles Ende!");
 		return tiles;
 	}
 }

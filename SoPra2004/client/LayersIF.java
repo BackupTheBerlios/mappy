@@ -12,28 +12,28 @@ import java.awt.Color;
  *	contains the Layers as Constants
  */
 public interface LayersIF {
-	public final String[] ALLLAYERS = {"Acker", 	//1
-						   "Bachl‰ufe mit Schrift",	//2
-						   "Baumgr¸n mit Schrift",	//3
-						   "Brachland",				//4
-						   "Industrie",				//5
-						   "Grundriﬂ mit Schrift", 	//6
-						   "H‰user",				//7
-						   "Wohnen",				//8
-						   "Park ",					//9
-						   "Reliefbraun", 			//10
+	public final String[] ALLLAYERS = {"Acker", 			//1
+						   "Bachl‰ufe mit Schrift",			//2
+						   "Baumgr¸n mit Schrift",			//3
+						   "Brachland",						//4
+						   "Industrie",						//5
+						   "Grundriﬂ mit Schrift", 			//6
+						   "H‰user",						//7
+						   "Wohnen",						//8
+						   "Park ",							//9
+						   "Reliefbraun", 					//10
 						   "Symbole ",						//11
 						   "schwarzer Grundriﬂ freigst.",	//12
-						   "Gew‰sser",				//13
-						   "Staats-/Landstr.",		//14
-						   "Autobahn-/Bundesstr.", 	//15
-						   "Straﬂennamen",			//16
-						   "schwarze Schrift", 		//17
-						   "UTM-Gitter", 			//18
-						   "Verwaltungsgrenzen", 	//19
-						   "Wald", 					//20
-						   "Weiﬂe Schrift", 		//21
-						   "Wiese"} ;				//22
+						   "Gew‰sser",						//13
+						   "Staats-/Landstr.",				//14
+						   "Autobahn-/Bundesstr.", 			//15
+						   "Straﬂennamen",					//16
+						   "schwarze Schrift", 				//17
+						   "UTM-Gitter", 					//18
+						   "Verwaltungsgrenzen", 			//19
+						   "Wald", 							//20
+						   "Weiﬂe Schrift", 				//21
+						   "Wiese"} ;						//22
 	public final Color[] LAYERCOLORS = {new Color(0xff8B4513),
 										new Color(0xff1C86EE),
 										new Color(0xff008B45),
@@ -54,6 +54,6 @@ public interface LayersIF {
 										new Color(0xffA2B5CD),
 										new Color(0xffBC8F8F),
 										new Color(0xff458B00),
-										new Color(0xffffffff),
-										new Color(0xff90EE90)};
+										new Color(0x22ffffff, true),
+										new Color(0x3590EE90, true)};
 }

@@ -45,7 +45,7 @@ public class MenuBar extends JMenuBar{
 		  // View 
 		JMenuItem menuItemZoom100=new JMenuItem("Zoom 100%");
 		JMenuItem menuItemZoom200=new JMenuItem("Zoom 200%");
-		//JMenuItem menuItemZoom300=new JMenuItem("Zoom 300%");
+		JMenuItem menuItemZoom300=new JMenuItem("Zoom 300%");
 		  // Help
 		JMenuItem menuItemAbout=new JMenuItem("Über Mappy...");
 		  // Settings
@@ -63,7 +63,7 @@ public class MenuBar extends JMenuBar{
 		  // Anzeige
 		menuView.add(menuItemZoom100);
 		menuView.add(menuItemZoom200);
-		//menuView.add(menuItemZoom300);
+		menuView.add(menuItemZoom300);
 		  // Hilfe
 		menuHelp.add(menuItemAbout);
 	
@@ -94,7 +94,11 @@ public class MenuBar extends JMenuBar{
 			setZoom(200);
 		}
 	});
-	
+	menuItemZoom300.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			setZoom(300);
+		}
+	});
 	owner.setJMenuBar(this);
 	}
 	

@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.52 2005/01/14 20:55:50 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.53 2005/01/17 18:10:34 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -25,7 +25,6 @@ import server.Mappy;
 public class Gui extends JFrame implements LayersIF{
 	private Mappy mappy;
 	private String[] layer = ALLLAYERS;
-	private int clickCounter=1;
 	private JList layers;
 	private JScrollPane layersScrollPane;
 	private JPanel status;
@@ -34,9 +33,9 @@ public class Gui extends JFrame implements LayersIF{
 	private JButton refresh;
 	private JButton chooseAll;
 	private JButton deselect;
-	private AbstractButton moveEast;
-	private AbstractButton moveWest;
-	private AbstractButton moveNorth;
+	private JButton moveEast;
+	private JButton moveWest;
+	private JButton moveNorth;
 	private JButton moveSouth;
 	private Point upperLeft;
 	private int[] layersToShow;
@@ -64,7 +63,6 @@ public class Gui extends JFrame implements LayersIF{
 		System.out.print("Building new GUI...");
 		setNewLookAndFeel();
 		initComponents();
-
 	}
 
 	/**
@@ -117,7 +115,7 @@ public class Gui extends JFrame implements LayersIF{
 		zoomLabel.setFont(new Font("Verdana", Font.PLAIN, 11));
 		zoomSlider = new JSlider();
 		zoomSlider.setMinimum(0);
-		zoomSlider.setMaximum(100);
+		zoomSlider.setMaximum(300);
 		zoomSlider.setValue(IOHandler.getSavedZoom());
 		zoomSlider.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent ce){
@@ -151,27 +149,44 @@ public class Gui extends JFrame implements LayersIF{
 		moveEast.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("east");
+				upperLeft.x = upperLeft.x + 300;
+				sb.setPosition(upperLeft.x, upperLeft.y);
+				progress.setValue(0);
+				refreshAction();
 			}
 		});
 		
 		moveWest.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("west");
+				upperLeft.x = upperLeft.x - 300;
+				sb.setPosition(upperLeft.x, upperLeft.y);
+				progress.setValue(0);
+				refreshAction();
 			}
 		});
 		
 		moveNorth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("north");
+				upperLeft.y = upperLeft.y - 300;
+				sb.setPosition(upperLeft.x, upperLeft.y);
+				progress.setValue(0);
+				refreshAction();
 			}
 		});
 		
 		moveSouth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("south");
+				upperLeft.y = upperLeft.y + 300;
+				sb.setPosition(upperLeft.x, upperLeft.y);
+				progress.setValue(0);
+				refreshAction();
 			}
 		});
 		mapPanel = new JPanel();
+		mapPanel.setOpaque(false);
 		mapPanel.setBorder(new MetalBorders.Flush3DBorder());
 		mapPanel.setLayout(new BorderLayout());
 		mapPanel.setBackground(new Color(0,0,0));
@@ -211,6 +226,7 @@ public class Gui extends JFrame implements LayersIF{
 	protected void zoomSliderChanged(){
 		if(!zoomSlider.getValueIsAdjusting()){
 			System.out.println("Zoomwert: " + zoomSlider.getValue());
+			progress.setValue(0);
 			refresh.setEnabled(true);
 		}
 		else{
@@ -286,7 +302,7 @@ public class Gui extends JFrame implements LayersIF{
 	  try {
 	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    SwingUtilities.updateComponentTreeUI(this ); 
-	  } catch( Exception e ) { e.printStackTrace(); }
+	  } catch(Exception e){e.printStackTrace();}
 	}
 	
 	Point getUpperLeft(){

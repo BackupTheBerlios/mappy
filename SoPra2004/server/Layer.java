@@ -18,13 +18,13 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.28 2005/01/14 19:47:36 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.29 2005/01/17 18:10:34 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
 		
 	Layer(Dimension d, Point p, int zoom, int layerId, DBValues DB){
-		float zoomFactor = 2 - ((float)zoom / 100);
+		float zoomFactor = 4 - ((float)zoom / 100);
 		Dimension realDimension = new Dimension();
 		realDimension.setSize(round(d.width * zoomFactor), round(d.height * zoomFactor));
 		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
@@ -36,7 +36,7 @@ public class Layer{
 			while(i.hasNext()){
 				Tile temp = (Tile)i.next();
 				if (temp.hasImage()){
-					if(!(zoom == 100)){
+					if(zoomFactor != 1){
 						float resizedX = temp.getSize().width / zoomFactor;
 						float resizedY = temp.getSize().height / zoomFactor;
 						temp.setImage(temp.getImage().getScaledInstance(round(resizedX), round(resizedY), Image.SCALE_DEFAULT));
@@ -65,23 +65,22 @@ public class Layer{
 						}
 						int width = temp.getSize().width;
 						int height = temp.getSize().height;
-						System.out.println(width + " " + height);
 						BufferedImage cutTile = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-						if(xToCut > 0 & yToCut > 0){
+						if(xToCut > 0 && yToCut > 0){
 							cutTile.getGraphics().drawImage(temp.getImage(),0,0,null);
 						}
-						if(xToCut > 0 & yToCut == 0){
-							cutTile.getGraphics().drawImage(temp.getImage(),0,yPaint,null);
+						if(xToCut > 0 && yToCut == 0){
+							cutTile.getGraphics().drawImage(temp.getImage(),0,yToCut,null);
 						}
-						if(xToCut == 0 & yToCut > 0){
-							cutTile.getGraphics().drawImage(temp.getImage(),xPaint,0,null);
+						if(xToCut == 0 && yToCut > 0){
+							cutTile.getGraphics().drawImage(temp.getImage(),xToCut,0,null);
 						}
 						int newWidth = width - xToCut;
 						int newHeight = height - yToCut;
 						temp.setImage(cutTile.getSubimage(round(xToCut), round(yToCut), newWidth, newHeight));
 						temp.setXFrom(temp.getXFrom() - xToCut);
 						temp.setYFrom(temp.getYFrom() - yToCut);
-						map.getGraphics().drawImage(temp.getImage(),0,0,null);
+						map.getGraphics().drawImage(temp.getImage(),xPaint + xToCut,yPaint + yToCut,null);
 					}
 					else{
 						map.getGraphics().drawImage(temp.getImage(),xPaint,yPaint,null);
