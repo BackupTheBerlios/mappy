@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.11 2004/12/18 16:06:29 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.12 2004/12/18 17:35:18 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -35,7 +35,6 @@ public class Gui extends JFrame {
 	private JScrollPane layersScrollPane;
 	private JPanel status;
 	private Image image;
-	private JLabel map;
 	private JToolBar layerButtonBar;
 	private JButton refresh;
 	private JButton chooseAll;
@@ -43,6 +42,7 @@ public class Gui extends JFrame {
 	private ArrayList layerList;
 	private Point upperLeft;
 	private int[] layersToShow = {0, 0, 0, 0, 0, 0};
+	private MapLabel map;
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -111,9 +111,10 @@ public class Gui extends JFrame {
 		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
 		
+		
 		upperLeft = IOHandler.getSavedStart();
-		layerList = mappy.getLayers(map.getSize(), upperLeft, layersToShow);
-		MapLabel map = new MapLabel(layerList, new Point(IOHandler.getSavedStart()));
+		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
+		map = new MapLabel(layerList);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 1, 0, 1, 3, 1d, 1d);
 		
 		
@@ -160,9 +161,12 @@ public class Gui extends JFrame {
 	 */
 	protected void listValueChanged(ListSelectionEvent evt) {
 		refresh.setEnabled(true);
-		for (int i = 0; i < layersToShow.length;){
+		for (int i = 0; i < layersToShow.length; i++){
 			if (layers.isSelectedIndex(i)){
 				layersToShow[i] = 1;
+			}
+			else{
+				layersToShow[i] = 0;
 			}
 		}
 	}
