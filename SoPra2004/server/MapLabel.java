@@ -7,6 +7,8 @@
 package server;
 
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -21,6 +23,8 @@ import javax.swing.JPanel;
  */
 class MapLabel extends JPanel{
 	private ArrayList layerList;
+	private ArrayList pinList;
+	private Point start;
 
 	MapLabel(){
 		setDoubleBuffered(true);
@@ -28,7 +32,8 @@ class MapLabel extends JPanel{
 		setIgnoreRepaint(false);
 	}
 	
-	public void refresh(ArrayList layerList){
+	public void refresh(ArrayList layerList, Point start){
+		this.start = start;
 		this.layerList = layerList;
 		repaint();
 	}
@@ -44,5 +49,34 @@ class MapLabel extends JPanel{
 				}
 			}
 		}
+		if(pinList != null){
+			ListIterator i = pinList.listIterator(0);
+			while(i.hasNext()){
+				Pin currentPin = (Pin)i.next();
+				Image img = currentPin.getImage();
+				int x = currentPin.getPosition().x - start.x;
+				int y = currentPin.getPosition().y - start.y;
+				if(x > 0 && y > 0){
+					getGraphics().drawImage(img, x, y, null);
+				}
+			}
+		}
+		//setPins(pinList);
+	}
+	public void setPins(ArrayList pins){
+		pinList = pins;
+		/*if(pinList != null){
+			ListIterator i = pins.listIterator(0);
+			while(i.hasNext()){
+				Pin currentPin = (Pin)i.next();
+				Image img = currentPin.getImage();
+				int x = currentPin.getPosition().x - start.x;
+				int y = currentPin.getPosition().y - start.y;
+				if(x > 0 && y > 0){
+					getGraphics().drawImage(img, x, y, null);
+				}
+			}
+		}*/
+		repaint();
 	}
 }

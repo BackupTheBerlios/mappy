@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.30 2005/01/20 01:40:12 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.31 2005/01/20 23:10:22 drrsatzteil Exp $
  */
 
 
@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -28,10 +29,12 @@ public class Mappy{
 	private MapLabel map;
 	private Color[] layerColors;
 	private Color[] layerColorsAlpha;
+	private ArrayList pins;
 
 	public Mappy(){
 		DB = new DBValues();
 		map = new MapLabel();
+		pins = new ArrayList();
 	}
 	
 	public ArrayList getLayers(Dimension d, Point p, int zoom, int[] layerIds, JProgressBar progress){
@@ -49,14 +52,28 @@ public class Mappy{
 	public void refresh(Point upperLeft, int[] layersToShow, int zoom, JProgressBar progress, Color[] layerColors, Color[] layerColorsAlpha){
 
 		this.layerColors = layerColors;
-		this.layerColorsAlpha=layerColorsAlpha;
-		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress));
-
+		this.layerColorsAlpha = layerColorsAlpha;
+		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), upperLeft);
 	}
 	public JPanel getMapLabel(){
 		return map;
 	}
 	public boolean closeDB(){
 		return DB.closeConnection();
+	}
+	public void pin(Point p, String name){
+		boolean b = false;
+		ListIterator i = pins.listIterator(0);
+		while(i.hasNext()){
+			b = ((Pin)i.next()).checkAtLocation(p);
+			if(b){
+				System.out.println("Wech mit");
+				pins.remove(i.nextIndex()-1);
+			}
+		}
+		if(!b){
+			pins.add(new Pin(p,name));
+		}
+		map.setPins(pins);
 	}
 }
