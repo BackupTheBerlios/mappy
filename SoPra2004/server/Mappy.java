@@ -8,7 +8,7 @@ package server;
 
 /**
  * @author fkubis
- * $Id: Mappy.java,v 1.12 2004/12/21 13:47:22 drrsatzteil Exp $
+ * $Id: Mappy.java,v 1.13 2004/12/22 01:59:14 drrsatzteil Exp $
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -39,23 +39,7 @@ public class Mappy {
 		}
 		return layers;
 	}
-	
-	private Image getTile(){
-		Image img=null;
-		DBValues myDBValues = new DBValues();
-		Point point = new Point(0, 0);
-		int type = 1;
-		try{
-			 img = myDBValues.getImage(point, type);
-		}
-		catch (Exception e){
-			System.err.println("koi bildle");
-		}
-		
-		if (img!=null)System.out.println("Bild wird übergeben...");
-		return img;
-	}
-	
+
 	public BufferedImage getMapDemo() {
 		System.err.println("getMapDemo");
 				
