@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.16 2005/01/04 21:08:36 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.17 2005/01/10 19:10:49 drrsatzteil Exp $
  */
 
 
@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.util.ArrayList;
+
+import javax.swing.JProgressBar;
 
 import data.*;
 
@@ -27,7 +29,7 @@ public class Mappy {
 		map = new MapLabel();
 	}
 	
-	public ArrayList getLayers(Dimension d, Point p, int[] layerIds) {
+	public ArrayList getLayers(Dimension d, Point p, int[] layerIds, JProgressBar progress){
 		// ArrayList mit Layern
 		// die layer haben Zeilen und Spalten und eine ArrayList mit Tiles
 		// die Tiles sind fertig eingefärbt und so ...
@@ -36,6 +38,7 @@ public class Mappy {
 		for (int i = 0; i < layerIds.length; i++){
 			Layer layer = new Layer(d, p, layerIds[i]+1, DB);
 			layers.add(layer);
+			progress.setValue(i+1);
 		}
 		return layers;
 	}
@@ -52,8 +55,9 @@ public class Mappy {
 		return bI;
 	}
 	
-	public void refresh(Point upperLeft, int[] layersToShow){
-		map.refresh(this.getLayers(map.getSize(), upperLeft, layersToShow));
+	public void refresh(Point upperLeft, int[] layersToShow, JProgressBar progress){
+		map.refresh(this.getLayers(map.getSize(), upperLeft, layersToShow, progress));
+		
 	}
 	public MapLabel getMapLabel(){
 		
