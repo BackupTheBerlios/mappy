@@ -15,10 +15,6 @@
  */
 public class Start {
 	public static void main(String args[]){
-		client.Gui gui1=new client.Gui(new server.Mappy());
-		
-		
+		client.Gui gui1 = new client.Gui(new server.Mappy());
 	}
-
-
 }

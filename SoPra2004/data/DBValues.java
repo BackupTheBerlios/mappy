@@ -47,7 +47,8 @@ public class DBValues {
     			"AND YFrom = " + (int)start.getY() 
 				+ " AND Type = " + type;
     		
-    		sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";    		
+    		//sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
+    		System.out.println (sql);
     		ResultSet res = stmt.executeQuery(sql);
     		res.next();
     		int id = res.getInt("ID");

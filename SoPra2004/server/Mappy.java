@@ -6,37 +6,30 @@
  */
 package server;
 
-/**
- * @author ba008959
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
-import java.awt.Image;
 import java.awt.Point;
-
-import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 import data.*;
+
 public class Mappy {
 	public Mappy(){
 		
 	}
 	
-	public Image getMap(){
-		Image img=null;
+	public BufferedImage getMap(Point start, int type){
+		System.out.println ("getMap Start");
+		BufferedImage img = null;
 		DBValues myDBValues = new DBValues();
-		Point point = new Point(0, 0);
-		int type = 1;
 		try{
-			 img = myDBValues.getImage(point, type);
+			 img = myDBValues.getImage(start, type);
 		}
 		catch (Exception e){
 			System.err.println("koi bildle");
 		}
 		
-		if (img!=null)System.out.println("Bild wird übergeben...");
+		if (img!=null) {
+			System.out.println("Bild wird übergeben...");
+		}
 		return img;
-		
 	}
 }
