@@ -81,15 +81,22 @@ public class Gui extends JFrame {
 		
 		// Map setup
 		// Hier Weiter Machen
-		ImageIcon image=new ImageIcon("uniba.gif");//mappy.getMap();
-		labelMap=new JLabel(image);
-		panelMap.add(labelMap);
+		//ImageIcon image=new ImageIcon("uniba.gif");//mappy.getMap();
+		//labelMap=new JLabel(image);
+		//panelMap.add(labelMap);
+		
+// KUB: Hier muss dass doch irgedwie funzen, bild kommt auf jeden fall,sie konsole
+//      weiﬂ nicht mehr weiter...
 		Image img=mappy.getMap();//
 		BufferedImage bi=new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
 		Graphics2D gfx=bi.createGraphics();
+		gfx.setColor(Color.BLACK); 
+        gfx.drawLine(0,0,50,50); 
 		gfx.drawImage(img,0,0,this);
 		System.out.println(img.getWidth(this));
-		//panelMap.paint(gfx);
+		JLabel imageLabel=new JLabel();
+		panelMap.paint(gfx);
+		
 		
 		
 		// Status setup
