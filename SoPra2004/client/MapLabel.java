@@ -22,13 +22,13 @@ import javax.swing.JLabel;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 class MapLabel extends JLabel{
-	private ArrayList tiles;
+	private ArrayList layerList;
 
-	MapLabel(ArrayList tiles, Point start){
-		this.tiles = tiles;
+	MapLabel(ArrayList layerList, Point start){
+		this.layerList = layerList;
 	}
 	public void paint(Graphics g){
-		ListIterator i = tiles.listIterator(0);
+		ListIterator i = layerList.listIterator(0);
 		ImageObserver imageObserver = null;
 		while(i.hasNext()){
 			g.drawImage((Image)i.next(), (i.nextIndex()-1)*500, 0, imageObserver);
