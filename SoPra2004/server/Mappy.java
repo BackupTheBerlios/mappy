@@ -5,12 +5,12 @@
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package server;
-
 /**
- * @author fkubis
- * $Id: Mappy.java,v 1.15 2005/01/04 20:16:50 drrsatzteil Exp $
+ *
+ *$Id: Mappy.java,v 1.16 2005/01/04 21:08:36 drrsatzteil Exp $
  */
-import java.awt.Image;
+
+
 import java.awt.image.BufferedImage;
 import java.awt.Point;
 import java.awt.Dimension;
@@ -24,6 +24,7 @@ public class Mappy {
 
 	public Mappy(){
 		DB = new DBValues();
+		map = new MapLabel();
 	}
 	
 	public ArrayList getLayers(Dimension d, Point p, int[] layerIds) {
@@ -32,9 +33,8 @@ public class Mappy {
 		// die Tiles sind fertig eingefärbt und so ...
 		
 		ArrayList layers = new ArrayList();
-		
 		for (int i = 0; i < layerIds.length; i++){
-			Layer layer = new Layer(d, p, layerIds[i+1], DB);
+			Layer layer = new Layer(d, p, layerIds[i]+1, DB);
 			layers.add(layer);
 		}
 		return layers;
@@ -55,9 +55,8 @@ public class Mappy {
 	public void refresh(Point upperLeft, int[] layersToShow){
 		map.refresh(this.getLayers(map.getSize(), upperLeft, layersToShow));
 	}
-	public MapLabel getMapLabel(ArrayList layerList){
+	public MapLabel getMapLabel(){
 		
-		map=new MapLabel(layerList);
 		return map;
 	}
 }

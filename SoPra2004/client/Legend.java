@@ -10,12 +10,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.plaf.metal.MetalBorders;
 
 /**
  * @author DrRSatzteil
- *
+ * $Id: Legend.java,v 1.2 2005/01/04 21:11:01 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */

@@ -22,11 +22,8 @@ import javax.swing.JLabel;
  */
 class MapLabel extends JLabel{
 	private ArrayList layerList;
-	
-	int TEST = 0;
 
-	MapLabel(ArrayList layerList){
-		this.layerList = layerList;
+	MapLabel(){
 		setDoubleBuffered(true);
 	}
 	

@@ -20,7 +20,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.13 2005/01/04 18:41:17 jesuzz Exp $
+ * $Id: DBValues.java,v 1.14 2005/01/04 21:09:16 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -32,10 +32,10 @@ public class DBValues {
 	
 	public DBValues() {		
 		this.connector = new DBConnector();		
-		this.con = this.connector.openDB(this.url, this.user, this.pass); 		
+		this.con = this.connector.openDB(this.url, this.user, this.pass);
 	}
 	
-	public Tile getTile(Point p, int type) {
+	public Tile getTile(Point p, int type){
 		Tile t = null;
 		ResultSet r = null;				
 		try{
