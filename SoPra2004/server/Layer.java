@@ -15,7 +15,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.16 2005/01/12 21:41:31 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.17 2005/01/12 22:09:26 drrsatzteil Exp $
  */
 public class Layer {
 	private BufferedImage map;
@@ -41,12 +41,10 @@ public class Layer {
 				}
 				x += tileWidth;
 				currentPoint.setLocation(5500 + x, 5500 + y);
-				System.out.println(currentPoint);
 			}
 			x = 0;
 			y += tileHeight;
 			currentPoint.setLocation(5500 + x, 5500 + y);
-			//System.out.println(currentPoint);
 		}
 		map.flush();
 	}
