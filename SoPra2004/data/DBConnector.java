@@ -1,47 +1,58 @@
 package data;
 
 import java.sql.*;
+
 /**
  * Simple Database Connection Class
  * 
  * @author Softwarepraktikum 2004/05 Gruppe 2
- *
+ *  
  */
-public class DBConnector{
+public class DBConnector {
 	private Thread reconnect;
+
 	Connection con = null;
+
 	private String url;
+
 	private String user;
+
 	private String pass;
-	
+
 	/**
 	 * Class Constructor builds a DBConnector with the defined jdbcDriver
-	 * @param jdbcDriver	defined jdbcDriver as String
+	 * 
+	 * @param jdbcDriver
+	 *            defined jdbcDriver as String
 	 */
 	public DBConnector(String jdbcDriver) {
 		try {
 			Class.forName(jdbcDriver);
 		} catch (ClassNotFoundException e) {
-			System.err.println(e.getMessage()+ " not found");
+			System.err.println(e.getMessage() + " not found");
 			System.exit(1);
 		}
 	}
-	
+
 	/**
 	 * Class Constructor with predefined jdbcDriver
 	 */
-	public DBConnector(){
+	public DBConnector() {
 		this("org.gjt.mm.mysql.Driver");
 	}
-	
+
 	/**
 	 * opens the Connection to the Database
-	 * @param url	the url of the Database
-	 * @param user	the user of the Database
-	 * @param pass	the password to the defined user of the Database
-	 * @return	the Connection
+	 * 
+	 * @param url
+	 *            the url of the Database
+	 * @param user
+	 *            the user of the Database
+	 * @param pass
+	 *            the password to the defined user of the Database
+	 * @return the Connection
 	 */
-	public Connection openDB(String url, String user, String pass){
+	public Connection openDB(String url, String user, String pass) {
 		this.url = url;
 		this.user = user;
 		this.pass = pass;
@@ -55,36 +66,37 @@ public class DBConnector{
 		}
 		return con;
 	}
-	
+
 	/**
 	 * Reconnects to the Database
-	 * @return	the Connection
+	 * 
+	 * @return the Connection
 	 */
-	Connection reconnect(){
-		if(reconnect != null){
-			if(!reconnect.isAlive()){
+	Connection reconnect() {
+		if (reconnect != null) {
+			if (!reconnect.isAlive()) {
 				reconnect.start();
-			}
-			else{
+			} else {
 				System.err.println("Versuche bereits zu verbinden");
 			}
-		}
-		else{
+		} else {
 			reconnect = new Thread(new Reconnector(url, user, pass, this));
 			reconnect.start();
 		}
 		return con;
 	}
-	
+
 	/**
 	 * Closes the defined Connection
-	 * @param con	the defined Connection
-	 * @return	the boolean-Value of the Connection (true: connection closed)
+	 * 
+	 * @param con
+	 *            the defined Connection
+	 * @return the boolean-Value of the Connection (true: connection closed)
 	 */
 	public boolean closeDB(Connection con) {
 		if (con == null) {
 			return false;
-		}	
+		}
 		try {
 			con.close();
 		} catch (SQLException e) {
@@ -92,16 +104,21 @@ public class DBConnector{
 		}
 		return true;
 	}
+
 	/**
 	 * Returns the Connection
+	 * 
 	 * @return the current Connection
 	 */
 	public Connection getCon() {
 		return con;
 	}
+
 	/**
 	 * Sets a defined Connection
-	 * @param con	sets a defined Connection as the current Connection
+	 * 
+	 * @param con
+	 *            sets a defined Connection as the current Connection
 	 */
 	public void setCon(Connection con) {
 		this.con = con;

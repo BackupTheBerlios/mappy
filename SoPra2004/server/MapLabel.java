@@ -12,12 +12,15 @@ import javax.swing.JPanel;
  * Creats a Label out of the different Buffered images
  * 
  * @author Softwarepraktikum 2004/05 Gruppe 2
- *
+ *  
  */
 class MapLabel extends JPanel {
 	private ArrayList layerList;
+
 	private ArrayList pinList;
+
 	private int zoom;
+
 	private Point start;
 
 	/**
@@ -31,12 +34,18 @@ class MapLabel extends JPanel {
 
 	/**
 	 * Refreshes the Label
-	 * @param layerList	Layers to be refreshed
-	 * @param pins		Markers to be refreshed
-	 * @param zoom		defined zoom
-	 * @param start		defined Startpoint
+	 * 
+	 * @param layerList
+	 *            Layers to be refreshed
+	 * @param pins
+	 *            Markers to be refreshed
+	 * @param zoom
+	 *            defined zoom
+	 * @param start
+	 *            defined Startpoint
 	 */
-	public void refresh(ArrayList layerList, ArrayList pins, int zoom, Point start) {
+	public void refresh(ArrayList layerList, ArrayList pins, int zoom,
+			Point start) {
 		this.zoom = zoom;
 		this.start = start;
 		this.pinList = pins;
@@ -44,7 +53,9 @@ class MapLabel extends JPanel {
 		repaint();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.Component#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g) {
@@ -59,18 +70,18 @@ class MapLabel extends JPanel {
 			}
 		}
 		if (pinList != null) {
-			double zoomFactor = 4 - (zoom/100);
+			double zoomFactor = 4 - (zoom / 100);
 			ListIterator i = pinList.listIterator(0);
 			while (i.hasNext()) {
 				Pin currentPin = (Pin) i.next();
 				Image img = currentPin.getImage();
 				String description = currentPin.getName();
-				System.out.println (start.x);
+				System.out.println(start.x);
 				double x = ((currentPin.getPosition().x - start.x) / zoomFactor - 7);
 				double y = ((currentPin.getPosition().y - start.y) / zoomFactor - 7);
 				if (x > 0 && y > 0) {
-					g.drawImage(img, (int)x, (int)y, null);
-					g.drawString(description, (int)x + 17, (int)y + 13);
+					g.drawImage(img, (int) x, (int) y, null);
+					g.drawString(description, (int) x + 17, (int) y + 13);
 				}
 			}
 		}
@@ -78,10 +89,13 @@ class MapLabel extends JPanel {
 
 	/**
 	 * Sets the markers in the Label
-	 * @param pins	Markers to be set
-	 * @param zoom	Zoom to be set
+	 * 
+	 * @param pins
+	 *            Markers to be set
+	 * @param zoom
+	 *            Zoom to be set
 	 */
-	public void setPins(ArrayList pins, int zoom){
+	public void setPins(ArrayList pins, int zoom) {
 		this.zoom = zoom;
 		pinList = pins;
 		repaint();

@@ -16,48 +16,57 @@ import javax.swing.JLabel;
  * Simple About Dialog
  * 
  * @author Softwarepraktikum 2004/05 Gruppe 2
- *
+ *  
  */
 public class AboutDialog extends JDialog {
-	
+
 	private ImageIcon uniIcon;
+
 	private JLabel uniLabel;
+
 	private JLabel team;
+
 	private JLabel mappyVersion;
+
 	private JButton close;
+
 	/**
 	 * Class constructor displays the About Dialog in the center of the screen
-	 * @param parent the frame the dialog belongs to
+	 * 
+	 * @param parent
+	 *            the frame the dialog belongs to
+	 *  
 	 */
-	public AboutDialog(JFrame parent){
+	public AboutDialog(JFrame parent) {
 		super(parent, "Über Mappy", true);
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int xPos = (screenDimension.width - this.getSize().width)/2-50;
-		int yPos = (screenDimension.height - this.getSize().height)/2-100;
+		int xPos = (screenDimension.width - this.getSize().width) / 2 - 50;
+		int yPos = (screenDimension.height - this.getSize().height) / 2 - 100;
 		this.setLocation(xPos, yPos);
-		setResizable (false);
+		setResizable(false);
 		initComponents();
 	}
 
 	/**
 	 * initializes the components of the About Dialog
 	 */
-	private void initComponents(){
-		uniIcon = new ImageIcon (getClass().getResource("/images/aboutlogo.gif"));
-		uniLabel = new JLabel (uniIcon);
+	private void initComponents() {
+		uniIcon = new ImageIcon(getClass().getResource("/images/aboutlogo.gif"));
+		uniLabel = new JLabel(uniIcon);
 		getContentPane().add(uniLabel, BorderLayout.CENTER);
-		mappyVersion = new JLabel("<html><p/<p/Endlich habe ich es geschafft.<p/Wir haben einen neuen about Dialog.<p/" +
-				"Unsere aktuelle Version ist: 1.3<p/<p/</html>" );
+		mappyVersion = new JLabel(
+				"<html><p/<p/Endlich habe ich es geschafft.<p/Wir haben einen neuen about Dialog.<p/"
+						+ "Unsere aktuelle Version ist: 1.3<p/<p/</html>");
 		mappyVersion.setFont(new Font("Verdana", Font.PLAIN, 11));
 		getContentPane().add(mappyVersion, BorderLayout.NORTH);
-		close = new JButton ("Schliessen");
+		close = new JButton("Schliessen");
 		getContentPane().add(close, BorderLayout.SOUTH);
-		close.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
 		pack();
-		setVisible (true);
+		setVisible(true);
 	}
 }

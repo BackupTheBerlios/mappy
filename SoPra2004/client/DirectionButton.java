@@ -15,7 +15,10 @@ public class DirectionButton extends JButton {
 
 	/**
 	 * Class constructor to build a Direction Button
-	 * @param file	a String giving the base location of the file
+	 * 
+	 * @param file
+	 *            a String giving the base location of the file
+	 *  
 	 */
 	public DirectionButton(String file) {
 		super(new ImageIcon(file));
@@ -23,9 +26,12 @@ public class DirectionButton extends JButton {
 		setBorderPainted(false);
 		setFocusPainted(false);
 	}
+
 	/**
 	 * Class constructor to build a Direction Button
-	 * @param file	a URL giving the base location of the file
+	 * 
+	 * @param file
+	 *            a URL giving the base location of the file
 	 */
 	public DirectionButton(URL file) {
 		super(new ImageIcon(file));

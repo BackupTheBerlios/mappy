@@ -9,31 +9,35 @@ import java.util.ListIterator;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-
-
 import data.*;
 
 /**
- * The toplevel server-class handling all the tasks of the client and 
- * returns them to the GUI
+ * The toplevel server-class handling all the tasks of the client and returns
+ * them to the GUI
  * 
  * @author Softwarepraktikum 2004/05 Gruppe 2
- *
+ *  
  */
-public class Mappy{
+public class Mappy {
 	private DBValues DB;
+
 	private MapLabel map;
+
 	private Color[] layerColors;
+
 	private Color[] layerColorsAlpha;
+
 	private ArrayList pins;
+
 	private Point startPoint;
+
 	private int zoom;
 
 	/**
 	 * Class constructor which creates a new Mappy with the information of the
 	 * DBValues-constructor and the MapLabel-constructor
 	 */
-	public Mappy(){
+	public Mappy() {
 		DB = new DBValues();
 		map = new MapLabel();
 		pins = new ArrayList();
@@ -41,90 +45,117 @@ public class Mappy{
 
 	/**
 	 * Returns all Layers selected by the parameters
-	 * @param d		Dimension of the Layers
-	 * @param p		Point of the Layers
-	 * @param zoom	Zoom of the Layers
-	 * @param layerIds	The LayerIds of the selected Layers
-	 * @param progress	the defined progressbar
-	 * @return		ArrayList with the information of the BufferedImages
+	 * 
+	 * @param d
+	 *            Dimension of the Layers
+	 * @param p
+	 *            Point of the Layers
+	 * @param zoom
+	 *            Zoom of the Layers
+	 * @param layerIds
+	 *            The LayerIds of the selected Layers
+	 * @param progress
+	 *            the defined progressbar
+	 * @return ArrayList with the information of the BufferedImages
 	 */
-	public ArrayList getLayers(Dimension d, Point p, int zoom, int[] layerIds, JProgressBar progress){
+	public ArrayList getLayers(Dimension d, Point p, int zoom, int[] layerIds,
+			JProgressBar progress) {
 		ArrayList layers = new ArrayList();
-		for (int i = 0; i < layerIds.length; i++){
-			Layer layer = new Layer(d, p, zoom, layerIds[i]+1, DB);
-			layer.setColor(layerColors[layerIds[i]], layerColorsAlpha[layerIds[i]]);
+		for (int i = 0; i < layerIds.length; i++) {
+			Layer layer = new Layer(d, p, zoom, layerIds[i] + 1, DB);
+			layer.setColor(layerColors[layerIds[i]],
+					layerColorsAlpha[layerIds[i]]);
 			layers.add(layer);
-			progress.setValue(i+1);
+			progress.setValue(i + 1);
 		}
 		return layers;
 	}
-	
 
 	/**
 	 * Refreshes the selected Layers
-	 * @param upperLeft	Point of the selected Layers
-	 * @param layersToShow	the Array containing the indices of the Layers to show
-	 * @param zoom	the defined zoom
-	 * @param progress	the defined progressbar
-	 * @param layerColors	the defined layerColors
-	 * @param layerColorsAlpha	the predefined layer Colors
+	 * 
+	 * @param upperLeft
+	 *            Point of the selected Layers
+	 * @param layersToShow
+	 *            the Array containing the indices of the Layers to show
+	 * @param zoom
+	 *            the defined zoom
+	 * @param progress
+	 *            the defined progressbar
+	 * @param layerColors
+	 *            the defined layerColors
+	 * @param layerColorsAlpha
+	 *            the predefined layer Colors
 	 */
-	public void refresh(Point upperLeft, int[] layersToShow, int zoom, JProgressBar progress, Color[] layerColors, Color[] layerColorsAlpha){
+	public void refresh(Point upperLeft, int[] layersToShow, int zoom,
+			JProgressBar progress, Color[] layerColors, Color[] layerColorsAlpha) {
 		this.zoom = zoom;
 		this.startPoint = upperLeft;
 		this.layerColors = layerColors;
 		this.layerColorsAlpha = layerColorsAlpha;
-		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, zoom, upperLeft);
+		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom,
+				layersToShow, progress), pins, zoom, upperLeft);
 	}
+
 	/**
 	 * @return the current MapLabel as JPanel
 	 */
-	public JPanel getMapLabel(){
+	public JPanel getMapLabel() {
 		return map;
 	}
+
 	/**
 	 * @return the Status of the connection (true: connection is closed)
 	 */
-	public boolean closeDB(){
+	public boolean closeDB() {
 		return DB.closeConnection();
 	}
+
+	public void openNewDB(String url, String user, String pass) {
+		DB.setDBValues(url, user, pass);
+	}
+
 	/**
 	 * Sets a marker to a defined location
-	 * @param p		Point of the marker
-	 * @param name	name of the marker
-	 * @param zoom	zoom of the marker
+	 * 
+	 * @param p
+	 *            Point of the marker
+	 * @param name
+	 *            name of the marker
+	 * @param zoom
+	 *            zoom of the marker
 	 */
-	public void setPin(Point p, String name, int zoom){
+	public void setPin(Point p, String name, int zoom) {
 		this.zoom = zoom;
 		boolean b = false;
 		Integer test = pinExists(p);
-		if(test == null){
-			if(pins != null){
+		if (test == null) {
+			if (pins != null) {
 				ListIterator i = pins.listIterator(0);
-				while (i.hasNext()){
-					Pin temp = (Pin)i.next();
-					if(temp.getName().equals(name)){
+				while (i.hasNext()) {
+					Pin temp = (Pin) i.next();
+					if (temp.getName().equals(name)) {
 						System.err.println("Pin already exists");
 						b = true;
 					}
 				}
 			}
-			if (b == false){
-				pins.add(new Pin(p,name));
+			if (b == false) {
+				pins.add(new Pin(p, name));
 				map.setPins(pins, zoom);
 			}
 		}
 	}
 
-	public Integer pinExists(Point p){
+	public Integer pinExists(Point p) {
 		Integer index = null;
-		if(pins != null){
+		if (pins != null) {
 			ListIterator i = pins.listIterator(0);
-			while (i.hasNext()){
-				Pin temp = (Pin)i.next();
+			while (i.hasNext()) {
+				Pin temp = (Pin) i.next();
 				Point position = temp.getPosition();
-				if(p.x >= position.x - 8 && p.x <= position.x + 8){
-					if(p.y >= position.y - 8 && p.y <= position.y + 8){
+				if (p.x >= position.x - 8 && p.x <= position.x + 8) {
+					if (p.y >= position.y - 8 && p.y <= position.y + 8) {
 						index = new Integer(i.nextIndex() - 1);
 					}
 				}
@@ -132,62 +163,81 @@ public class Mappy{
 		}
 		return index;
 	}
+
 	/**
 	 * Removes a defined marker
-	 * @param p	Point from where the marker should be removed
+	 * 
+	 * @param p
+	 *            Point from where the marker should be removed
 	 */
-	public void removePin(Point p){
+	public void removePin(Point p) {
 		Integer test = pinExists(p);
-		if(test != null){
+		if (test != null) {
 			pins.remove(test.intValue());
 		}
 		map.setPins(pins, zoom);
 	}
-	
+
 	/**
 	 * @return String array with the names of all pins
 	 */
-	public String[] getPositions(){
+	public String[] getPositions() {
 		String[] names = null;
-		if(pins != null){
+		if (pins != null) {
 			names = new String[pins.size()];
 			ListIterator i = pins.listIterator(0);
-			while (i.hasNext()){
-				Pin temp = (Pin)i.next();
-				names[i.nextIndex()-1] = temp.getName();
+			while (i.hasNext()) {
+				Pin temp = (Pin) i.next();
+				names[i.nextIndex() - 1] = temp.getName();
 			}
 		}
 		return names;
 	}
 
+	public Point getPinLocation(String name) {
+		if (pins != null) {
+			ListIterator i = pins.listIterator(0);
+			while (i.hasNext()) {
+				Pin temp = (Pin) i.next();
+				if (temp.getName().equals(name)) {
+					return temp.getPosition();
+				}
+			}
+		}
+		return new Point(7000, 7000);
+	}
+
 	/**
 	 * Calculates the distance between a Start point and a marker
-	 * @param start	the Startpoint
-	 * @param name	the name of the marker
-	 * @return		the distance between the two points
+	 * 
+	 * @param start
+	 *            the Startpoint
+	 * @param name
+	 *            the name of the marker
+	 * @return the distance between the two points
 	 */
-	public int getDistance(Point start, Point mapStart, String name){
+	public int getDistance(Point start, Point mapStart, String name) {
 		double realDistance = 0;
 		int realD = 0;
-		if(pins != null){
+		if (pins != null) {
 			ListIterator i = pins.listIterator(0);
-			while (i.hasNext()){
-				Pin temp = (Pin)i.next();
-				if(temp.getName().equals(name)){
+			while (i.hasNext()) {
+				Pin temp = (Pin) i.next();
+				if (temp.getName().equals(name)) {
 					Point destination = temp.getPosition();
 					int sx = start.x - mapStart.x;
 					int sy = start.y - mapStart.y;
 					int dx = destination.x - mapStart.x;
 					int dy = destination.y - mapStart.y;
-					double aSquare = (sx - dx)*(sx - dx);
-					double bSquare = (sy - dy)*(sy - dy);
+					double aSquare = (sx - dx) * (sx - dx);
+					double bSquare = (sy - dy) * (sy - dy);
 					double cSquare = aSquare + bSquare;
 					double distanceInPixels = Math.sqrt(cSquare);
-					if(zoom == 0){
+					if (zoom == 0) {
 						zoom = 1;
 					}
-					realDistance = (distanceInPixels * Math.pow(0.5,1/100));
-					realD = (int)realDistance;
+					realDistance = ((distanceInPixels * Math.pow(0.5, 1 / 100) * 0.5));
+					realD = (int) realDistance;
 				}
 			}
 		}
