@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.14 2004/12/19 19:49:29 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.15 2004/12/21 13:44:39 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -39,7 +39,7 @@ public class Gui extends JFrame {
 	private JButton deselect;
 	private ArrayList layerList;
 	private Point upperLeft;
-	private int[] layersToShow = {0, 0, 0, 0, 0, 0};
+	private int[] layersToShow = {7, 8, 9, 10, 11, 12};
 	private MapLabel map;
 	
 	public Gui(Mappy mappy){
@@ -77,7 +77,8 @@ public class Gui extends JFrame {
 		layersScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)layersScrollPane, 0, 0, 1, 1, 0d, 1d);
 		
-		
+		Legend legend = new Legend();
+		LayoutManager.addComponent(getContentPane(), layout, (Component)legend, 1, 0, 1, 1, 0d, 1d);
 		
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
@@ -100,16 +101,16 @@ public class Gui extends JFrame {
 				deselectAction();
 			}
 		});
-		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 2, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 2, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 2, 1, 0d, 0d);
 		
 		
 		upperLeft = IOHandler.getSavedStart();
 		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
 		
 		map = new MapLabel(layerList);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 1, 0, 1, 3, 1d, 1d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
 		
 		
 		status = new JPanel();
@@ -117,7 +118,7 @@ public class Gui extends JFrame {
 		sb.setInfo("Los geht's!");
 		sb.setZoom(100);
 		sb.setPosition(143,256);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 1, 3, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 3, 1, 1, 1d, 0d);
 		
 		setVisible(true);
 		
@@ -141,7 +142,7 @@ public class Gui extends JFrame {
 	 */
 	protected void refreshAction() {
 		refresh.setEnabled(false);
-		
+		map.refresh(mappy.getLayers(map.getSize(), upperLeft, layersToShow));
 	}
 
 	/**
@@ -155,7 +156,7 @@ public class Gui extends JFrame {
 				layersToShow[i] = 1;
 			}
 			else{
-				layersToShow[i] = 0;
+				layersToShow[i] = 2;
 			}
 		}
 	}
