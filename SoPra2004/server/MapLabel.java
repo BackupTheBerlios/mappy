@@ -8,8 +8,6 @@ package server;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.ListIterator;
-
 import javax.swing.JPanel;
 
 
@@ -25,6 +23,7 @@ class MapLabel extends JPanel{
 	MapLabel(){
 		setDoubleBuffered(true);
 		setOpaque(false);
+		setIgnoreRepaint(false);
 	}
 	
 	public void refresh(ArrayList layerList){
@@ -35,12 +34,10 @@ class MapLabel extends JPanel{
 		if (layerList == null){
 		}
 		else{
-			if (!layerList.isEmpty()){
-				ListIterator i = layerList.listIterator(0);
-				while(i.hasNext()){
-					Layer temp = (Layer)i.next();
-					g.drawImage(temp.getMap(), 0, 0, null);
-				}
+			while(!layerList.isEmpty()){
+				Layer temp = (Layer)layerList.get(0);
+				g.drawImage(temp.getMap(), 0, 0, null);
+				layerList.remove(0);
 			}
 		}
 	}

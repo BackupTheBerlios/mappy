@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.41 2005/01/13 12:13:39 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.42 2005/01/13 12:36:54 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -141,6 +141,7 @@ public class Gui extends JFrame implements LayersIF{
 		layers.setSelectedIndices(layersToShow);
 		
 		map = mappy.getMapLabel();
+		map.setDoubleBuffered(true);
 		map.setSize(IOHandler.getSavedMapSize());
 		moveEast=new DirectionButton("east.gif");
 		moveWest=new DirectionButton("west.gif");
@@ -171,14 +172,14 @@ public class Gui extends JFrame implements LayersIF{
 		});
 		mapPanel = new JPanel();
 		mapPanel.setLayout(new BorderLayout());
-		mapPanel.setBackground(new Color(0x00FFFFFF));
+		mapPanel.setBounds(20,20,20,20);
+		//mapPanel.setBackground(new Color(0xFF000000));
 		mapPanel.add(moveEast, BorderLayout.EAST);
 		mapPanel.add(moveWest, BorderLayout.WEST);
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
 		mapPanel.add(moveSouth, BorderLayout.SOUTH);
 		mapPanel.add(map, BorderLayout.CENTER);
 		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 1, 0, 2, 2, 1d, 1d);
-		//LayoutManager.addComponent(getContentPane(), layout, map, 1, 0, 2, 2, 1d, 1d);
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);

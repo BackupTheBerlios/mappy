@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.23 2005/01/13 11:51:42 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.24 2005/01/13 12:36:48 drrsatzteil Exp $
  */
 
 
@@ -32,14 +32,12 @@ public class Mappy{
 	}
 	
 	public ArrayList getLayers(Dimension d, Point p, int[] layerIds, JProgressBar progress){
-		
 		ArrayList layers = new ArrayList();
 		for (int i = 0; i < layerIds.length; i++){
 			Layer layer = new Layer(d, p, layerIds[i]+1, DB);
 			layer.setColor(layerColors[layerIds[i]]);
 			layers.add(layer);
 			progress.setValue(i+1);
-			
 		}
 		return layers;
 	}
