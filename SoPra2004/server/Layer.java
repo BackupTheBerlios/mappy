@@ -12,11 +12,11 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.6 2004/12/18 19:26:48 fkubis Exp $
+ * $Id: Layer.java,v 1.7 2004/12/21 13:46:53 drrsatzteil Exp $
  */
 public class Layer {
-	private int lines = 1;
-	private int columns = 1;
+	private int lines;
+	private int columns;
 	private int layerId;		
 	private ArrayList tiles;
 	
@@ -30,35 +30,20 @@ public class Layer {
 		this.layerId 	= layerId;
 		this.DB 		= DB;
 		this.tiles		= new ArrayList();
-	}
-	
-	public boolean fetchTiles() {
-		// solange wir d nicht erfüllen müssen wir weiter fetchen
-		// unsere Auflösung beschränken wir jetzt mal auf ganze Kacheln
-		System.out.println("Layer " + layerId + " Breite: " + dim.getWidth() );
-		System.out.println("Layer " + layerId + " Höhe: " + dim.getHeight() );
 		
-		int i =0;
-		boolean b = false;
-		Point actPoint = (Point)startP.clone();
-		actPoint = new Point(600, 600);
-		do {
-			try {
-				Tile t = DB.getTile(actPoint, layerId);
-				this.tiles.add(t);
-				/*
-				Object o = new Object();
-				this.tiles.add(o);
-				*/
-				b = true;
+		int x = 0;
+		int y = 0;
+		while (y < dim.height){
+			lines++;
+			while (x < dim.width){
+				columns++;
+				Point currentPoint = new Point (startP.x + x, startP.y + y);
+				Tile temp = DB.getTile(currentPoint, layerId);
+				tiles.add(temp);
+				x += temp.getSize().width;
 			}
-			catch (NullPointerException e) {
-				System.err.println("Fehler beim erstellen der tiles ArrayList: " + e.getMessage());
-			}			
-			i++;
-		} while(i < 1);
-		
-		return b;
+			y += 500;
+		}
 	}
 	
 	/**
@@ -76,31 +61,10 @@ public class Layer {
 	}
 
 	/**
-	 * @param i
-	 */
-	public void setColumns(int i) {
-		columns = i;
-	}
-
-	/**
-	 * @param i
-	 */
-	public void setLines(int i) {
-		lines = i;
-	}
-
-	/**
 	 * @return
 	 */
 	public int getLayerId() {
 		return layerId;
-	}
-
-	/**
-	 * @param i
-	 */
-	public void setLayerId(int i) {
-		layerId = i;
 	}
 
 	/**
