@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.54 2005/01/17 21:01:18 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.55 2005/01/17 21:20:23 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -218,6 +218,7 @@ public class Gui extends JFrame implements LayersIF{
 		setVisible(true);
 		
 		wait = new Dialog(this, "Bitte Warten", true);
+		wait.setVisible(false);
 		Label waitLabel = new Label("Bitte haben sie einen Augenblick Geduld", Label.CENTER);
 		waitLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
 		wait.add(waitLabel);
@@ -225,7 +226,7 @@ public class Gui extends JFrame implements LayersIF{
 		wait.pack();
 		Point location = getLocation();
 		Dimension size = getSize();
-		wait.setLocation(location.x + size.width/2 - wait.getSize().width/2, location.y + size.height/2 - wait.getSize().height/2);
+		wait.setLocation(location.x + size.width/2 - wait.getSize().width/2 + 70, location.y + size.height/2 - wait.getSize().height/2);
 		
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();

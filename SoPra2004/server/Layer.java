@@ -18,7 +18,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.30 2005/01/17 21:01:18 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.31 2005/01/17 21:20:23 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
@@ -39,7 +39,7 @@ public class Layer{
 					if(zoomFactor != 1){
 						float resizedX = temp.getSize().width / zoomFactor;
 						float resizedY = temp.getSize().height / zoomFactor;
-						temp.setImage(temp.getImage().getScaledInstance(round(resizedX), round(resizedY), Image.SCALE_REPLICATE));
+						temp.setImage(temp.getImage().getScaledInstance(round(resizedX), round(resizedY), Image.SCALE_DEFAULT));
 						temp.setSize(new Dimension (round(resizedX), round(resizedY)));
 						float xFrom = temp.getXFrom();
 						xFrom = xFrom - p.x;
