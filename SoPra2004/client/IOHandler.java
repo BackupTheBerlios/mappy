@@ -86,16 +86,16 @@ public class IOHandler {
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load WindowSize");
-				return new Dimension(820,600);
+				return new Dimension(850,600);
 			}
 			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load WindowSize");
-				return new Dimension(820,600);
+				return new Dimension(850,600);
 			}
 		}
 		else{
 			System.err.println("Failed to load WindowSize");
-			return new Dimension(820,600);
+			return new Dimension(850,600);
 		}
 	}
 	static Point getSavedWindowPosition(){

@@ -37,44 +37,26 @@ public class StatusBar extends JPanel {
 		
 		pointX = new JFormattedTextField();
 		pointX.addKeyListener(new KeyListener(){
-			public void keyPressed(KeyEvent arg0) {
-				try{
-					new Integer(pointX.getText());
-				}
-				catch(NumberFormatException e){
-					if(pointX.getText().length() > 1){
-						String text = pointX.getText().substring(0, pointX.getText().length() - 1);
-						pointX.setText(text);
-					}
-					else{
-						pointX.setText(null);
-					}
-				}
+			public void keyPressed(KeyEvent arg0){
+				checkX();
 			}
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0){
+				checkX();
 			}
 			public void keyReleased(KeyEvent arg0) {
+				checkX();
 			}			
 		});
 		pointY = new JFormattedTextField();
 		pointY.addKeyListener(new KeyListener(){
-			public void keyPressed(KeyEvent arg0) {
-				try{
-					new Integer(pointY.getText());
-				}
-				catch(NumberFormatException e){
-					if(pointY.getText().length() > 1){
-						String text = pointY.getText().substring(0, pointY.getText().length() - 1);
-						pointY.setText(text);
-					}
-					else{
-						pointY.setText(null);
-					}
-				}
+			public void keyPressed(KeyEvent arg0){
+				checkY();
 			}
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0){
+				checkY();
 			}
-			public void keyReleased(KeyEvent arg0) {
+			public void keyReleased(KeyEvent arg0){
+				checkY();
 			}			
 		});
 		
@@ -105,6 +87,44 @@ public class StatusBar extends JPanel {
 		add(progress);
 		add(state);
 		add(info);
+	}
+	/**
+	 * 
+	 */
+	protected void checkX() {
+		try{
+			new Integer(pointX.getText());
+			if(pointX.getText().length() > 5){
+				Toolkit.getDefaultToolkit().beep();
+				String text = pointX.getText().substring(0, pointX.getText().length() - 1);
+				pointX.setText(text);
+			}
+		}
+		catch(NumberFormatException e){
+			if(pointX.getText().length() > 0){
+				Toolkit.getDefaultToolkit().beep();
+				pointX.setText(null);
+			}
+		}
+	}
+	/**
+	 * 
+	 */
+	protected void checkY() {
+		try{
+			new Integer(pointY.getText());
+			if(pointY.getText().length() > 5){
+				Toolkit.getDefaultToolkit().beep();
+				String text = pointY.getText().substring(0, pointY.getText().length() - 1);
+				pointY.setText(text);
+			}
+		}
+		catch(NumberFormatException e){
+			if(pointY.getText().length() > 0){
+				Toolkit.getDefaultToolkit().beep();
+				pointY.setText(null);
+			}
+		}
 	}
 
 	public void setZoom(int z){
