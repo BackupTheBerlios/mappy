@@ -15,7 +15,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.19 2005/01/13 09:06:53 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.20 2005/01/13 11:24:25 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
@@ -55,10 +55,10 @@ public class Layer{
 					int newHeight = height - yToCut;
 					tiles[i].setImage(cutTile.getSubimage(xToCut, yToCut, newWidth, newHeight));
 					tiles[i].setDim(new Dimension(newWidth, newHeight));
-					tiles[i].setXFrom(p.x);
-					tiles[i].setYFrom(p.y);
+					tiles[i].setXFrom(tiles[i].getXFrom() - xToCut);
+					tiles[i].setYFrom(tiles[i].getYFrom() - yToCut);
+					System.out.println (tiles[i].getXFrom() + " " + tiles[i].getYFrom());
 					map.getGraphics().drawImage(tiles[i].getImage(),0,0,null);
-					System.out.println("Erstes Tile: " + tiles[i] + " Grösse: " + tiles[i].getDim());
 				}
 				else{
 					map.getGraphics().drawImage(tiles[i].getImage(),xPaint,yPaint,null);
