@@ -27,15 +27,17 @@ public class Refresher implements Runnable{
 	private JProgressBar progress;
 	private StatusBar sb;
 	private Color[] layerColors;
+	private int zoom;
 
 
-	Refresher(Point upperLeft, int[] layersToShow, Mappy refToMappy, JProgressBar progress, StatusBar sb, Color[] layerColors){
-		this.upperLeft = upperLeft;
-		this.layersToShow = layersToShow;
-		this.refToMappy = refToMappy;
-		this.progress = progress;
-		this.sb = sb;
-		this.layerColors = layerColors;
+	Refresher(Gui owner){
+		this.upperLeft = owner.getUpperLeft();
+		this.layersToShow = owner.getLayers();
+		this.refToMappy = owner.getMappy();
+		this.progress = owner.getProgress();
+		this.sb = owner.getSb();
+		this.layerColors = owner.getLayerColors();
+		this.zoom = owner.getZoomSlider().getValue();
 		sb.setInfo("Aktualisiere Karte");
 	}
 
@@ -44,7 +46,7 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
-		refToMappy.refresh(upperLeft, layersToShow, progress, layerColors);
+		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
 		sb.setInfo("Fertig!");
 	}
 }

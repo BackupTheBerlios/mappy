@@ -15,19 +15,26 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.21 2005/01/13 11:51:42 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.22 2005/01/13 19:15:19 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
 		
-	Layer(Dimension d, Point p, int layerId, DBValues DB) {
+	Layer(Dimension d, Point p, int zoom, int layerId, DBValues DB) {
 		
 		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
 		Tile[] tiles;
 		tiles = DB.getTiles(p, d, layerId);
 		
 		for (int i = 0; i < tiles.length; i++){
+			System.out.println(tiles[i]);
 			if (tiles[i].hasImage()){
+				/*if(!(zoom == 100)){
+					int resizedX = (int)(tiles[i].getDim().width / (100/zoom));
+					int resizedY = (int)(tiles[i].getDim().height / (zoom / 50));
+					tiles[i].setImage(tiles[i].getImage().getScaledInstance(resizedX, resizedY, Image.SCALE_DEFAULT));
+					
+				}*/
 				int xPaint = tiles[i].getXFrom() - p.x;
 				int yPaint = tiles[i].getYFrom() - p.y;
 				if(xPaint < 0 || yPaint < 0){

@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.24 2005/01/13 12:36:48 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.25 2005/01/13 19:15:39 drrsatzteil Exp $
  */
 
 
@@ -31,10 +31,10 @@ public class Mappy{
 		map = new MapLabel();
 	}
 	
-	public ArrayList getLayers(Dimension d, Point p, int[] layerIds, JProgressBar progress){
+	public ArrayList getLayers(Dimension d, Point p, int zoom, int[] layerIds, JProgressBar progress){
 		ArrayList layers = new ArrayList();
 		for (int i = 0; i < layerIds.length; i++){
-			Layer layer = new Layer(d, p, layerIds[i]+1, DB);
+			Layer layer = new Layer(d, p, zoom, layerIds[i]+1, DB);
 			layer.setColor(layerColors[layerIds[i]]);
 			layers.add(layer);
 			progress.setValue(i+1);
@@ -45,9 +45,9 @@ public class Mappy{
 	public void move(String direction){
 		System.out.println(direction);
 	}
-	public void refresh(Point upperLeft, int[] layersToShow, JProgressBar progress, Color[] layerColors){
+	public void refresh(Point upperLeft, int[] layersToShow, int zoom, JProgressBar progress, Color[] layerColors){
 		this.layerColors = layerColors;
-		map.refresh(this.getLayers(map.getSize(), upperLeft, layersToShow, progress));
+		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress));
 
 	}
 	public JPanel getMapLabel(){

@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.44 2005/01/13 15:01:15 jesuzz Exp $
+ * $Id: Gui.java,v 1.45 2005/01/13 19:14:55 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -258,7 +258,7 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	protected void refreshAction(){
 		refresh.setEnabled(false);
-		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress, sb, LAYERCOLORS));
+		Thread getData = new Thread(new Refresher(this));
 		getData.start();
 	}
 
@@ -300,5 +300,32 @@ public class Gui extends JFrame implements LayersIF{
 	}
 	public JProgressBar getProgress(){
 		return progress;
+	}
+	/**
+	 * @return Returns the sb.
+	 */
+	public StatusBar getSb() {
+		return sb;
+	}
+	/**
+	 * @return Returns the zoomSlider.
+	 */
+	public JSlider getZoomSlider() {
+		return zoomSlider;
+	}
+	/**
+	 * @param upperLeft The upperLeft to set.
+	 */
+	public void setUpperLeft(Point upperLeft) {
+		this.upperLeft = upperLeft;
+	}
+	public Color[] getLayerColors(){
+		return LAYERCOLORS;
+	}
+	/**
+	 * @return Returns the mappy.
+	 */
+	public Mappy getMappy() {
+		return mappy;
 	}
 }
