@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 /**
@@ -121,6 +122,30 @@ public class IOHandler {
 			return new Point(0,0);
 		}
 	}
+	static Dimension getSavedMapSize(){
+		File path = new File ("save" + File.separatorChar + "mapSize.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream map = new ObjectInputStream (file);
+				Dimension mapSize = (Dimension) map.readObject();
+				map.close();
+				return mapSize;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load MapSize");
+				return new Dimension(0,0);
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load MapSize");
+				return new Dimension(0,0);
+			}
+		}
+		else{
+			System.err.println("Failed to load MapSize");
+			return new Dimension(0,0);
+		}
+	}
 	static void saveStartPoint (Point startPoint){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {
@@ -179,6 +204,21 @@ public class IOHandler {
 		}
 		catch ( IOException e ) {
 			System.err.println("Failed to save WindowPosition");
+		}
+	}
+	static void saveMapSize(JLabel map){
+		File path = new File ("save" + File.separatorChar + "mapSize.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir ();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream mapProperties = new ObjectOutputStream (file);
+			mapProperties.writeObject(map.getSize());
+			mapProperties.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save MapSize");
 		}
 	}
 }

@@ -100,6 +100,9 @@ public class MenuBar extends JMenuBar{
 	protected void saveSettings() {
 		IOHandler.saveStartPoint(owner.getUpperLeft());
 		IOHandler.saveLayers(owner.getLayers());
+		IOHandler.saveWindowSize(owner);
+		IOHandler.saveWindowPosition(owner);
+		IOHandler.saveMapSize(owner.getMap());
 	}
 
 	void openAbout(){

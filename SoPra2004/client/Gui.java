@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.25 2005/01/10 21:00:31 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.26 2005/01/11 14:39:19 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -113,16 +113,24 @@ public class Gui extends JFrame implements LayersIF {
 		
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
+		
 		setSize(IOHandler.getSavedWindowSize());
 		setLocation(IOHandler.getSavedWindowPosition());
 		
 		layers.setSelectedIndices(layersToShow);
 		
 		map = mappy.getMapLabel();
+		map.setSize(IOHandler.getSavedMapSize());
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 2, 3, 1d, 1d);
 			
 		status = new JPanel();
-		progress = new JProgressBar(0, layersToShow.length);
+		if(layersToShow.length != 0){
+			progress = new JProgressBar(0, layersToShow.length);
+		}
+		else{
+			progress = new JProgressBar(0,1);
+		}
+		
 		progress.setStringPainted(true);
 		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
@@ -133,7 +141,9 @@ public class Gui extends JFrame implements LayersIF {
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 3, 1, 1, 1d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 3, 3, 1, 1, 0d, 0d);
 		
-		refreshAction();
+		if(map.getSize().height != 0 && map.getSize().width != 0){
+			refreshAction();
+		}
 		setVisible(true);
 		
 	}
@@ -150,6 +160,7 @@ public class Gui extends JFrame implements LayersIF {
 				IOHandler.saveLayers(layersToShow);
 				IOHandler.saveWindowSize(this);
 				IOHandler.saveWindowPosition(this);
+				IOHandler.saveMapSize(map);
 				System.exit(0);
 			}
 			if(decision == JOptionPane.NO_OPTION){
@@ -207,5 +218,12 @@ public class Gui extends JFrame implements LayersIF {
 	}
 	int[] getLayers(){
 		return layersToShow;
+	}
+
+	/**
+	 * @return
+	 */
+	public JLabel getMap() {
+		return map;
 	}
 }

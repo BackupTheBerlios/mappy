@@ -32,36 +32,41 @@ class MapLabel extends JLabel{
 		repaint();
 	}
 	public void paint(Graphics g){
-		if (!layerList.isEmpty()){
-			ListIterator i = layerList.listIterator(0);
-			
-			while(i.hasNext()){
-				ImageObserver imageObserver = null;
+		if (layerList == null){
+			setText("Keine Ebenen ausgewählt");
+		}
+		else{
+			if (!layerList.isEmpty()){
+				ListIterator i = layerList.listIterator(0);
 				
-				Layer temp = (Layer)i.next();
-				int columns = temp.getColumns();
-				ArrayList tiles = temp.getTiles();
-				ListIterator j = tiles.listIterator(0);
-				int startX = 0;
-				int startY = 0;
-				
-				while (j.hasNext()){
-					Tile currentTile = (Tile)j.next();
-					if (columns > 0){
-						if(currentTile.hasImage()){
-							g.drawImage(currentTile.getImage(), startX, startY, imageObserver);
-							startX = startX + currentTile.getSize().width;
-							columns--;
+				while(i.hasNext()){
+					ImageObserver imageObserver = null;
+					
+					Layer temp = (Layer)i.next();
+					int columns = temp.getColumns();
+					ArrayList tiles = temp.getTiles();
+					ListIterator j = tiles.listIterator(0);
+					int startX = 0;
+					int startY = 0;
+					
+					while (j.hasNext()){
+						Tile currentTile = (Tile)j.next();
+						if (columns > 0){
+							if(currentTile.hasImage()){
+								g.drawImage(currentTile.getImage(), startX, startY, imageObserver);
+								startX = startX + currentTile.getSize().width;
+								columns--;
+							}
+							else{
+								startX = startX + currentTile.getSize().width;
+								columns--;
+							}
 						}
 						else{
-							startX = startX + currentTile.getSize().width;
-							columns--;
+							columns = temp.getColumns();
+							startY = startY + currentTile.getSize().height;
+							startX = 0;
 						}
-					}
-					else{
-						columns = temp.getColumns();
-						startY = startY + currentTile.getSize().height;
-						startX = 0;
 					}
 				}
 			}

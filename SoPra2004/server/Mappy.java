@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.17 2005/01/10 19:10:49 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.18 2005/01/11 14:39:19 drrsatzteil Exp $
  */
 
 
@@ -60,7 +60,6 @@ public class Mappy {
 		
 	}
 	public MapLabel getMapLabel(){
-		
 		return map;
 	}
 }
