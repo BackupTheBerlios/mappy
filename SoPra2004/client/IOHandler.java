@@ -257,26 +257,30 @@ public class IOHandler implements SettingsIF, LayersIF{
 		}
 	}
 	static boolean getSavedSoundSettings(){
-		if(IOHandler.class.getResource("/save/soundSettings.mpy")!=null){
+		if(IOHandler.class.getResource("save/soundSettings.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/soundSettings.mpy").getFile());
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream soundSettings = new ObjectInputStream (file);
 				Boolean b = (Boolean)soundSettings.readObject();
 				boolean bool = b.booleanValue();
+				System.out.println("gesucht");
 				return bool;
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load soundSettings. Sounds enabled");
+				System.out.println("gesucht");
 				return false;
 			}
 			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load soundSettings. Sounds enabled");
+				System.out.println("gesucht");
 				return false;
 			}
 		}
 		else{
 			System.err.println("Failed to load soundSettings. Sounds enabled");
+			System.out.println("gesucht");
 			return false;
 		}
 	}

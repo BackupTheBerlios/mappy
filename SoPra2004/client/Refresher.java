@@ -8,13 +8,9 @@ package client;
 
 import java.awt.Color;
 import java.awt.Point;
-
-import java.io.File;
 import java.net.URL;
-
 import javax.sound.sampled.Clip;
 import javax.swing.JProgressBar;
-
 import server.Mappy;
 
 /**

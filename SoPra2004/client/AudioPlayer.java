@@ -6,7 +6,7 @@
  */
 package client;
 
-import java.io.File;
+
 import java.net.URL;
 
 import javax.sound.sampled.AudioFormat;
@@ -18,7 +18,7 @@ import javax.sound.sampled.DataLine;
 /**
  * @author DrRSatzteil
  *
- *$Id: AudioPlayer.java,v 1.3 2005/01/21 14:34:53 jesuzz Exp $
+ *$Id: AudioPlayer.java,v 1.4 2005/01/21 14:36:07 jesuzz Exp $
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
