@@ -7,10 +7,7 @@
 package client;
 
 /**
- * @author ba008959
- * $Id: Gui.java,v 1.61 2005/01/18 20:17:43 drrsatzteil Exp $
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  */
 import java.awt.*;
 import java.awt.event.*;

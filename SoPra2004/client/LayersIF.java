@@ -1,3 +1,5 @@
+//javadoc ready
+
 /*
  * Created on 03.01.2005
  *
@@ -7,9 +9,10 @@ package client;
 import java.awt.Color;
 
 /**
- * @author Nicolas Fritsch
+ * contains the Layers and the Colors as Constants
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *	
- *	contains the Layers as Constants
  */
 public interface LayersIF {
 	public final String[] ALLLAYERS = {"Acker", 			//1

@@ -1,8 +1,7 @@
+//javadoc ready
 /*
  * Created on 07.12.2004
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package client;
 
@@ -20,6 +19,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/**
+ * Simple About Dialog
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *
+ */
 public class AboutDialog extends JDialog {
 	
 	private ImageIcon uniIcon;

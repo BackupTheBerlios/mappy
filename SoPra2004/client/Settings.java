@@ -1,3 +1,4 @@
+//javadoc ready
 /*
  * Created on 18.01.2005
  *
@@ -19,38 +20,142 @@ import java.awt.event.ItemListener;
 import javax.swing.*;
 
 /**
- * @author Nicolas Fritsch
+ * The class Settings builds a new Window with 3 Tabs.
+ * There is a tab for the following settings:
+ * - Datenbank: Connection information of the database
+ * - Farben: Colormanagement of the map layers
+ * - Sonstige: various settings
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
  */
 public class Settings extends JFrame implements SettingsIF, LayersIF {
+	/**
+	 * The database settings.
+	 * [0]url
+	 * [1]port
+	 * [2]database
+	 * [3]user
+	 * [4]password
+	 */
 	String[] dbSettings=IOHandler.getSavedDbSettings();
+	/**
+	 * the Url of the db
+	 */
 	String dbUrl;
+	/**
+	 * Colors of the layers
+	 */
 	Color[] savedColors=IOHandler.getSavedColorSettings();
+	/**
+	 * Tabbed Pane
+	 */
 	JTabbedPane jTabbedPane= new JTabbedPane();
+	/**
+	 * Panel for database settings
+	 */
 	JPanel dbPanel=new JPanel();
+	/**
+	 * Panel for color settings
+	 */
 	JPanel colorPanel=new JPanel();
+	/**
+	 * Panel for various settings
+	 */
 	JPanel sonstEinst=new JPanel();
+	/**
+	 * Panel for the buttons
+	 */
 	JPanel buttonPanel=new JPanel();
+	/**
+	 * enabel/disable sound
+	 */
 	JCheckBox soundCheckBox = new JCheckBox("Ton aus");
+	/**
+	 * database url input
+	 */
 	JTextField urlField=new JTextField();
+	/**
+	 * database port input
+	 */
 	JTextField portField=new JTextField();
+	/**
+	 * database input
+	 */
 	JTextField dbField=new JTextField();
+	/**
+	 * database user input
+	 */
 	JTextField usrField=new JTextField();
+	/**
+	 * database password input
+	 */
 	JPasswordField pwField=new JPasswordField();
+	/**
+	 * box with db-types
+	 */
 	JComboBox dbTypBox=new JComboBox(new Object[] {"MySQL"});
+	/**
+	 * save Button
+	 */
 	JButton saveBt=new JButton("Speichern");
+	/**
+	 * cancel Button
+	 */
 	JButton cancelBt=new JButton("Abrechen");
+	/**
+	 * reset Button
+	 */
 	JButton resetBt=new JButton("Zurücksetzen");
-	JTextField[] tf=new JTextField[IOHandler.getSavedColorSettings().length];
+
+	/**
+	 * Panels for color preview
+	 */
 	JPanel[] jp=new JPanel[IOHandler.getSavedColorSettings().length];
+	/**
+	 * Comment for <code>dbScrollPane</code>
+	 */
+	JScrollPane dbScrollPane;
+	/**
+	 * Comment for <code>colorScrollPane</code>
+	 */
+	JScrollPane colorScrollPane;
+	/**
+	 * Comment for <code>variousScrollPane</code>
+	 */
+	JScrollPane variousScrollPane;
 	
+	/**
+	 * Label for input Field url
+	 */
 	JLabel urlLabel= new JLabel("Datenbankadresse: ");
+	/**
+	 * Label for input Field port
+	 */
 	JLabel portLabel= new JLabel("Port: ");
+	/**
+	 * Label for input Field database
+	 */
 	JLabel dbLabel= new JLabel("Datenbankname: ");
+	/**
+	 * Label for input Field user
+	 */
 	JLabel usrLabel= new JLabel("Benutzername: ");
+	/**
+	 * Label for input Field password
+	 */
 	JLabel pwLabel= new JLabel("Passwort: ");
+	/**
+	 * Label for input ComboBox db type
+	 */
 	JLabel dbTypLabel= new JLabel("Datenbank-Typ: ");
+	/**
+	 * just a string spacer for layout
+	 */
 	JLabel spacer=new JLabel("                                     ");
+	/**
+	 * Layout
+	 */
 	GridBagLayout layout = new GridBagLayout();
 
 	public Settings (){
@@ -65,6 +170,9 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	}
 	
 
+	/**
+	 * The method init sets up the content/components of the settings window
+	 */
 	private void init() {
 		this.setSize(new Dimension(350,700));
 		//dbPanel init
@@ -105,7 +213,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			JLabel label=new JLabel(ALLLAYERS[i]);
 			jp[i]=new JPanel();
 			jp[i].setBackground(savedColors[i]);
-			tf[i]=new JTextField(savedColors[i].toString());
+			
 			final IDButton bt=new IDButton("Ändern", i);
 			
 			
@@ -117,8 +225,6 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 				
 			});
 			LayoutManager.addComponent(colorPanel, layout, label, 0, i, 1, 1, 0d, 0d);
-			//LayoutManager.addComponent(colorPanel, layout, tf[i], 1, i, 1, 1, 0d, 0d);
-			
 			LayoutManager.addComponent(colorPanel, layout, jp[i], 1, i, 1, 1, 0d, 0d);
 			LayoutManager.addComponent(colorPanel, layout, bt, 2, i, 1, 1, 0d, 0d);
 			count=i;
@@ -137,7 +243,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			}	
 		};
 		
-		
+		//general init
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(jTabbedPane, BorderLayout.CENTER);
 		buttonPanel.add(saveBt);
@@ -146,13 +252,21 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		buttonPanel.add(resetBt);
 		
 		this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		jTabbedPane.add(dbPanel, "Datenbank");
-		jTabbedPane.add(colorPanel, "Farben");
-		jTabbedPane.add(sonstEinst, "sonstige Einstellungen");
-		this.setVisible(true);
+		dbScrollPane=new JScrollPane(dbPanel);
+		jTabbedPane.add(dbScrollPane, "Datenbank");
+		colorScrollPane=new JScrollPane(colorPanel);
+		jTabbedPane.add(colorScrollPane, "Farben");
+		variousScrollPane=new JScrollPane(sonstEinst);
+		jTabbedPane.add(variousScrollPane, "Sonstiges");
+		
 		dbUrl="jdbc:"+"mysql"+"://"+urlField.getText()+":"+portField.getText()+"/"+dbField.getText();
 		
-		System.out.println(dbUrl);
+		//Window Properties
+		 this.getContentPane().setPreferredSize(new Dimension(350,550));
+		 this.pack();
+		 this.setResizable(false);
+		 this.setVisible(true);
+		//Handler
 		saveBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
 			String[] dbSet={urlField.getText(),portField.getText() ,dbField.getText(), usrField.getText(),pwField.getText() };	
 			IOHandler.saveDbSettings(dbSet);
@@ -173,8 +287,14 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			init();
 		}
 		});
+		
 
 	}
+	/**
+	 * changes the Color of the JPanels next to the layer name
+	 * @param i 
+	 * i is the layer level
+	 */
 	private void changeLayerColor(int i) {
 		Color newColor = JColorChooser.showDialog(
 	              null, "Wähle neue Farbe für die Ebene", jp[i].getBackground() );
