@@ -35,12 +35,13 @@ public interface LayersIF {
 						   "Weiﬂe Schrift", 				//21
 						   "Wiese"} ;						//22
 	public final Color[] LAYERCOLORS = {new Color(0xff8B4513),
-										new Color(0xff1C86EE),
+										//new Color(0xff1C86EE),
+										new Color(0xff0000ff),
 										new Color(0xff008B45),
 										new Color(0xffF0E68C),
-										new Color(0xffC1CDC1),
+										new Color(0xaaC1CDC1, true),
 										new Color(0xffE0EEE0),
-										new Color(0xffCD5B45),
+										new Color(0xaaCD5B45, true),
 										new Color(0x22FF7256, true),
 										new Color(0xff00CD66),
 										new Color(0xff8B4500),
