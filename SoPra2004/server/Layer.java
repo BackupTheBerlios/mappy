@@ -18,7 +18,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.26 2005/01/14 17:18:22 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.27 2005/01/14 19:46:36 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
@@ -27,71 +27,69 @@ public class Layer{
 		float zoomFactor = 2 - ((float)zoom / 100);
 		Dimension realDimension = new Dimension();
 		realDimension.setSize(round(d.width * zoomFactor), round(d.height * zoomFactor));
-		System.out.println (d);
-		System.out.println (realDimension);
 		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
 		
 		ArrayList tiles;
 		tiles = DB.getTiles(p, realDimension, layerId);
-		ListIterator i = tiles.listIterator(0);
-		while(i.hasNext()){
-			Tile temp = (Tile)i.next();
-			if (temp.hasImage()){
-				if(!(zoom == 100)){
-					float resizedX = temp.getSize().width / zoomFactor;
-					float resizedY = temp.getSize().height / zoomFactor;
-					temp.setImage(temp.getImage().getScaledInstance(round(resizedX), round(resizedY), Image.SCALE_DEFAULT));
-					temp.setSize(new Dimension (round(resizedX), round(resizedY)));
-					float xFrom = temp.getXFrom();
-					xFrom = xFrom - p.x;
-					xFrom = xFrom / zoomFactor;
-					xFrom = xFrom + p.x;
-					temp.setXFrom(xFrom);
-					float yFrom = temp.getYFrom();
-					yFrom = yFrom - p.y;
-					yFrom = yFrom / zoomFactor;
-					yFrom = yFrom + p.y;
-					temp.setYFrom(yFrom);
-				}
-				int xPaint = round(temp.getXFrom()) - p.x;
-				int yPaint = round(temp.getYFrom()) - p.y;
-				if(xPaint < 0 || yPaint < 0){
-					int xToCut = 0;
-					int yToCut = 0;
-					if(xPaint < 0){
-						xToCut = -xPaint;
+		if(tiles != null){
+			ListIterator i = tiles.listIterator(0);
+			while(i.hasNext()){
+				Tile temp = (Tile)i.next();
+				if (temp.hasImage()){
+					if(!(zoom == 100)){
+						float resizedX = temp.getSize().width / zoomFactor;
+						float resizedY = temp.getSize().height / zoomFactor;
+						temp.setImage(temp.getImage().getScaledInstance(round(resizedX), round(resizedY), Image.SCALE_DEFAULT));
+						temp.setSize(new Dimension (round(resizedX), round(resizedY)));
+						float xFrom = temp.getXFrom();
+						xFrom = xFrom - p.x;
+						xFrom = xFrom / zoomFactor;
+						xFrom = xFrom + p.x;
+						temp.setXFrom(xFrom);
+						float yFrom = temp.getYFrom();
+						yFrom = yFrom - p.y;
+						yFrom = yFrom / zoomFactor;
+						yFrom = yFrom + p.y;
+						temp.setYFrom(yFrom);
 					}
-					if(yPaint < 0){
-						yToCut = -yPaint;
+					int xPaint = round(temp.getXFrom()) - p.x;
+					int yPaint = round(temp.getYFrom()) - p.y;
+					if(xPaint < 0 || yPaint < 0){
+						int xToCut = 0;
+						int yToCut = 0;
+						if(xPaint < 0){
+							xToCut = -xPaint;
+						}
+						if(yPaint < 0){
+							yToCut = -yPaint;
+						}
+						int width = temp.getSize().width;
+						int height = temp.getSize().height;
+						System.out.println(width + " " + height);
+						BufferedImage cutTile = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+						if(xToCut > 0 & yToCut > 0){
+							cutTile.getGraphics().drawImage(temp.getImage(),0,0,null);
+						}
+						if(xToCut > 0 & yToCut == 0){
+							cutTile.getGraphics().drawImage(temp.getImage(),0,yPaint,null);
+						}
+						if(xToCut == 0 & yToCut > 0){
+							cutTile.getGraphics().drawImage(temp.getImage(),xPaint,0,null);
+						}
+						int newWidth = width - xToCut;
+						int newHeight = height - yToCut;
+						temp.setImage(cutTile.getSubimage(round(xToCut), round(yToCut), newWidth, newHeight));
+						temp.setXFrom(temp.getXFrom() - xToCut);
+						temp.setYFrom(temp.getYFrom() - yToCut);
+						map.getGraphics().drawImage(temp.getImage(),0,0,null);
 					}
-					System.out.println(xToCut + " " + yToCut);
-					System.out.println(xPaint + " " + yPaint);
-					int width = temp.getSize().width;
-					int height = temp.getSize().height;
-					System.out.println(width + " " + height);
-					BufferedImage cutTile = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-					if(xToCut > 0 & yToCut > 0){
-						cutTile.getGraphics().drawImage(temp.getImage(),0,0,null);
+					else{
+						map.getGraphics().drawImage(temp.getImage(),xPaint,yPaint,null);
 					}
-					if(xToCut > 0 & yToCut == 0){
-						cutTile.getGraphics().drawImage(temp.getImage(),0,yPaint,null);
-					}
-					if(xToCut == 0 & yToCut > 0){
-						cutTile.getGraphics().drawImage(temp.getImage(),xPaint,0,null);
-					}
-					int newWidth = width - xToCut;
-					int newHeight = height - yToCut;
-					temp.setImage(cutTile.getSubimage(round(xToCut), round(yToCut), newWidth, newHeight));
-					temp.setXFrom(temp.getXFrom() - xToCut);
-					temp.setYFrom(temp.getYFrom() - yToCut);
-					map.getGraphics().drawImage(temp.getImage(),0,0,null);
-				}
-				else{
-					map.getGraphics().drawImage(temp.getImage(),xPaint,yPaint,null);
 				}
 			}
+			map.flush();
 		}
-		map.flush();
 	}
 	
 	private static int round(float value){
