@@ -13,6 +13,7 @@ package client;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalBorders;
 //import javax.swing.border.Border;
 
 import java.awt.*;
@@ -23,7 +24,8 @@ public class StatusBar extends JPanel {
 	JLabel zoom=new JLabel("");
 	
 	public StatusBar(){
-		this.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		setBorder(new MetalBorders.Flush3DBorder());
 		
 		position.setHorizontalAlignment(JLabel.LEFT);
 		info.setHorizontalAlignment(JLabel.CENTER);
@@ -33,12 +35,16 @@ public class StatusBar extends JPanel {
 		zoom.setPreferredSize(new Dimension(110,15));
 		
 		position.setText("");
+		position.setFont(new Font("Verdana", Font.BOLD, 12));
 		zoom.setText("");
+		zoom.setFont(new Font("Verdana", Font.BOLD, 12));
 		info.setText("");
+		info.setFont(new Font("Verdana", Font.BOLD, 12));
 		
-		this.add(position);
-		this.add(info);
-		this.add(zoom);
+		add(position);
+		add(info);
+		add(zoom);
+		
 		
 	}
 	public void setZoom(int z){
