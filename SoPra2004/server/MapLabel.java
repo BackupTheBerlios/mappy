@@ -8,6 +8,8 @@ package server;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.ListIterator;
+
 import javax.swing.JPanel;
 
 
@@ -34,10 +36,12 @@ class MapLabel extends JPanel{
 		if (layerList == null){
 		}
 		else{
-			while(!layerList.isEmpty()){
-				Layer temp = (Layer)layerList.get(0);
-				g.drawImage(temp.getMap(), 0, 0, null);
-				layerList.remove(0);
+			if(!layerList.isEmpty()){
+				ListIterator i = layerList.listIterator(0);
+				while(i.hasNext()){
+					Layer temp = (Layer)i.next();
+					g.drawImage(temp.getMap(), 0, 0, null);
+				}
 			}
 		}
 	}
