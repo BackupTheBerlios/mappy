@@ -4,6 +4,7 @@
  */
 package server;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -11,7 +12,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.13 2005/01/12 20:51:29 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.14 2005/01/12 21:23:06 drrsatzteil Exp $
  */
 public class Layer {
 	private BufferedImage map;
@@ -55,6 +56,13 @@ public class Layer {
 	 */
 	public BufferedImage getMap(){
 		return map;
+	}
+
+	/**
+	 * @param color
+	 */
+	public void setColor(Color color) {
+		
 	}
 
 }

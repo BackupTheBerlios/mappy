@@ -6,6 +6,7 @@
  */
 package client;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import javax.swing.JProgressBar;
@@ -25,14 +26,16 @@ public class Refresher implements Runnable{
 	private Mappy refToMappy;
 	private JProgressBar progress;
 	private StatusBar sb;
+	private Color[] layerColors;
 
 
-	Refresher(Point upperLeft, int[] layersToShow, Mappy refToMappy, JProgressBar progress, StatusBar sb){
+	Refresher(Point upperLeft, int[] layersToShow, Mappy refToMappy, JProgressBar progress, StatusBar sb, Color[] layerColors){
 		this.upperLeft = upperLeft;
 		this.layersToShow = layersToShow;
 		this.refToMappy = refToMappy;
 		this.progress = progress;
 		this.sb = sb;
+		this.layerColors = layerColors;
 		sb.setInfo("Aktualisiere Karte");
 	}
 
@@ -41,7 +44,7 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
-		refToMappy.refresh(upperLeft, layersToShow, progress);
+		refToMappy.refresh(upperLeft, layersToShow, progress, layerColors);
 		sb.setInfo("Fertig!");
 	}
 }

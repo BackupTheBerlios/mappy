@@ -4,13 +4,15 @@
  */
 package client;
 
+import java.awt.Color;
+
 /**
  * @author Nicolas Fritsch
  *	
  *	contains the Layers as Constants
  */
 public interface LayersIF {
-	public final String[] ALLLAYERS={"Acker", 
+	public final String[] ALLLAYERS = {"Acker", 
 						   "Bachläufe mit Schrift",
 						   "Baumgrün mit Schrift",
 						   "Brachland",
@@ -32,6 +34,26 @@ public interface LayersIF {
 						   "Wald", 
 						   "Weiße Schrift", 
 						   "Wiese"} ;
-
-
+	public final Color[] LAYERCOLORS = {new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100),
+										new Color(100,100,100)};
 }

@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.33 2005/01/12 20:51:29 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.34 2005/01/12 21:23:06 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -25,7 +25,7 @@ import javax.swing.plaf.metal.MetalBorders;
 import server.Mappy;
 
 
-public class Gui extends JFrame implements LayersIF {
+public class Gui extends JFrame implements LayersIF{
 	private Mappy mappy;
 	private String[] layer = ALLLAYERS;
 	private JList layers;
@@ -228,7 +228,7 @@ public class Gui extends JFrame implements LayersIF {
 	 */
 	protected void refreshAction(){
 		refresh.setEnabled(false);
-		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress, sb));
+		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress, sb, LAYERCOLORS));
 		getData.start();
 	}
 
