@@ -86,7 +86,7 @@ public class MapPopup extends JPopupMenu{
 	 */
 	protected void getDistance(ActionEvent arg0) {
 		String name = ((JMenuItem)arg0.getSource()).getLabel();
-		int distance = owner.getMappy().getDistance(p, name);
+		int distance = owner.getMappy().getDistance(p, owner.getSb().getUpperLeft(), name);
 		JOptionPane.showMessageDialog(null, "Die Entfernung zu " + name + " beträgt ca. " + distance + " Meter.", "Distanz", JOptionPane.PLAIN_MESSAGE);
 	}
 

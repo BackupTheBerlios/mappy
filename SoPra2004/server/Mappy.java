@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.35 2005/01/21 16:11:49 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.36 2005/01/21 16:20:09 drrsatzteil Exp $
  */
 
 
@@ -131,23 +131,24 @@ public class Mappy{
 	/**
 	 * 
 	 */
-	public int getDistance(Point start, String name){
+	public int getDistance(Point start, Point mapStart, String name){
 		double realDistance = 0;
 		int realD = 0;
 		if(pins != null){
 			ListIterator i = pins.listIterator(0);
 			while (i.hasNext()){
 				Pin temp = (Pin)i.next();
-				System.out.println(temp.getName() + " " + name);
 				if(temp.getName().equals(name)){
-					System.out.println(temp.getName() + " " + name);
 					Point destination = temp.getPosition();
+					start.x = start.x - mapStart.x;
+					start.y = start.y - mapStart.y;
+					destination.x = destination.x - start.x - mapStart.x;
+					destination.y = destination.y - start.y - mapStart.y;
 					double aSquare = (start.x - destination.x)*(start.x - destination.x);
 					double bSquare = (start.y - destination.y)*(start.y - destination.y);
 					double cSquare = aSquare + bSquare;
 					double distanceInPixels = Math.sqrt(cSquare);
-					System.out.println (distanceInPixels);
-					realDistance = (distanceInPixels * 0.5);// * (4 - (zoom / 100));
+					realDistance = (distanceInPixels * 0.5) * (4 - (zoom / 100));
 					realD = (int)realDistance;
 				}
 			}
