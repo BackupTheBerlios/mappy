@@ -17,7 +17,6 @@ public class Mappy {
 	}
 	
 	public BufferedImage getMap(Point start, int type){
-		System.out.println ("getMap Start");
 		BufferedImage img = null;
 		DBValues myDBValues = new DBValues();
 		try{
