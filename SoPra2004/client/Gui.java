@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.21 2005/01/10 19:08:00 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.22 2005/01/10 19:19:35 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -115,7 +115,6 @@ public class Gui extends JFrame implements LayersIF {
 		
 		
 		status = new JPanel();
-		System.out.println(layersToShow.length);
 		progress = new JProgressBar(0, layersToShow.length);
 		progress.setStringPainted(true);
 		sb = new StatusBar(progress);
@@ -150,16 +149,6 @@ public class Gui extends JFrame implements LayersIF {
 		refresh.setEnabled(false);
 		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress));
 		getData.start();
-		/*try {
-			getData.join();
-		}
-		catch (InterruptedException e) {
-		}
-		try{
-			getData.join();
-		}catch (InterruptedException e1){
-			e1.printStackTrace();
-		}*/
 	}
 
 	/**
@@ -169,6 +158,7 @@ public class Gui extends JFrame implements LayersIF {
 	protected void listValueChanged(ListSelectionEvent evt) {
 		refresh.setEnabled(true);
 		layersToShow = layers.getSelectedIndices();
+		progress.setValue(0);
 		progress.setMaximum(layersToShow.length);
 	}
 

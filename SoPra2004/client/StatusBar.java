@@ -19,10 +19,11 @@ import javax.swing.plaf.metal.MetalBorders;
 import java.awt.*;
 public class StatusBar extends JPanel {
 	
-	JLabel position=new JLabel("");
-	JLabel info=new JLabel("");
-	JLabel zoom=new JLabel("");
+	JLabel position;
+	JLabel info;
+	JLabel zoom;
 	private JProgressBar progress;
+	private JLabel state;
 	
 	public StatusBar(JProgressBar progress){
 		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
@@ -30,19 +31,19 @@ public class StatusBar extends JPanel {
 		
 		this.progress = progress;
 		
-		System.out.println(progress);
-		
-		position.setText("");
+		position = new JLabel();
 		position.setFont(new Font("Verdana", Font.BOLD, 12));
-		zoom.setText("");
+		zoom = new JLabel();
 		zoom.setFont(new Font("Verdana", Font.BOLD, 12));
-		info.setText("");
+		info = new JLabel();
 		info.setFont(new Font("Verdana", Font.BOLD, 12));
+		state = new JLabel(" Fortschritt");
 		
 		add(position);
 		add(info);
 		add(zoom);
-		add(progress);	
+		add(progress);
+		add(state);
 	}
 
 	public void setZoom(int z){
