@@ -267,7 +267,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		 this.setVisible(true);
 		//Handler
 		saveBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
-			String[] dbSet={urlField.getText(),portField.getText() ,dbField.getText(), usrField.getText(),new String(pwField.getPassword())};	
+			String[] dbSet={urlField.getText(),portField.getText() ,dbField.getText(), usrField.getText(),pwField.getText() };	
 			IOHandler.saveDbSettings(dbSet);
 			
 			Color[] colorSet=new Color[savedColors.length];
