@@ -25,7 +25,7 @@ public class StatusBar extends JPanel {
 	private JLabel state;
 	
 	public StatusBar(JProgressBar progress){
-		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		setLayout(new GridLayout(0,5));
 		setBorder(new MetalBorders.Flush3DBorder());
 		
 		this.progress = progress;
@@ -56,7 +56,7 @@ public class StatusBar extends JPanel {
 	}
 	
 	public void setPosition(int x, int y){
-		position.setText("x: "+x+" y: "+y + "   ");
+		position.setText(" x: "+x+" y: "+y + "   ");
 	}
 
 	/**
