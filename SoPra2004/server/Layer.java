@@ -15,42 +15,61 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.18 2005/01/12 22:57:00 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.19 2005/01/13 09:06:53 drrsatzteil Exp $
  */
-public class Layer {
+public class Layer{
 	private BufferedImage map;
-	private Dimension d;
 		
 	Layer(Dimension d, Point p, int layerId, DBValues DB) {
 		
 		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
-		this.d = d;
-		int tileWidth = 0;
-		int tileHeight = 0;
-		int x = -500;
-		int y = -500;
-		final Point startPoint = new Point (5500,5500);
-		Point currentPoint = p;
-		while(d.height > y){
-			while(d.width > x){
-				Tile current = DB.getTile(currentPoint, layerId);
-				tileWidth = current.getSize().width;
-				tileHeight = current.getSize().height;
-				if(current.hasImage() == true){
-					map.getGraphics().drawImage(current.getImage(),x,y,null);
+		Tile[] tiles;
+		tiles = DB.getTiles(p, d, layerId);
+		
+		for (int i = 0; i < tiles.length; i++){
+			if (tiles[i].hasImage()){
+				int xPaint = tiles[i].getXFrom() - p.x;
+				int yPaint = tiles[i].getYFrom() - p.y;
+				if(xPaint < 0 || yPaint < 0){
+					int xToCut = 0;
+					int yToCut = 0;
+					if(xPaint < 0){
+						xToCut = -xPaint;
+					}
+					if(yPaint < 0){
+						yToCut = -yPaint;
+					}
+					int width = tiles[i].getSize().width;
+					int height = tiles[i].getSize().height;
+					BufferedImage cutTile = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+					if(xToCut > 0 & yToCut > 0){
+						cutTile.getGraphics().drawImage(tiles[i].getImage(),0,0,null);
+					}
+					if(xToCut > 0 & yToCut == 0){
+						cutTile.getGraphics().drawImage(tiles[i].getImage(),0,yPaint,null);
+					}
+					if(xToCut == 0 & yToCut > 0){
+						cutTile.getGraphics().drawImage(tiles[i].getImage(),xPaint,0,null);
+					}
+					int newWidth = width - xToCut;
+					int newHeight = height - yToCut;
+					tiles[i].setImage(cutTile.getSubimage(xToCut, yToCut, newWidth, newHeight));
+					tiles[i].setDim(new Dimension(newWidth, newHeight));
+					tiles[i].setXFrom(p.x);
+					tiles[i].setYFrom(p.y);
+					map.getGraphics().drawImage(tiles[i].getImage(),0,0,null);
+					System.out.println("Erstes Tile: " + tiles[i] + " Grösse: " + tiles[i].getDim());
 				}
-				x += tileWidth;
-				currentPoint.setLocation(5500 + x, 5500 + y);
+				else{
+					map.getGraphics().drawImage(tiles[i].getImage(),xPaint,yPaint,null);
+				}
 			}
-			x = 0;
-			y += tileHeight;
-			currentPoint.setLocation(5500 + x, 5500 + y);
 		}
 		map.flush();
 	}
 
 	public Dimension getDimension(){
-		return d;
+		return new Dimension (map.getWidth(), map.getHeight());
 	}
 	/**
 	 * @return
@@ -76,5 +95,4 @@ public class Layer {
 	    LookupOp lop = new LookupOp (blut, null);
 	    lop.filter(map, map);
 	}
-
 }
