@@ -47,7 +47,7 @@ public class IOHandler {
 		}
 		else{
 			System.err.println("Failed to load StartPoint");
-			return new Point(5432,5325);
+			return new Point(4000,3000);
 		}
 	}
 	static int[] getSavedLayers(){

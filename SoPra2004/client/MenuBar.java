@@ -117,7 +117,7 @@ public class MenuBar extends JMenuBar{
 	 */
 	protected void saveSettings(){
 		JProgressBar progress = owner.getProgress();
-		progress.setMaximum(5);
+		progress.setMaximum(6);
 		IOHandler.saveStartPoint(owner.getUpperLeft());
 		progress.setValue(1);
 		IOHandler.saveLayers(owner.getLayers());
@@ -128,6 +128,8 @@ public class MenuBar extends JMenuBar{
 		progress.setValue(4);
 		IOHandler.saveMapSize(owner.getMap());
 		progress.setValue(5);
+		IOHandler.saveZoomValue(owner.getZoomSlider().getValue());
+		progress.setValue(6);
 		owner.getStatusPanel().setText("Gespeichert!");
 	}
 

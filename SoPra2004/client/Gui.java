@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.51 2005/01/14 17:17:59 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.52 2005/01/14 20:55:50 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -231,6 +231,7 @@ public class Gui extends JFrame implements LayersIF{
 				IOHandler.saveWindowSize(this);
 				IOHandler.saveWindowPosition(this);
 				IOHandler.saveMapSize(map);
+				IOHandler.saveZoomValue(zoomSlider.getValue());
 				System.exit(0);
 			}
 			if(decision == JOptionPane.NO_OPTION){
