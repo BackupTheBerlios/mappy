@@ -14,12 +14,9 @@ package client;
  */
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalBorders;
-import javax.swing.text.MaskFormatter;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.ParseException;
 public class StatusBar extends JPanel {
 	
 	private JLabel info;
@@ -39,7 +36,47 @@ public class StatusBar extends JPanel {
 		this.progress = progress;
 		
 		pointX = new JFormattedTextField();
+		pointX.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent arg0) {
+				try{
+					new Integer(pointX.getText());
+				}
+				catch(NumberFormatException e){
+					if(pointX.getText().length() > 1){
+						String text = pointX.getText().substring(0, pointX.getText().length() - 1);
+						pointX.setText(text);
+					}
+					else{
+						pointX.setText(null);
+					}
+				}
+			}
+			public void keyTyped(KeyEvent arg0) {
+			}
+			public void keyReleased(KeyEvent arg0) {
+			}			
+		});
 		pointY = new JFormattedTextField();
+		pointY.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent arg0) {
+				try{
+					new Integer(pointY.getText());
+				}
+				catch(NumberFormatException e){
+					if(pointY.getText().length() > 1){
+						String text = pointY.getText().substring(0, pointY.getText().length() - 1);
+						pointY.setText(text);
+					}
+					else{
+						pointY.setText(null);
+					}
+				}
+			}
+			public void keyTyped(KeyEvent arg0) {
+			}
+			public void keyReleased(KeyEvent arg0) {
+			}			
+		});
 		
 		xPointBar = new JToolBar();
 		xPointBar.setFloatable(false);

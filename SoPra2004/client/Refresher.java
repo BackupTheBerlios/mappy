@@ -9,6 +9,7 @@ package client;
 import java.awt.Color;
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 
 import server.Mappy;
@@ -48,6 +49,9 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
+		if(upperLeft == null){
+			 JOptionPane.showMessageDialog(null, "Bitte Koordinaten eintragen", "Fehler", JOptionPane.ERROR_MESSAGE);
+		}
 		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
 		sb.setInfo("Fertig!");
 		owner.getWait().setVisible(false);
