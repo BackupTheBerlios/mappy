@@ -43,6 +43,7 @@ public class Refresher implements Runnable{
 		this.layerColorsAlpha=owner.getLayerColorsAlpha();
 		this.zoom = owner.getZoomSlider().getValue();
 		sb.setInfo("Aktualisiere Karte");
+		sb.setZoom(zoom);
 	}
 
 

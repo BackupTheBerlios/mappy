@@ -29,6 +29,7 @@ public class StatusBar extends JPanel {
 	private JToolBar xPointBar;
 	private JToolBar yPointBar;
 	private Gui owner;
+	private int zoomValue;
 	
 	
 	public StatusBar(JProgressBar progress, Gui owner){
@@ -146,9 +147,11 @@ public class StatusBar extends JPanel {
 		}
 	}
 
-	public void setZoom(int z){
-		zoom.setText("  Zoom: " +z+ "%   ");
-		
+	public void setZoom(int zoom){
+		zoomValue = zoom;
+	}
+	public int getZoomValue(){
+		return zoomValue;
 	}
 	public void setInfo(String z){
 		info.setText(z + "   ");

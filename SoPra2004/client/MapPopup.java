@@ -86,6 +86,7 @@ public class MapPopup extends JPopupMenu{
 	 * 
 	 */
 	protected void getDistance(ActionEvent arg0) {
+		owner.getMappy().refreshPins(owner.getSb().getUpperLeft(), owner.getSb().getZoomValue());
 		String name = ((JMenuItem)arg0.getSource()).getLabel();
 		int distance = owner.getMappy().getDistance(p, name);
 		JOptionPane.showMessageDialog(null, "Die Entfernung zu " + name + " beträgt ca. " + distance + " Meter.", "Distanz", JOptionPane.PLAIN_MESSAGE);
@@ -97,12 +98,14 @@ public class MapPopup extends JPopupMenu{
 	protected void deletePoint() {
 		if(owner.getMappy().pinExists(p) != null){
 			owner.getMappy().removePin(p);
+			owner.getMappy().refreshPins(owner.getSb().getUpperLeft(), owner.getSb().getZoomValue());
 		}
 	}
 
 	void setPinPoint(Point p){
 		Point mapPoint = owner.getSb().getUpperLeft();
 		this.p = new Point(mapPoint.x + p.x, mapPoint.y + p.y);
+		owner.getMappy().refreshPins(owner.getSb().getUpperLeft(), owner.getSb().getZoomValue());
 	}
 	/**
 	 * 

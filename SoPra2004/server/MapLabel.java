@@ -69,6 +69,7 @@ class MapLabel extends JPanel {
 	}
 
 	public void setPins(ArrayList pins) {
+		
 		pinList = pins;
 		repaint();
 	}

@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.33 2005/01/21 14:25:51 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.34 2005/01/21 14:42:57 drrsatzteil Exp $
  */
 
 
@@ -64,6 +64,11 @@ public class Mappy{
 		this.layerColorsAlpha = layerColorsAlpha;
 		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, zoom, upperLeft);
 	}
+	public void refreshPins(Point upperLeft, int zoom){
+		startPoint = upperLeft;
+		this.zoom = zoom;
+		map.setPins(pins);
+	}
 	public JPanel getMapLabel(){
 		return map;
 	}
@@ -86,7 +91,6 @@ public class Mappy{
 			}
 			if (b == false){
 				pins.add(new Pin(p,name));
-				map.setPins(pins);
 			}
 		}
 	}
@@ -111,7 +115,6 @@ public class Mappy{
 		if(test != null){
 			pins.remove(test.intValue());
 		}
-		map.setPins(pins);
 	}
 	
 	public String[] getPositions(){
