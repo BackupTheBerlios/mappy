@@ -12,11 +12,11 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.5 2004/12/18 17:34:42 fkubis Exp $
+ * $Id: Layer.java,v 1.6 2004/12/18 19:26:48 fkubis Exp $
  */
 public class Layer {
-	private int lines;
-	private int columns;
+	private int lines = 1;
+	private int columns = 1;
 	private int layerId;		
 	private ArrayList tiles;
 	
@@ -29,6 +29,7 @@ public class Layer {
 		startP 			= p;
 		this.layerId 	= layerId;
 		this.DB 		= DB;
+		this.tiles		= new ArrayList();
 	}
 	
 	public boolean fetchTiles() {
@@ -38,13 +39,26 @@ public class Layer {
 		System.out.println("Layer " + layerId + " Höhe: " + dim.getHeight() );
 		
 		int i =0;
-		Point actPoint = (Point)startP.clone();		
+		boolean b = false;
+		Point actPoint = (Point)startP.clone();
+		actPoint = new Point(600, 600);
 		do {
-			tiles.add(DB.getTile(actPoint));
+			try {
+				Tile t = DB.getTile(actPoint, layerId);
+				this.tiles.add(t);
+				/*
+				Object o = new Object();
+				this.tiles.add(o);
+				*/
+				b = true;
+			}
+			catch (NullPointerException e) {
+				System.err.println("Fehler beim erstellen der tiles ArrayList: " + e.getMessage());
+			}			
 			i++;
-		} while(i < 10);
+		} while(i < 1);
 		
-		return false;
+		return b;
 	}
 	
 	/**

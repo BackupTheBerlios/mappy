@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 
 /**
  * @author fkubis
- * $Id: Tile.java,v 1.2 2004/12/18 17:34:41 fkubis Exp $
+ * $Id: Tile.java,v 1.3 2004/12/18 19:26:48 fkubis Exp $
  */
 public class Tile {
 	private int id;
@@ -24,19 +24,19 @@ public class Tile {
 	private boolean hasImage = false;
 	private ImageIcon image;
 	
-	public Tile(int id, int XFrom, int XTo, int YFrom, int YTo, byte[] gif) {
-		this.id	= id;		
-		from.x 	= XFrom;
-		from.y 	= YFrom;		
-		to.x 	= XTo;
-		to.y 	= YTo;		
+	public Tile(int id, int XFrom, int XTo, int YFrom, int YTo, byte[] gif) {		
+		this.id	= id;
+		from 	= new Point(XFrom, YFrom);
+		to 		= new Point(XTo, YTo);
 		data 	= gif;
-		
+				
 		try {
 			createImage();
 		} catch (NoImageException e) {
 			System.err.println("createImage der Tile: " + e.getMessage());
-		}		
+		}
+		
+		System.out.println("EIN NEUES TILE WURDE GEBOREN! EIN HOCH AUF DIE KÜHE!");
 	}
 	
 	private void createImage() throws NoImageException {
