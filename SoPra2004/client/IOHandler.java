@@ -238,16 +238,16 @@ public class IOHandler implements SettingsIF, LayersIF{
 				return colorSet;
 			}
 			catch (IOException e){
-				System.err.println ("Failed to load Colors, using default1");
+				System.err.println ("Failed to load colors, using default");
 				return LAYERCOLORS;
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load Colors, using default2");
+				System.err.println ("Failed to load colors, using default");
 				return LAYERCOLORS;
 			}
 		}
 		else{
-			System.err.println("Failed to load colors, using default3");
+			System.err.println("Failed to load colors, using default");
 			return LAYERCOLORS;
 		}
 	}
