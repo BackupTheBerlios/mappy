@@ -57,12 +57,10 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-//<<<<<<< Refresher.java
 		File file = new File("mapload.wav");
 		AudioInputStream ais;
 		AudioFormat format;
 		Clip cl = null;
-
 		try{
 			ais = AudioSystem.getAudioInputStream(file);
 			format = ais.getFormat();
@@ -75,16 +73,12 @@ public class Refresher implements Runnable{
 		catch(Exception e){}
 		cl.start();
 		cl.loop(Clip.LOOP_CONTINUOUSLY);
-		//refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
-//=======
-
+		
 		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors, layerColorsAlpha);
 		sb.setInfo("Fertig!");
 
-//>>>>>>> 1.12
 		owner.getWait().setVisible(false);
 		cl.stop();
 		cl.close();
-		
 	}
 }

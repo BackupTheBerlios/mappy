@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,7 +37,7 @@ public class AboutDialog extends JDialog {
 		initComponents();
 	}
 	private void initComponents(){
-		uniIcon = new ImageIcon ("aboutlogo.gif");
+		uniIcon = new ImageIcon ("images" + File.separatorChar +  "aboutlogo.gif");
 		uniLabel = new JLabel (uniIcon);
 		getContentPane().add(uniLabel, BorderLayout.CENTER);
 		mappyVersion = new JLabel("<html><p/<p/Endlich habe ich es geschafft.<p/Wir haben einen neuen about Dialog.<p/" +

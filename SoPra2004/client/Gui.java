@@ -8,12 +8,13 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.60 2005/01/18 19:36:56 jesuzz Exp $
+ * $Id: Gui.java,v 1.61 2005/01/18 20:17:43 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -92,19 +93,19 @@ public class Gui extends JFrame implements LayersIF{
 		
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
-		refresh = new SelectionButton ("refresh.gif", "refreshOver.gif");
+		refresh = new SelectionButton ("images" + File.separatorChar + "refresh.gif", "images" + File.separatorChar + "refreshOver.gif");
 		refresh.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				refreshAction();
 			}			
 		});
-		chooseAll = new SelectionButton ("chooseAll.gif", "chooseAllOver.gif");
+		chooseAll = new SelectionButton ("images" + File.separatorChar + "chooseAll.gif", "images" + File.separatorChar + "chooseAllOver.gif");
 		chooseAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				chooseAllAction();
 			}			
 		});
-		deselect = new SelectionButton ("reset.gif", "resetOver.gif");
+		deselect = new SelectionButton ("images" + File.separatorChar + "reset.gif", "images" + File.separatorChar + "resetOver.gif");
 		deselect.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				deselectAction();
@@ -143,10 +144,10 @@ public class Gui extends JFrame implements LayersIF{
 		map = mappy.getMapLabel();
 		map.setDoubleBuffered(true);
 		map.setSize(IOHandler.getSavedMapSize());
-		moveEast = new DirectionButton("east.gif");
-		moveWest = new DirectionButton("west.gif");
-		moveNorth = new DirectionButton("north.gif");
-		moveSouth = new DirectionButton("south.gif");
+		moveEast = new DirectionButton("images" + File.separatorChar + "east.gif");
+		moveWest = new DirectionButton("images" + File.separatorChar + "west.gif");
+		moveNorth = new DirectionButton("images" + File.separatorChar + "north.gif");
+		moveSouth = new DirectionButton("images" + File.separatorChar + "south.gif");
 		moveEast.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				upperLeft = sb.getUpperLeft();
