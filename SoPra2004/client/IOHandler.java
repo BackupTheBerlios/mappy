@@ -41,7 +41,7 @@ public class IOHandler {
 		}
 		else{
 			System.err.println("Failed to load StartPoint");
-			return new Point(0,0);
+			return new Point(5500,5500);
 		}
 	}
 }
