@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -27,8 +26,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved upperLeft Point of the map
 	 */
 	static Point getSavedStart(){
-		if(IOHandler.class.getResource("/save/start.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/start.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "start.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream upperLeft = new ObjectInputStream (file);
@@ -54,15 +53,14 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("start.mpy not found");
 			return new Point(0,0);
 		}
-	  
 	}
 	/**
 	 * Returns the saved Layers
 	 * @return	the saved int-Array of the selected Layers
 	 */
 	static int[] getSavedLayers(){
-		if(IOHandler.class.getResource("/save/layers.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/layers.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "layers.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream layers = new ObjectInputStream (file);
@@ -95,8 +93,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Dimension of the window
 	 */
 	static Dimension getSavedWindowSize(){
-		if(IOHandler.class.getResource("/save/windowSize.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/windowSize.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "windowSize.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream window = new ObjectInputStream (file);
@@ -128,9 +126,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Location of the window
 	 */
 	static Point getSavedWindowPosition(){
-		
-		if(IOHandler.class.getResource("/save/windowPos.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/windowPos.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "windowPos.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream window = new ObjectInputStream (file);
@@ -162,9 +159,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Dimension the Map
 	 */
 	static Dimension getSavedMapSize(){
-		
-		if(IOHandler.class.getResource("/save/mapSize.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/mapSize.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "mapSize.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream map = new ObjectInputStream (file);
@@ -196,8 +192,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Zoom Value as an int
 	 */
 	static int getSavedZoom(){
-		if(IOHandler.class.getResource("/save/zoom.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/zoom.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "zoom.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream zoomFactor = new ObjectInputStream (file);
@@ -230,8 +226,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Database Settings as a String-Array
 	 */
 	static String[] getSavedDbSettings(){
-		if(IOHandler.class.getResource("/save/dbSettings.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/dbSettings.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream dbSettings = new ObjectInputStream (file);
@@ -258,8 +254,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Color Settings as a Color-Array
 	 */
 	static Color[] getSavedColorSettings(){
-		if(IOHandler.class.getResource("/save/colorSettings.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/colorSettings.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream colorSettings = new ObjectInputStream (file);
@@ -286,40 +282,35 @@ public class IOHandler implements SettingsIF, LayersIF{
 	 * @return	the saved Sound Setting as a boolean
 	 */
 	static boolean getSavedSoundSettings(){
-		if(IOHandler.class.getResource("save/soundSettings.mpy")!=null){
-			File path = new File (IOHandler.class.getResource("/save/soundSettings.mpy").getFile());
+		File path = new File ("save" + File.separatorChar + "soundSettings.mpy");
+		if(path.exists()){
 			try{
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream soundSettings = new ObjectInputStream (file);
 				Boolean b = (Boolean)soundSettings.readObject();
 				boolean bool = b.booleanValue();
-				System.out.println("gesucht");
 				return bool;
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load soundSettings. Sounds enabled");
-				System.out.println("gesucht");
 				return false;
 			}
 			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load soundSettings. Sounds enabled");
-				System.out.println("gesucht");
 				return false;
 			}
 		}
 		else{
 			System.err.println("Failed to load soundSettings. Sounds enabled");
-			System.out.println("gesucht");
 			return false;
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Saves the current Startpoint 
 	 * @param startPoint	the current upperLeft of the map
 	 */
+
 	static void saveStartPoint (Point startPoint){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {

@@ -106,21 +106,21 @@ public class Gui extends JFrame implements LayersIF{
 		refresh = new SelectionButton (getClass().getResource("/images/refresh.gif"), getClass().getResource("/images/refreshOver.gif"));
 		refresh.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				refreshAction();
 			}			
 		});
 		chooseAll = new SelectionButton (getClass().getResource("/images/chooseAll.gif"), getClass().getResource("/images/chooseAllOver.gif"));
 		chooseAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				chooseAllAction();
 			}			
 		});
 		deselect = new SelectionButton (getClass().getResource("/images/reset.gif"), getClass().getResource("/images/resetOver.gif"));
 		deselect.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				deselectAction();
 			}
 		});
@@ -183,7 +183,7 @@ public class Gui extends JFrame implements LayersIF{
 		moveSouth = new DirectionButton(getClass().getResource("/images/south.gif"));
 		moveEast.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				upperLeft = sb.getUpperLeft();
 				upperLeft.x = upperLeft.x + 300;
 				setXY(upperLeft.x, upperLeft.y);
@@ -193,7 +193,7 @@ public class Gui extends JFrame implements LayersIF{
 		});
 		moveWest.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				upperLeft = sb.getUpperLeft();
 				upperLeft.x = upperLeft.x - 300;
 				setXY(upperLeft.x, upperLeft.y);
@@ -203,7 +203,7 @@ public class Gui extends JFrame implements LayersIF{
 		});
 		moveNorth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				upperLeft = sb.getUpperLeft();
 				upperLeft.y = upperLeft.y - 300;
 				setXY(upperLeft.x, upperLeft.y);
@@ -213,7 +213,7 @@ public class Gui extends JFrame implements LayersIF{
 		});
 		moveSouth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				click();
+				if(!IOHandler.getSavedSoundSettings())click();
 				upperLeft = sb.getUpperLeft();
 				upperLeft.y = upperLeft.y + 300;
 				setXY(upperLeft.x, upperLeft.y);
