@@ -20,6 +20,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import java.io.File;
+import java.net.URL;
 
 
 import javax.sound.sampled.Clip;
@@ -164,7 +165,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	 */
 	GridBagLayout layout = new GridBagLayout();
 	
-	private File clickSound;
+	private URL clickSound;
 	private Clip btClick;
 
 	public Settings (){
@@ -235,7 +236,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		colorPanel.setLayout(layout);
 		int count=0;
 		
-		clickSound = new File(getClass().getResource("/Blip.wav").getFile());
+		clickSound = getClass().getResource("/Blip.wav");
 		try{
 			btClick = AudioPlayer.getStream(clickSound);
 		}

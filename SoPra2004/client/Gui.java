@@ -12,6 +12,7 @@ package client;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.net.URL;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class Gui extends JFrame implements LayersIF{
 	private JLabel zoomLabel;
 	private GridBagLayout layout;
 	private Dialog wait;
-	private File clickSound=new File(getClass().getResource("/Blip.wav").getFile());
+	private URL clickSound;
 	private Clip btClick;
 	protected MapPopup menu;	
 	
@@ -78,7 +79,7 @@ public class Gui extends JFrame implements LayersIF{
 		getContentPane().setLayout(layout);
 		
 		MenuBar mb = new MenuBar(this);
-		
+		clickSound=getClass().getResource("/sounds/Blip.wav");
 		try{
 			btClick = AudioPlayer.getStream(clickSound);
 		}

@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Point;
 
 import java.io.File;
+import java.net.URL;
 
 import javax.sound.sampled.Clip;
 import javax.swing.JProgressBar;
@@ -53,19 +54,26 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-		File file = new File("mapload.wav");
+		URL file=getClass().getResource("/sounds/Mapload.wav");
 		Clip clip;
 		try {
+			System.out.println("starte sound");
 			clip = AudioPlayer.getStream(file);
+			if(clip!=null){
+			clip.setFramePosition(0);
 			clip.start();
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			
 			refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors, layerColorsAlpha);
 			sb.setInfo("Fertig!");
-
 			owner.getWait().setVisible(false);
 			clip.stop();
 			clip.close();
+			}
+			else{
+				refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors, layerColorsAlpha);
+				sb.setInfo("Fertig!");
+				owner.getWait().setVisible(false);
+			}
 		}
 		catch (SoundDisabledException e){
 			System.err.println(e.getMessage());
