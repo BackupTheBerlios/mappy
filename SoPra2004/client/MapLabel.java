@@ -29,6 +29,7 @@ class MapLabel extends JLabel{
 
 	MapLabel(ArrayList layerList){
 		this.layerList = layerList;
+		setDoubleBuffered(true);
 	}
 	
 	public void refresh(ArrayList layerList){
@@ -60,7 +61,7 @@ class MapLabel extends JLabel{
 						else{
 							startX = startX + currentTile.getSize().width;
 							columns--;
-						}						
+						}
 					}
 					else{
 						columns = temp.getColumns();
