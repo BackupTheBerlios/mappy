@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.31 2005/01/20 23:10:22 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.32 2005/01/21 11:44:19 drrsatzteil Exp $
  */
 
 
@@ -53,7 +53,7 @@ public class Mappy{
 
 		this.layerColors = layerColors;
 		this.layerColorsAlpha = layerColorsAlpha;
-		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), upperLeft);
+		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, upperLeft);
 	}
 	public JPanel getMapLabel(){
 		return map;
@@ -61,18 +61,33 @@ public class Mappy{
 	public boolean closeDB(){
 		return DB.closeConnection();
 	}
-	public void pin(Point p, String name){
-		boolean b = false;
-		ListIterator i = pins.listIterator(0);
-		while(i.hasNext()){
-			b = ((Pin)i.next()).checkAtLocation(p);
-			if(b){
-				System.out.println("Wech mit");
-				pins.remove(i.nextIndex()-1);
+	public void setPin(Point p, String name){
+		Integer test = pinExists(p);
+		if(test == null){
+			pins.add(new Pin(p,name));
+		}
+		map.setPins(pins);
+	}
+	public Integer pinExists(Point p){
+		Integer index = null;
+		if(pins != null){
+			ListIterator i = pins.listIterator(0);
+			while (i.hasNext()){
+				Pin temp = (Pin)i.next();
+				Point position = temp.getPosition();
+				if(p.x >= position.x - 8 && p.x <= position.x + 8){
+					if(p.y >= position.y - 8 && p.y <= position.y + 8){
+						index = new Integer(i.nextIndex() - 1);
+					}
+				}
 			}
 		}
-		if(!b){
-			pins.add(new Pin(p,name));
+		return index;
+	}
+	public void removePin(Point p){
+		Integer test = pinExists(p);
+		if(test != null){
+			pins.remove(test.intValue());
 		}
 		map.setPins(pins);
 	}

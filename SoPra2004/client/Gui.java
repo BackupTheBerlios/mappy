@@ -12,8 +12,6 @@ package client;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -51,7 +49,8 @@ public class Gui extends JFrame implements LayersIF{
 	private GridBagLayout layout;
 	private Dialog wait;
 	private File clickSound=new File(getClass().getResource("/Blip.wav").getFile());
-	private Clip btClick;	
+	private Clip btClick;
+	protected MapPopup menu;	
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -154,9 +153,24 @@ public class Gui extends JFrame implements LayersIF{
 		
 		layers.setSelectedIndices(layersToShow);
 		
+		menu = new MapPopup("Punktverwaltung", this);
 		map = mappy.getMapLabel();
 		map.setDoubleBuffered(true);
 		map.setSize(IOHandler.getSavedMapSize());
+		map.addMouseListener(new MouseListener(){
+			public void mouseClicked(MouseEvent arg0){
+				menu.setPinPoint(new Point(arg0.getX(), arg0.getY()));
+				menu.show(arg0.getComponent(), arg0.getX(), arg0.getY());
+			}
+			public void mousePressed(MouseEvent arg0) {
+			}
+			public void mouseReleased(MouseEvent arg0) {
+			}
+			public void mouseEntered(MouseEvent arg0) {
+			}
+			public void mouseExited(MouseEvent arg0) {
+			}
+		});
 		
 		moveEast = new DirectionButton(getClass().getResource("/images/east.gif"));
 		moveWest = new DirectionButton(getClass().getResource("/images/west.gif"));
@@ -328,7 +342,7 @@ public class Gui extends JFrame implements LayersIF{
 	/**
 	 * 
 	 */
-	protected void deselectAction() {
+	protected void deselectAction(){
 		layers.clearSelection();		
 	}
 

@@ -24,7 +24,7 @@ public class Pin{
 	String name;
 	
 	Pin(Point position, String name){
-		pin = new ImageIcon("images" + File.separatorChar + "mappy_icon_20x20.gif");
+		pin = new ImageIcon("images" + File.separatorChar + "mappy_icon_15x15.gif");
 		this.position = position;
 		this.name = name;
 	}
@@ -36,13 +36,5 @@ public class Pin{
 	}
 	String getName(){
 		return name;
-	}
-	boolean checkAtLocation(Point x){
-		if(x.x >= position.x && x.y >= position.y){
-			if((x.x + 20 <= position.x + 20) && (x.y + 20 <= position.y + 20)){
-				return true;
-			}
-		}
-		return false;
 	}
 }

@@ -14,69 +14,60 @@ import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
-
 /**
  * @author DrRSatzteil
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
-class MapLabel extends JPanel{
+class MapLabel extends JPanel {
 	private ArrayList layerList;
 	private ArrayList pinList;
+
 	private Point start;
 
-	MapLabel(){
+	MapLabel() {
 		setDoubleBuffered(true);
 		setOpaque(false);
 		setIgnoreRepaint(false);
 	}
-	
-	public void refresh(ArrayList layerList, Point start){
+
+	public void refresh(ArrayList layerList, ArrayList pins, Point start) {
 		this.start = start;
+		this.pinList = pins;
 		this.layerList = layerList;
 		repaint();
 	}
-	public void paint(Graphics g){
-		if (layerList == null){
-		}
-		else{
-			if(!layerList.isEmpty()){
+
+	public void paint(Graphics g) {
+		if (layerList == null) {
+		} else {
+			if (!layerList.isEmpty()) {
 				ListIterator i = layerList.listIterator(0);
-				while(i.hasNext()){
-					Layer temp = (Layer)i.next();
+				while (i.hasNext()) {
+					Layer temp = (Layer) i.next();
 					g.drawImage(temp.getMap(), 0, 0, null);
 				}
 			}
 		}
-		if(pinList != null){
+		if (pinList != null) {
 			ListIterator i = pinList.listIterator(0);
-			while(i.hasNext()){
-				Pin currentPin = (Pin)i.next();
+			while (i.hasNext()) {
+				Pin currentPin = (Pin) i.next();
 				Image img = currentPin.getImage();
-				int x = currentPin.getPosition().x - start.x;
-				int y = currentPin.getPosition().y - start.y;
-				if(x > 0 && y > 0){
-					getGraphics().drawImage(img, x, y, null);
+				String description = currentPin.getName();
+				int x = currentPin.getPosition().x - start.x - 7;
+				int y = currentPin.getPosition().y - start.y - 7;
+				if (x > 0 && y > 0) {
+					g.drawImage(img, x, y, null);
+					g.drawString(description, x + 17, y + 13);
 				}
 			}
 		}
-		//setPins(pinList);
 	}
-	public void setPins(ArrayList pins){
+
+	public void setPins(ArrayList pins) {
 		pinList = pins;
-		/*if(pinList != null){
-			ListIterator i = pins.listIterator(0);
-			while(i.hasNext()){
-				Pin currentPin = (Pin)i.next();
-				Image img = currentPin.getImage();
-				int x = currentPin.getPosition().x - start.x;
-				int y = currentPin.getPosition().y - start.y;
-				if(x > 0 && y > 0){
-					getGraphics().drawImage(img, x, y, null);
-				}
-			}
-		}*/
 		repaint();
 	}
 }
