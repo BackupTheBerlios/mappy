@@ -20,7 +20,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.10 2004/12/18 19:26:48 fkubis Exp $
+ * $Id: DBValues.java,v 1.11 2004/12/18 19:28:40 fkubis Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -43,14 +43,14 @@ public class DBValues {
 			Statement stmt = this.con.createStatement();
 			String sql = "";
 			
-			sql = "SELECT * " 
+			/*sql = "SELECT * " 
 				+ "FROM MapData " 
 				+ "WHERE " 
 				+ "XFrom <= " + (int)p.getX() + " AND " + (int)p.getX() + " < XTo "  
 				+ "AND YFrom <= " + (int)p.getY() + " AND " + (int)p.getY() + " < YTo "
 				+ " AND Type = " + type;
-			
-			//sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
+			*/
+			sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
 			System.out.println (sql);
 						
 			try {
