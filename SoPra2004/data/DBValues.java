@@ -41,11 +41,9 @@ public class DBValues {
     		Statement stmt = this.con.createStatement();
     		String sql = "";
     		sql = "SELECT * FROM MapData WHERE " +
-    				"XFrom <= " + (int)start.getX() + 
-					"AND" +
-					"" +
-    			"AND YFrom = " + (int)start.getY() 
-				+ " AND Type = " + type;
+    			  "XFrom <= " + (int)start.getX() +
+				  "AND YFrom = " + (int)start.getY()
+				  + " AND Type = " + type;
     		
     		//sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
     		System.out.println (sql);
