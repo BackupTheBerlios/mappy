@@ -24,13 +24,16 @@ public class Refresher implements Runnable{
 	private int[] layersToShow;
 	private Mappy refToMappy;
 	private JProgressBar progress;
+	private StatusBar sb;
 
 
-	Refresher(Point upperLeft, int[] layersToShow, Mappy refToMappy, JProgressBar progress){
+	Refresher(Point upperLeft, int[] layersToShow, Mappy refToMappy, JProgressBar progress, StatusBar sb){
 		this.upperLeft = upperLeft;
 		this.layersToShow = layersToShow;
 		this.refToMappy = refToMappy;
 		this.progress = progress;
+		this.sb = sb;
+		sb.setInfo("Aktualisiere Karte");
 	}
 
 
@@ -39,5 +42,6 @@ public class Refresher implements Runnable{
 	 */
 	public void run() {
 		refToMappy.refresh(upperLeft, layersToShow, progress);
+		sb.setInfo("Karte vollständig geladen");
 	}
 }
