@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.40 2005/01/13 12:06:54 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.41 2005/01/13 12:13:39 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -46,7 +46,7 @@ public class Gui extends JFrame implements LayersIF{
 	private Point upperLeft;
 	private int[] layersToShow;
 	private JPanel map;
-	private JPanel mapPanel = new JPanel();
+	private JPanel mapPanel;
 	private StatusBar sb;
 	private JProgressBar progress = new JProgressBar(0,1);
 	private Time date;
@@ -142,7 +142,6 @@ public class Gui extends JFrame implements LayersIF{
 		
 		map = mappy.getMapLabel();
 		map.setSize(IOHandler.getSavedMapSize());
-		mapPanel.setLayout(new BorderLayout());
 		moveEast=new DirectionButton("east.gif");
 		moveWest=new DirectionButton("west.gif");
 		moveNorth=new DirectionButton("north.gif");
@@ -170,6 +169,9 @@ public class Gui extends JFrame implements LayersIF{
 				mappy.move("south");
 			}
 		});
+		mapPanel = new JPanel();
+		mapPanel.setLayout(new BorderLayout());
+		mapPanel.setBackground(new Color(0x00FFFFFF));
 		mapPanel.add(moveEast, BorderLayout.EAST);
 		mapPanel.add(moveWest, BorderLayout.WEST);
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
