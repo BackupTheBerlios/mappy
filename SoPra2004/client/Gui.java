@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.34 2005/01/12 21:23:06 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.35 2005/01/12 21:45:25 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.metal.MetalBorders;
@@ -28,6 +30,8 @@ import server.Mappy;
 public class Gui extends JFrame implements LayersIF{
 	private Mappy mappy;
 	private String[] layer = ALLLAYERS;
+	private int zoom=50;
+	private int clickCounter=1;
 	private JList layers;
 	private JScrollPane layersScrollPane;
 	private JPanel status;
@@ -47,6 +51,7 @@ public class Gui extends JFrame implements LayersIF{
 	private StatusBar sb;
 	private JProgressBar progress = new JProgressBar(0,1);
 	private Time date;
+	private JSlider zoomSlider=new JSlider();
 	
 	
 	
@@ -116,8 +121,23 @@ public class Gui extends JFrame implements LayersIF{
 		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
-		
-		
+		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomSlider, 0, 4, 1, 1, 0d, 0d);
+		zoomSlider.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent ce){
+				if(zoom==zoomSlider.getValue()){
+				if(clickCounter==2){
+				//Hier kommt dann der methodenaufruf
+				System.out.println("Zoomwert: "+zoomSlider.getValue());
+				clickCounter=1;
+				}
+				else{
+					clickCounter++;
+				}
+				
+				}
+				zoom=zoomSlider.getValue();
+			}
+		});
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
 		
