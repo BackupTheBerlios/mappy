@@ -6,8 +6,8 @@
  */
 package data;
 
-import javax.swing.ImageIcon;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 /**
  * @author ba008961
@@ -21,6 +21,6 @@ public class MappyData {
 		DBValues myDBValues = new DBValues();
 		Point point = new Point(0, 0);
 		int type = 1; 
-		ImageIcon img = myDBValues.getImage(point, type);
+		BufferedImage img = myDBValues.getImage(point, type);
 	}
 }
