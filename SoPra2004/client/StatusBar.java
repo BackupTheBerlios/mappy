@@ -13,7 +13,7 @@ package client;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import javax.swing.*;
-import javax.swing.border.Border;
+//import javax.swing.border.Border;
 
 import java.awt.*;
 public class StatusBar extends JPanel {

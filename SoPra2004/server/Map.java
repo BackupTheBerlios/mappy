@@ -29,15 +29,23 @@ public class Map {
 	}
 	
 	public BufferedImage generateMap(Dimension dim, Point point, double zoom) {
+		System.err.println("generateMap");
+		BufferedImage bI;
 		
 		try {
-			BufferedImage bI = myDBValues.getImage(point, this.type);
+			 bI = myDBValues.getImage(point, this.type);			
 		}
 		catch ( NoImageException e ) {
 			System.err.println("An dieser Stelle existiert keine Kachel");
-		}
+			bI = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
+			
+		}		
 		
+		System.err.println("Ende generateMap");
+		return bI;		
+		/*
 		BufferedImage bufImg = new BufferedImage((int)dim.getWidth(), (int)dim.getHeight(), BufferedImage.TYPE_INT_RGB);
 		return bufImg;
+		*/		
 	}
 }

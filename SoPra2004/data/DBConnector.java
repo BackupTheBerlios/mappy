@@ -19,7 +19,7 @@ public class DBConnector {
 		try {
 			Class.forName(jdbcDriver);
 		} catch (ClassNotFoundException e) {
-			System.err.println(e.getMessage());
+			System.err.println(e.getMessage() +  " -> Fehler in DBConnector");
 			System.exit(1);
 		}
 	}
