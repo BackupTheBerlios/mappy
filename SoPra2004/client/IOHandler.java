@@ -40,7 +40,7 @@ public class IOHandler {
 			}
 		}
 		else{
-			System.err.println("Failed to load Player");
+			System.err.println("Failed to load StartPoint");
 			return new Point(0,0);
 		}
 	}
