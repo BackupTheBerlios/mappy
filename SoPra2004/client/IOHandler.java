@@ -6,6 +6,7 @@
  */
 package client;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import javax.swing.JFrame;
 
 
 /**
@@ -32,11 +35,11 @@ public class IOHandler {
 				upperLeft.close();
 				return start;
 			}
-			catch (IOException e) {
+			catch (IOException e){
 				System.err.println ("Failed to load Startpoint");
 				return new Point(0,0);
 			}
-			catch (ClassNotFoundException e) {
+			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load Startpoint");
 				return new Point(0,0);
 			}
@@ -56,11 +59,11 @@ public class IOHandler {
 				layers.close();
 				return layersToShow;
 			}
-			catch (IOException e) {
+			catch (IOException e){
 				System.err.println ("Failed to load Layerlist");
 				return new int[0];
 			}
-			catch (ClassNotFoundException e) {
+			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load Layerlist");
 				return new int[0];
 			}
@@ -68,6 +71,54 @@ public class IOHandler {
 		else{
 			System.err.println("Failed to load Layerlist");
 			return new int[0];
+		}
+	}
+	static Dimension getSavedWindowSize(){
+		File path = new File ("save" + File.separatorChar + "windowSize.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream window = new ObjectInputStream (file);
+				Dimension windowSize = (Dimension) window.readObject();
+				window.close();
+				return windowSize;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load WindowSize");
+				return new Dimension(600,600);
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load WindowSize");
+				return new Dimension(600,600);
+			}
+		}
+		else{
+			System.err.println("Failed to load WindowSize");
+			return new Dimension(600,600);
+		}
+	}
+	static Point getSavedWindowPosition(){
+		File path = new File ("save" + File.separatorChar + "windowPos.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream window = new ObjectInputStream (file);
+				Point windowPosition = (Point) window.readObject();
+				window.close();
+				return windowPosition;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load WindowPosition");
+				return new Point(0,0);
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load WindowPosition");
+				return new Point(0,0);
+			}
+		}
+		else{
+			System.err.println("Failed to load WindowPostition");
+			return new Point(0,0);
 		}
 	}
 	static void saveStartPoint (Point startPoint){
@@ -85,7 +136,7 @@ public class IOHandler {
 			System.err.println("Failed to save StartPoint");
 		}
   	}
-	static void saveLayers (int[] layers){
+	static void saveLayers(int[] layers){
 		File path = new File ("save" + File.separatorChar + "layers.mpy");
 		try {
 			if (!path.exists()) {
@@ -100,4 +151,34 @@ public class IOHandler {
 			System.err.println("Failed to save Layers");
 		}
   	}
+	static void saveWindowSize(JFrame window){
+		File path = new File ("save" + File.separatorChar + "windowSize.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir ();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream windowProperties = new ObjectOutputStream (file);
+			windowProperties.writeObject(window.getSize());
+			windowProperties.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save WindowSize");
+		}
+	}
+	static void saveWindowPosition(JFrame window){
+		File path = new File ("save" + File.separatorChar + "windowPos.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir ();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream windowProperties = new ObjectOutputStream (file);
+			windowProperties.writeObject(window.getLocationOnScreen());
+			windowProperties.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save WindowPosition");
+		}
+	}
 }

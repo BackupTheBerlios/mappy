@@ -8,13 +8,15 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.22 2005/01/10 19:19:35 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.23 2005/01/10 20:06:51 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -38,20 +40,25 @@ public class Gui extends JFrame implements LayersIF {
 	private int[] layersToShow;
 	private JLabel map;
 	private StatusBar sb;
-	private JProgressBar progress;
+	private JProgressBar progress = new JProgressBar(0,1);
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
 		this.mappy = mappy;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing (WindowEvent e){
+				showCloseDialog();
+			}
+		});
 		// Build GUI
 		System.out.print("Building new GUI...");
-		setSize(500,500);
+		//setSize(500,500);
 		setNewLookAndFeel();
 		initComponents();
 
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -106,14 +113,14 @@ public class Gui extends JFrame implements LayersIF {
 		
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
+		setSize(IOHandler.getSavedWindowSize());
+		setLocation(IOHandler.getSavedWindowPosition());
 		
 		layers.setSelectedIndices(layersToShow);
 		
 		map = mappy.getMapLabel();
-		refreshAction();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
-		
-		
+			
 		status = new JPanel();
 		progress = new JProgressBar(0, layersToShow.length);
 		progress.setStringPainted(true);
@@ -123,8 +130,30 @@ public class Gui extends JFrame implements LayersIF {
 		sb.setPosition(upperLeft.x,upperLeft.y);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 3, 1, 1, 1d, 0d);
 		
+		refreshAction();
 		setVisible(true);
 		
+	}
+	
+	/**
+	 * 
+	 */
+	protected void showCloseDialog() {
+		try{
+			int decision = JOptionPane.showConfirmDialog(getGlassPane(),
+			"Aktuelle Anzeige vor Beenden speichern?", "Programm Beenden", JOptionPane.YES_NO_OPTION);
+			if(decision == JOptionPane.YES_OPTION){
+				IOHandler.saveStartPoint(upperLeft);
+				IOHandler.saveLayers(layersToShow);
+				IOHandler.saveWindowSize(this);
+				IOHandler.saveWindowPosition(this);
+				System.exit(0);
+			}
+			if(decision == JOptionPane.NO_OPTION){
+				System.exit(0);
+			}
+		}
+		catch (HeadlessException e) {}
 	}
 
 	/**

@@ -8,7 +8,6 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -71,7 +70,7 @@ public class MenuBar extends JMenuBar{
 	//ActionListener
 	menuItemExit.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			System.exit(0);
+			closeProgram();
 		}
 	});
 	menuItemSave.addActionListener(new ActionListener(){
@@ -88,6 +87,13 @@ public class MenuBar extends JMenuBar{
 	owner.setJMenuBar(this);
 	}
 	
+	/**
+	 * 
+	 */
+	protected void closeProgram() {
+		owner.showCloseDialog();
+	}
+
 	/**
 	 * 
 	 */
