@@ -372,4 +372,43 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save Colors");
 		}
   	}
+	
+	static void deleteColorSettings(){
+		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+	}
+	static void deleteDBSettings(){
+		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+	}
+	static void deleteViewSettings(){
+		File path = new File ("save" + File.separatorChar + "start.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+		path = new File ("save" + File.separatorChar + "layers.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+		path = new File ("save" + File.separatorChar + "windowSize.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+		path = new File ("save" + File.separatorChar + "windowPos.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+		path = new File ("save" + File.separatorChar + "mapSize.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+		path = new File ("save" + File.separatorChar + "zoom.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+	}
 }
