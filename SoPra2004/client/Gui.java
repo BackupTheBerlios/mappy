@@ -8,22 +8,15 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.50 2005/01/14 14:42:53 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.51 2005/01/14 17:17:59 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import javax.swing.plaf.metal.MetalBorders;
 
 import server.Mappy;
@@ -123,8 +116,9 @@ public class Gui extends JFrame implements LayersIF{
 		zoomLabel = new JLabel("Zoom: ");
 		zoomLabel.setFont(new Font("Verdana", Font.PLAIN, 11));
 		zoomSlider = new JSlider();
-		zoomSlider.setMinimum(100);
-		zoomSlider.setMaximum(200);
+		zoomSlider.setMinimum(0);
+		zoomSlider.setMaximum(100);
+		zoomSlider.setValue(IOHandler.getSavedZoom());
 		zoomSlider.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent ce){
 				zoomSliderChanged();
@@ -198,7 +192,7 @@ public class Gui extends JFrame implements LayersIF{
 		progress.setStringPainted(true);
 		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
-		sb.setZoom(100);
+		sb.setZoom(zoomSlider.getValue());
 		sb.setPosition(upperLeft.x,upperLeft.y);
 		
 		date = new Time();

@@ -47,7 +47,7 @@ public class IOHandler {
 		}
 		else{
 			System.err.println("Failed to load StartPoint");
-			return new Point(5324,5433);
+			return new Point(5500,5500);
 		}
 	}
 	static int[] getSavedLayers(){
@@ -146,6 +146,31 @@ public class IOHandler {
 			return new Dimension(0,0);
 		}
 	}
+	static int getSavedZoom(){
+		File path = new File ("save" + File.separatorChar + "zoom.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream zoomFactor = new ObjectInputStream (file);
+				Integer zoom = (Integer)zoomFactor.readObject();
+				int zoomValue = zoom.intValue();
+				zoomFactor.close();
+				return zoomValue;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load ZoomFactor");
+				return 100;
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load ZoomFactor");
+				return 100;
+			}
+		}
+		else{
+			System.err.println("Failed to load ZoomFactor");
+			return 100;
+		}
+	}
 	static void saveStartPoint (Point startPoint){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {
@@ -221,4 +246,20 @@ public class IOHandler {
 			System.err.println("Failed to save MapSize");
 		}
 	}
+	static void saveZoomValue (int zoom){
+		File path = new File ("save" + File.separatorChar + "zoom.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream zoomProperties = new ObjectOutputStream (file);
+			Integer zoomValue = new Integer(zoom);
+			zoomProperties.writeObject(zoomValue);
+			zoomProperties.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save ZoomFactor");
+		}
+  	}
 }
