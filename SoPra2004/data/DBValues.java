@@ -20,7 +20,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.11 2004/12/18 19:28:40 fkubis Exp $
+ * $Id: DBValues.java,v 1.12 2004/12/21 13:46:34 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -37,60 +37,34 @@ public class DBValues {
 	
 	public Tile getTile(Point p, int type) {
 		Tile t = null;
-		Object o = new Object();
 		ResultSet r = null;				
-		try {
+		try{
 			Statement stmt = this.con.createStatement();
-			String sql = "";
-			
-			/*sql = "SELECT * " 
+			String sql;
+			sql = "SELECT * " 
 				+ "FROM MapData " 
 				+ "WHERE " 
-				+ "XFrom <= " + (int)p.getX() + " AND " + (int)p.getX() + " < XTo "  
-				+ "AND YFrom <= " + (int)p.getY() + " AND " + (int)p.getY() + " < YTo "
-				+ " AND Type = " + type;
-			*/
-			sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
-			System.out.println (sql);
+				+ "XFrom <= " + (int)p.x + " AND " + (int)p.x + " <= XTo "  
+				+ "AND YFrom <= " + (int)p.y + " AND " + (int)p.y + " <= YTo "
+				+ "AND Type = " + type;
 						
 			try {
 				r = stmt.executeQuery(sql);
 				r.next();
+				System.out.println("ID des gewählten Datensatzes: " + r.getInt("ID"));
+				t = new Tile(r.getInt("ID"), r.getInt("XFrom"), r.getInt("XTo"), r.getInt("YFrom"), r.getInt("YTo"), r.getBytes("Data"));
+				return t;
 			}
 			catch (SQLException e) {
-				System.err.println("SQL Exception :" + e.getMessage());
-				System.err.println("trotzdem weiter");
-				sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
-				System.err.println ("Standard Query FIX IT!");
-				r = stmt.executeQuery(sql);								
-				r.next();				
-			} 
-					
-			int id = r.getInt("ID");
-			System.out.println("ID des gewählten Datensatzes: " + id);
-									
-			t = new Tile(id, r.getInt("XFrom"), r.getInt("XTo"), r.getInt("YFrom"), r.getInt("YTo"), r.getBytes("Data"));
-			return t;
+				System.err.println("SQL Exception: " + e.getMessage());	
+			}
 		}
 		catch (SQLException e) {
-			System.err.println("SQL Exception :" + e.getMessage());
+			System.err.println("SQL Exception: " + e.getMessage() + "Verdammt");
 		}
-		catch (NullPointerException e) {
-			System.err.println("Such den Fehler ...");
-		}
-		/*		
-		catch (Exception e) {
-			System.err.println("Error in getTile. Fehler beim fetchen aus der DB: " + e.getMessage());
-			// Wenn wir nix getten können brauchen wir noch standard werte für Tile
-			//System.exit(1);	
-		}
-		*/
-		
-		System.err.println("Da ging was bei getTile daneben");
-		return t;
-	} 
-	
-    //public ImageIcon getImage(Point start, int type) throws NoImageException {
+		return new Tile();
+	}
+
 	public BufferedImage getImage(Point start, int type) throws NoImageException {
     	try {
     		Statement stmt = this.con.createStatement();
