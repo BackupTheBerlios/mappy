@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.16 2005/01/04 18:41:17 jesuzz Exp $
+ * $Id: Gui.java,v 1.17 2005/01/04 20:17:35 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -22,7 +22,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.metal.MetalBorders;
 
-//import server.MapLabel;
 import server.Mappy;
 
 
@@ -39,7 +38,8 @@ public class Gui extends JFrame implements LayersIF {
 	private JButton deselect;
 	private ArrayList layerList;
 	private Point upperLeft;
-	private boolean[] layersToShow= new boolean[22];
+	private int[] layersToShow;
+	private JDialog waiting;
 	private JLabel map;
 	
 	public Gui(Mappy mappy){
@@ -58,6 +58,13 @@ public class Gui extends JFrame implements LayersIF {
 	 * 
 	 */
 	private void initComponents() {
+		
+		waiting = new JDialog((JFrame)this, false);
+		JLabel wait = new JLabel ("Haben sie einen Moment Geduld. Das Kartenmaterial wird aktualisiert...");
+		waiting.add(wait);
+		waiting.setResizable(false);
+		waiting.setUndecorated(true);
+		waiting.pack();
 		
 		GridBagLayout layout = new GridBagLayout();
 		getContentPane().setLayout(layout);
@@ -85,7 +92,6 @@ public class Gui extends JFrame implements LayersIF {
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
 		refresh = new JButton ("Aktualisieren");
-		refresh.setEnabled(false);
 		refresh.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				refreshAction();
@@ -109,9 +115,11 @@ public class Gui extends JFrame implements LayersIF {
 		
 		
 		upperLeft = IOHandler.getSavedStart();
+		layersToShow = IOHandler.getSavedLayers();
 		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
-		
-		map = mappy.getMapLabel(layerList);
+
+		map = new MapLabel();
+		refreshAction();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
 		
 		
@@ -125,6 +133,7 @@ public class Gui extends JFrame implements LayersIF {
 		setVisible(true);
 		
 	}
+
 	/**
 	 * 
 	 */
@@ -136,15 +145,27 @@ public class Gui extends JFrame implements LayersIF {
 	 * 
 	 */
 	protected void chooseAllAction() {
-		layers.addSelectionInterval(0,5);
+		layers.addSelectionInterval(0,ALLLAYERS.length);
 	}
 
 	/**
 	 * 
 	 */
-	protected void refreshAction() {
-		refresh.setEnabled(false);
-		mappy.refresh(upperLeft, layersToShow);
+	protected void refreshAction(){
+		waiting.setVisible(true);
+		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy));
+		getData.start();
+		try {
+			getData.join();
+		}
+		catch (InterruptedException e) {
+		}
+		try{
+			getData.join();
+		}catch (InterruptedException e1){
+			e1.printStackTrace();
+		}
+		waiting.setVisible(false);
 	}
 
 	/**
@@ -153,14 +174,7 @@ public class Gui extends JFrame implements LayersIF {
 	 */
 	protected void listValueChanged(ListSelectionEvent evt) {
 		refresh.setEnabled(true);
-		for (int i = 0; i < layersToShow.length; i++){
-			if (layers.isSelectedIndex(i)){
-				layersToShow[i] = true;
-			}
-			else{
-				layersToShow[i] = false;
-			}
-		}
+		layersToShow = layers.getSelectedIndices();
 	}
 
 	void setNewLookAndFeel()
@@ -170,7 +184,4 @@ public class Gui extends JFrame implements LayersIF {
 	    SwingUtilities.updateComponentTreeUI(this ); 
 	  } catch( Exception e ) { e.printStackTrace(); }
 	}
-	
-
-
 }
