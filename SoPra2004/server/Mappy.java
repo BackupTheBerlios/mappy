@@ -8,7 +8,7 @@ package server;
 
 /**
  * @author fkubis
- * $Id: Mappy.java,v 1.14 2005/01/04 18:41:17 jesuzz Exp $
+ * $Id: Mappy.java,v 1.15 2005/01/04 20:16:50 drrsatzteil Exp $
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -26,19 +26,16 @@ public class Mappy {
 		DB = new DBValues();
 	}
 	
-	public ArrayList getLayers(Dimension d, Point p, boolean[] layerIds) {
+	public ArrayList getLayers(Dimension d, Point p, int[] layerIds) {
 		// ArrayList mit Layern
 		// die layer haben Zeilen und Spalten und eine ArrayList mit Tiles
 		// die Tiles sind fertig eingefärbt und so ...
 		
 		ArrayList layers = new ArrayList();
 		
-		for (int i = 0; i < layerIds.length; i++) {
-			if(layerIds[i]==true){
-			System.out.println (layerIds[i]);
-			Layer layer = new Layer(d, p, i+1, DB);
+		for (int i = 0; i < layerIds.length; i++){
+			Layer layer = new Layer(d, p, layerIds[i+1], DB);
 			layers.add(layer);
-			}
 		}
 		return layers;
 	}
@@ -55,7 +52,7 @@ public class Mappy {
 		return bI;
 	}
 	
-	public void refresh(Point upperLeft, boolean[] layersToShow){
+	public void refresh(Point upperLeft, int[] layersToShow){
 		map.refresh(this.getLayers(map.getSize(), upperLeft, layersToShow));
 	}
 	public MapLabel getMapLabel(ArrayList layerList){
