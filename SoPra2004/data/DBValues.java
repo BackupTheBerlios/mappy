@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.imageio.ImageIO;
-
 import server.NoImageException;
 
 /**
