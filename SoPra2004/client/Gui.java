@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.plaf.metal.MetalBorders;
@@ -47,6 +48,8 @@ public class Gui extends JFrame implements LayersIF{
 	private JLabel zoomLabel;
 	private GridBagLayout layout;
 	private Dialog wait;
+	private File clickSound=new File("Blip.wav");
+	private Clip btClick=AudioPlayer.getStream(clickSound);
 	
 	
 	public Gui(Mappy mappy){
@@ -181,6 +184,7 @@ public class Gui extends JFrame implements LayersIF{
 				upperLeft.y = upperLeft.y + 300;
 				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
+				
 				refreshAction();
 			}
 		});

@@ -16,6 +16,11 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import java.awt.event.ItemListener;
+import java.io.File;
+
+
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 /**
@@ -156,6 +161,9 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	 * Layout
 	 */
 	GridBagLayout layout = new GridBagLayout();
+	
+	private File clickSound=new File("Blip.wav");
+	private Clip btClick=AudioPlayer.getStream(clickSound);
 
 	public Settings (){
 		super("Einstellungen");
@@ -221,6 +229,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			bt.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					changeLayerColor(bt.id);
+					btClick.start();
 					
 				}
 				
@@ -267,7 +276,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		 this.setVisible(true);
 		//Handler
 		saveBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
-			String[] dbSet={urlField.getText(),portField.getText() ,dbField.getText(), usrField.getText(),pwField.getText() };	
+			String[] dbSet={urlField.getText(),portField.getText() ,dbField.getText(), usrField.getText(),new String(pwField.getPassword())};	
 			IOHandler.saveDbSettings(dbSet);
 			
 			Color[] colorSet=new Color[savedColors.length];
