@@ -19,7 +19,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import java.awt.event.ItemListener;
 import java.io.File;
 
 
@@ -313,6 +312,14 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			if(dontPlaySounds){
 				btClick = null;
 			}
+			else{
+				try{
+					btClick = AudioPlayer.getStream(clickSound);
+				}
+				catch(SoundDisabledException e1){
+					System.err.println(e1.getMessage());
+				}
+			}
 			resetBt.setEnabled(true);
 			}
 		});
@@ -335,6 +342,12 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			pwField.setText(dbSettings[4]);
 			IOHandler.deleteSoundSettings();
 			soundCheckBox.setSelected(IOHandler.getSavedSoundSettings());
+			try{
+				btClick = AudioPlayer.getStream(clickSound);
+			}
+			catch(SoundDisabledException e1){
+				System.err.println(e1.getMessage());
+			}
 			resetBt.setEnabled(false);
 		}
 		});

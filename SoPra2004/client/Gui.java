@@ -63,7 +63,7 @@ public class Gui extends JFrame implements LayersIF{
 			}
 		});
 		//Build GUI
-		System.out.print("Building new GUI...");
+		System.out.println("Building new GUI...");
 		setNewLookAndFeel();
 		initComponents();
 	}
