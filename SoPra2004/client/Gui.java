@@ -249,12 +249,6 @@ public class Gui extends JFrame implements LayersIF{
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();
 		}
-	
-		this.addComponentListener(new java.awt.event.ComponentAdapter() {
-	      public void componentResized(ComponentEvent e) {
-	        this_componentResized(e);
-	      }	
-		});
 	}
 	
 
@@ -429,11 +423,4 @@ public class Gui extends JFrame implements LayersIF{
 	 * 
 	 * @param e
 	 */
-	private void this_componentResized(ComponentEvent e) {
-		Dimension size=this.getSize();
-		if(size.width<800)size.width=350;
-		if(size.height<550)size.height=550;
-		this.setSize(size);
-		
-	}
 }
