@@ -8,7 +8,7 @@ package server;
 
 /**
  * @author fkubis
- * $Id: Mappy.java,v 1.11 2004/12/18 17:23:44 fkubis Exp $
+ * $Id: Mappy.java,v 1.12 2004/12/21 13:47:22 drrsatzteil Exp $
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -32,25 +32,13 @@ public class Mappy {
 		
 		ArrayList layers = new ArrayList();
 		
-		for ( int i=0; i<layerIds.length; i++ ) {
-			Layer layer = new Layer(d, p, i, DB);
-			if (layer.fetchTiles()) {
-				System.out.println("fetchTiles erfolgreich fuer LayerNr: " + i );
-			} else {
-				System.err.println("fetchTiles Fehler für LayerNr " + i );
-			}
+		for (int i = 0; i < layerIds.length; i++) {
+			System.out.println (layerIds[i]);
+			Layer layer = new Layer(d, p, layerIds[i], DB);
 			layers.add(layer);
 		}
-		
 		return layers;
 	}
-	
-	/*
-	public ArrayList getTiles(Dimension d, Point p){
-		
-		return tiles;
-	}
-	*/
 	
 	private Image getTile(){
 		Image img=null;
