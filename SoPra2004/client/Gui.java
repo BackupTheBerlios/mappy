@@ -8,15 +8,13 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.20 2005/01/10 18:17:40 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.21 2005/01/10 19:08:00 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,11 +34,11 @@ public class Gui extends JFrame implements LayersIF {
 	private JButton refresh;
 	private JButton chooseAll;
 	private JButton deselect;
-	private ArrayList layerList;
 	private Point upperLeft;
 	private int[] layersToShow;
-	private JDialog waiting;
 	private JLabel map;
+	private StatusBar sb;
+	private JProgressBar progress;
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -58,13 +56,6 @@ public class Gui extends JFrame implements LayersIF {
 	 * 
 	 */
 	private void initComponents() {
-		
-		waiting = new JDialog((JFrame)this, false);
-		JLabel wait = new JLabel ("Haben sie einen Moment Geduld. Das Kartenmaterial wird aktualisiert...");
-		waiting.add(wait);
-		waiting.setResizable(false);
-		waiting.setUndecorated(true);
-		waiting.pack();
 		
 		GridBagLayout layout = new GridBagLayout();
 		getContentPane().setLayout(layout);
@@ -115,7 +106,6 @@ public class Gui extends JFrame implements LayersIF {
 		
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
-		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
 		
 		layers.setSelectedIndices(layersToShow);
 		
@@ -125,7 +115,10 @@ public class Gui extends JFrame implements LayersIF {
 		
 		
 		status = new JPanel();
-		StatusBar sb = new StatusBar();
+		System.out.println(layersToShow.length);
+		progress = new JProgressBar(0, layersToShow.length);
+		progress.setStringPainted(true);
+		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
 		sb.setZoom(100);
 		sb.setPosition(upperLeft.x,upperLeft.y);
@@ -155,10 +148,9 @@ public class Gui extends JFrame implements LayersIF {
 	 */
 	protected void refreshAction(){
 		refresh.setEnabled(false);
-		waiting.setVisible(true);
-		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy));
+		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress));
 		getData.start();
-		try {
+		/*try {
 			getData.join();
 		}
 		catch (InterruptedException e) {
@@ -167,8 +159,7 @@ public class Gui extends JFrame implements LayersIF {
 			getData.join();
 		}catch (InterruptedException e1){
 			e1.printStackTrace();
-		}
-		waiting.setVisible(false);
+		}*/
 	}
 
 	/**
@@ -178,6 +169,7 @@ public class Gui extends JFrame implements LayersIF {
 	protected void listValueChanged(ListSelectionEvent evt) {
 		refresh.setEnabled(true);
 		layersToShow = layers.getSelectedIndices();
+		progress.setMaximum(layersToShow.length);
 	}
 
 	void setNewLookAndFeel()
