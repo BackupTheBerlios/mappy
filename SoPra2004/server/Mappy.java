@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.27 2005/01/17 18:10:34 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.28 2005/01/18 16:02:16 drrsatzteil Exp $
  */
 
 
@@ -42,9 +42,6 @@ public class Mappy{
 		return layers;
 	}
 	
-	public void move(String direction){
-		System.out.println(direction);
-	}
 	public void refresh(Point upperLeft, int[] layersToShow, int zoom, JProgressBar progress, Color[] layerColors){
 		this.layerColors = layerColors;
 		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress));

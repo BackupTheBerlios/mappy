@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.58 2005/01/18 15:20:46 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.59 2005/01/18 16:02:16 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -149,7 +149,7 @@ public class Gui extends JFrame implements LayersIF{
 		moveSouth = new DirectionButton("south.gif");
 		moveEast.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				mappy.move("east");
+				upperLeft = sb.getUpperLeft();
 				upperLeft.x = upperLeft.x + 300;
 				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
@@ -159,7 +159,7 @@ public class Gui extends JFrame implements LayersIF{
 		
 		moveWest.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				mappy.move("west");
+				upperLeft = sb.getUpperLeft();
 				upperLeft.x = upperLeft.x - 300;
 				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
@@ -169,17 +169,16 @@ public class Gui extends JFrame implements LayersIF{
 		
 		moveNorth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				mappy.move("north");
+				upperLeft = sb.getUpperLeft();
 				upperLeft.y = upperLeft.y - 300;
 				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
 				refreshAction();
 			}
 		});
-		
 		moveSouth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				mappy.move("south");
+				upperLeft = sb.getUpperLeft();
 				upperLeft.y = upperLeft.y + 300;
 				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
@@ -206,7 +205,7 @@ public class Gui extends JFrame implements LayersIF{
 		}
 		
 		progress.setStringPainted(true);
-		sb = new StatusBar(progress);
+		sb = new StatusBar(progress, this);
 		sb.setInfo("Los geht's!");
 		sb.setZoom(zoomSlider.getValue());
 		sb.setXY(upperLeft.x, upperLeft.y);
@@ -224,7 +223,14 @@ public class Gui extends JFrame implements LayersIF{
 				if((getSize().width < 850) || (getSize().height < 600)){
 					setSize(850,600);
 				}
-				refreshAction();
+				else{
+					int decision = JOptionPane.showConfirmDialog
+					(null, "Die Fenstergröße wurde geändert. Wollen sie die Karte neu laden?",
+					"Größe geändert", JOptionPane.YES_NO_OPTION);
+					if(decision == JOptionPane.YES_OPTION){
+						refreshAction();
+					}					
+				}
 			}
 			public void componentShown(ComponentEvent arg0){
 			}
@@ -395,5 +401,12 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	public Dialog getWait() {
 		return wait;
+	}
+
+	/**
+	 * 
+	 */
+	public void setRefreshEnabled(boolean b) {
+		refresh.setEnabled(b);
 	}
 }

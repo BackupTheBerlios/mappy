@@ -34,19 +34,24 @@ public class IOHandler {
 				ObjectInputStream upperLeft = new ObjectInputStream (file);
 				Point start = (Point) upperLeft.readObject();
 				upperLeft.close();
-				return start;
+				if(start != null){
+					return start;
+				}
+				else{
+					return new Point(0,0);
+				}
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load Startpoint");
 				return new Point(0,0);
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load Startpoint");
+				System.err.println ("start.mpy not found");
 				return new Point(0,0);
 			}
 		}
 		else{
-			System.err.println("Failed to load StartPoint");
+			System.err.println("start.mpy not found");
 			return new Point(0,0);
 		}
 	}
@@ -58,19 +63,25 @@ public class IOHandler {
 				ObjectInputStream layers = new ObjectInputStream (file);
 				int[] layersToShow = (int[]) layers.readObject();
 				layers.close();
-				return layersToShow;
+				if(layersToShow != null){
+					return layersToShow;
+				}
+				else{
+					return new int[0];
+				}
+				
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load Layerlist");
 				return new int[0];
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load Layerlist");
+				System.err.println ("layers.mpy not found");
 				return new int[0];
 			}
 		}
 		else{
-			System.err.println("Failed to load Layerlist");
+			System.err.println("layers.mpy not found");
 			return new int[0];
 		}
 	}
@@ -82,19 +93,24 @@ public class IOHandler {
 				ObjectInputStream window = new ObjectInputStream (file);
 				Dimension windowSize = (Dimension) window.readObject();
 				window.close();
-				return windowSize;
+				if(windowSize != null){
+					return windowSize;
+				}
+				else{
+					return new Dimension(850,600);
+				}
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load WindowSize");
 				return new Dimension(850,600);
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load WindowSize");
+				System.err.println ("windowSize.mpy not found");
 				return new Dimension(850,600);
 			}
 		}
 		else{
-			System.err.println("Failed to load WindowSize");
+			System.err.println("windowSize.mpy not found");
 			return new Dimension(850,600);
 		}
 	}
@@ -106,19 +122,24 @@ public class IOHandler {
 				ObjectInputStream window = new ObjectInputStream (file);
 				Point windowPosition = (Point) window.readObject();
 				window.close();
-				return windowPosition;
+				if(windowPosition != null){
+					return windowPosition;
+				}
+				else{
+					return new Point(0,0);
+				}
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load WindowPosition");
 				return new Point(0,0);
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load WindowPosition");
+				System.err.println ("windowPos.mpy not found");
 				return new Point(0,0);
 			}
 		}
 		else{
-			System.err.println("Failed to load WindowPostition");
+			System.err.println("windowPos.mpy not found");
 			return new Point(0,0);
 		}
 	}
@@ -130,19 +151,24 @@ public class IOHandler {
 				ObjectInputStream map = new ObjectInputStream (file);
 				Dimension mapSize = (Dimension) map.readObject();
 				map.close();
-				return mapSize;
+				if(mapSize != null){
+					return mapSize;
+				}
+				else{
+					return new Dimension(0,0);
+				}
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load MapSize");
 				return new Dimension(0,0);
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load MapSize");
+				System.err.println ("mapSize.mpy not found");
 				return new Dimension(0,0);
 			}
 		}
 		else{
-			System.err.println("Failed to load MapSize");
+			System.err.println("mapSize.mpy not found");
 			return new Dimension(0,0);
 		}
 	}
@@ -153,21 +179,26 @@ public class IOHandler {
 				FileInputStream file = new FileInputStream (path);
 				ObjectInputStream zoomFactor = new ObjectInputStream (file);
 				Integer zoom = (Integer)zoomFactor.readObject();
-				int zoomValue = zoom.intValue();
 				zoomFactor.close();
-				return zoomValue;
+				if(zoom != null){
+					int zoomValue = zoom.intValue();
+					return zoomValue;
+				}
+				else{
+					return 0;
+				}
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load ZoomFactor");
 				return 0;
 			}
 			catch (ClassNotFoundException e){
-				System.err.println ("Failed to load ZoomFactor");
+				System.err.println ("zoom.mpy not found");
 				return 0;
 			}
 		}
 		else{
-			System.err.println("Failed to load ZoomFactor");
+			System.err.println("zoom.mpy not found");
 			return 0;
 		}
 	}

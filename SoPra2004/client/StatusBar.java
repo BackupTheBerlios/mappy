@@ -28,35 +28,43 @@ public class StatusBar extends JPanel {
 	private JTextField pointY;
 	private JToolBar xPointBar;
 	private JToolBar yPointBar;
+	private Gui owner;
 	
 	
-	public StatusBar(JProgressBar progress){
+	public StatusBar(JProgressBar progress, Gui owner){
 		setLayout(new GridLayout(2,5));
 		setBorder(new MetalBorders.Flush3DBorder());
 		this.progress = progress;
+		this.owner = owner;
 		
 		pointX = new JFormattedTextField();
 		pointX.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent arg0){
 				checkX();
+				setRefreshStatus();
 			}
 			public void keyTyped(KeyEvent arg0){
 				checkX();
+				setRefreshStatus();
 			}
 			public void keyReleased(KeyEvent arg0) {
 				checkX();
+				setRefreshStatus();
 			}			
 		});
 		pointY = new JFormattedTextField();
 		pointY.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent arg0){
 				checkY();
+				setRefreshStatus();
 			}
 			public void keyTyped(KeyEvent arg0){
 				checkY();
+				setRefreshStatus();
 			}
 			public void keyReleased(KeyEvent arg0){
 				checkY();
+				setRefreshStatus();
 			}			
 		});
 		
@@ -91,6 +99,17 @@ public class StatusBar extends JPanel {
 	/**
 	 * 
 	 */
+	protected void setRefreshStatus() {
+		if(pointX.getText().length() > 0 && pointY.getText().length() > 0){
+			owner.setRefreshEnabled(true);
+		}
+		else{
+			owner.setRefreshEnabled(false);
+		}
+	}
+	/**
+	 * 
+	 */
 	protected void checkX() {
 		try{
 			new Integer(pointX.getText());
@@ -103,7 +122,7 @@ public class StatusBar extends JPanel {
 		catch(NumberFormatException e){
 			if(pointX.getText().length() > 0){
 				Toolkit.getDefaultToolkit().beep();
-				pointX.setText(null);
+				pointX.setText("0");
 			}
 		}
 	}
@@ -122,7 +141,7 @@ public class StatusBar extends JPanel {
 		catch(NumberFormatException e){
 			if(pointY.getText().length() > 0){
 				Toolkit.getDefaultToolkit().beep();
-				pointY.setText(null);
+				pointY.setText("0");
 			}
 		}
 	}
