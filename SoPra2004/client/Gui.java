@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.43 2005/01/13 12:45:33 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.44 2005/01/13 15:01:15 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -97,19 +97,19 @@ public class Gui extends JFrame implements LayersIF{
 		
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
-		refresh = new JButton ("Aktualisieren");
+		refresh = new SelectionButton ("Button1.gif");
 		refresh.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				refreshAction();
 			}			
 		});
-		chooseAll = new JButton ("Alles wählen");
+		chooseAll = new SelectionButton ("chooseAll.gif");
 		chooseAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				chooseAllAction();
 			}			
 		});
-		deselect = new JButton ("Auswahl aufheben");
+		deselect = new SelectionButton ("reset.gif");
 		deselect.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				deselectAction();
@@ -191,7 +191,7 @@ public class Gui extends JFrame implements LayersIF{
 		progress.setStringPainted(true);
 		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
-		sb.setZoom(100);
+		sb.setZoom(50);
 		sb.setPosition(upperLeft.x,upperLeft.y);
 		
 		date = new Time();
