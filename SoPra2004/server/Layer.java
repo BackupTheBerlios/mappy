@@ -11,7 +11,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.10 2005/01/12 20:12:45 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.11 2005/01/12 20:25:36 drrsatzteil Exp $
  */
 public class Layer {
 	private BufferedImage map;
@@ -23,8 +23,8 @@ public class Layer {
 		this.d = d;
 		int tileWidth = 0;
 		int tileHeight = 0;
-		int x = 0;
-		int y = 0;
+		int x = -500;
+		int y = -500;
 		final Point startPoint = p;
 		Point currentPoint = p;
 		while(d.height > y){
