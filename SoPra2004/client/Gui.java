@@ -299,7 +299,13 @@ public class Gui extends JFrame implements LayersIF{
 				IOHandler.saveWindowPosition(this);
 				IOHandler.saveMapSize(map);
 				IOHandler.saveZoomValue(zoomSlider.getValue());
-				System.exit(0);
+				if(mappy.closeDB()){
+					System.exit(0);
+				}
+				else{
+					System.err.println("Not able to close DB-Connection. Exiting anyway");
+					System.exit(0);
+				}
 			}
 			if(decision == JOptionPane.NO_OPTION){
 				System.exit(0);

@@ -67,8 +67,7 @@ public class DBConnector{
 	public boolean closeDB(Connection con) {
 		if (con == null) {
 			return false;
-		}
-			
+		}	
 		try {
 			con.close();
 		} catch (SQLException e) {
@@ -82,13 +81,5 @@ public class DBConnector{
 	public void setCon(Connection con) {
 		this.con = con;
 		reconnect = null;
-	}
-
-	/**
-	 * 
-	 */
-	public void notifyDBValues() {
-		// TODO Auto-generated method stub
-		
 	}
 }

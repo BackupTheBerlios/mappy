@@ -18,7 +18,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.24 2005/01/20 01:14:56 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.25 2005/01/20 01:40:12 drrsatzteil Exp $
  */
 public class DBValues{
 	private DBConnector connector;
@@ -95,6 +95,10 @@ public class DBValues{
 			}
 		}
 		return null;
+	}
+	
+	public boolean closeConnection(){
+		return connector.closeDB(con);
 	}
 
 	public Connection getCon() {

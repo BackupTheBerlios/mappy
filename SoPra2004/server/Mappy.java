@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.29 2005/01/18 19:36:56 jesuzz Exp $
+ *$Id: Mappy.java,v 1.30 2005/01/20 01:40:12 drrsatzteil Exp $
  */
 
 
@@ -55,5 +55,8 @@ public class Mappy{
 	}
 	public JPanel getMapLabel(){
 		return map;
+	}
+	public boolean closeDB(){
+		return DB.closeConnection();
 	}
 }
