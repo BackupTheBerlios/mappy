@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.49 2005/01/14 14:04:12 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.50 2005/01/14 14:42:53 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -53,6 +55,7 @@ public class Gui extends JFrame implements LayersIF{
 	private JSlider zoomSlider;
 	private JToolBar zoomToolBar;
 	private JLabel zoomLabel;
+	private GridBagLayout layout;
 	
 	
 	public Gui(Mappy mappy){
@@ -76,9 +79,7 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	private void initComponents() {
 		
-		
-	
-		GridBagLayout layout = new GridBagLayout();
+		layout = new GridBagLayout();
 		getContentPane().setLayout(layout);
 		
 		MenuBar mb = new MenuBar(this);
@@ -179,8 +180,7 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel = new JPanel();
 		mapPanel.setBorder(new MetalBorders.Flush3DBorder());
 		mapPanel.setLayout(new BorderLayout());
-		mapPanel.setBounds(20,20,20,20);
-		mapPanel.setBackground(new Color(120,12,12));
+		mapPanel.setBackground(new Color(0,0,0));
 		mapPanel.add(moveEast, BorderLayout.EAST);
 		mapPanel.add(moveWest, BorderLayout.WEST);
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
@@ -285,7 +285,6 @@ public class Gui extends JFrame implements LayersIF{
 			progress.setMaximum(1);
 		}
 	}
-	
 	
 	void setNewLookAndFeel()
 	{

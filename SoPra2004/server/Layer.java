@@ -17,7 +17,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.24 2005/01/13 20:11:37 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.25 2005/01/14 14:42:53 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
@@ -94,7 +94,7 @@ public class Layer{
 	    byte cG[] = new byte[256];
 	    byte cB[] = new byte[256];
 	    byte cA[] = new byte[256];
-							 
+		
 	    cR[0]= (byte)color.getRed();
 	    cG[0]= (byte)color.getGreen();
 	    cB[0]= (byte)color.getBlue();

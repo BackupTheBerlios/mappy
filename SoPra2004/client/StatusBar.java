@@ -32,7 +32,7 @@ public class StatusBar extends JPanel {
 		this.progress = progress;
 		
 		
-		pointX = new JTextField();
+		pointX = new JTextField(2);
 		position = new JLabel();
 		position.setFont(new Font("Verdana", Font.PLAIN, 11));
 		zoom = new JLabel();
