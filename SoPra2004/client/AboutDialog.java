@@ -6,19 +6,13 @@
  */
 package client;
 
-/**
- * @author ba008959
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
-import java.awt.Dialog;
-public class AboutDialog extends Dialog {
-	
-	public AboutDialog(){
-		super();
-	}
-	
-	
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 
+public class AboutDialog extends JDialog {
+	
+	public AboutDialog(JFrame parent){
+		super(parent, "Über Mappy", true);
+		pack();
+	}
 }

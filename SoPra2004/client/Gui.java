@@ -15,16 +15,17 @@ package client;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.awt.Color;
 import javax.swing.border.*;
 
 import server.Mappy;
 
-import java.awt.image.*;
-
 
 public class Gui extends JFrame {
-	Mappy mappy;
+	private Mappy mappy;
+	private JLabel labelMap;
+	
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -110,7 +111,7 @@ public class Gui extends JFrame {
 		// Map setup
 		// Hier Weiter Machen
 		ImageIcon image=mappy.getMap();
-		JLabel labelMap=new JLabel(image);
+		labelMap=new JLabel(image);
 		panelMap.add(labelMap);
 		
 		
@@ -120,9 +121,8 @@ public class Gui extends JFrame {
 		panelStatus.setBackground(Color.RED);
 		panelStatus.add(labelDbStatus);
 		
-		
-		this.show();
-		this.pack();
+		pack();
+		setVisible(true);
 		
 	}
 	

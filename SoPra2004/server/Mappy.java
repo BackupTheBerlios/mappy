@@ -26,9 +26,9 @@ public class Mappy {
 		DBValues myDBValues = new DBValues();
 		Point point = new Point(0, 0);
 		int type = 1; 
-		//ImageIcon img = myDBValues.getImage(point, type);
+		ImageIcon img = new ImageIcon ();//myDBValues.getImage(point, type);
 		
-		//return img;
+		return img;
 		
 	}
 }

@@ -9,6 +9,8 @@ package data;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import server.NoImageException;
+
 /**
  * @author ba008961
  *
@@ -21,6 +23,10 @@ public class MappyData {
 		DBValues myDBValues = new DBValues();
 		Point point = new Point(0, 0);
 		int type = 1; 
-		BufferedImage img = myDBValues.getImage(point, type);
+		try {
+			BufferedImage img = myDBValues.getImage(point, type);
+		}
+		catch (NoImageException e) {}
+		
 	}
 }
