@@ -1,15 +1,4 @@
-/*
- * Created on 07.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package server;
-/**
- *
- *$Id: Mappy.java,v 1.36 2005/01/21 16:20:09 drrsatzteil Exp $
- */
-
 
 import java.awt.Color;
 import java.awt.Point;
@@ -25,10 +14,11 @@ import javax.swing.JProgressBar;
 import data.*;
 
 /**
- * @author ba008268
+ * The toplevel server-class handling all the tasks of the client and 
+ * returns them to the GUI
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Mappy{
 	private DBValues DB;
@@ -39,12 +29,25 @@ public class Mappy{
 	private Point startPoint;
 	private int zoom;
 
+	/**
+	 * Class constructor which creates a new Mappy with the information of the
+	 * DBValues-constructor and the MapLabel-constructor
+	 */
 	public Mappy(){
 		DB = new DBValues();
 		map = new MapLabel();
 		pins = new ArrayList();
 	}
 
+	/**
+	 * Returns all Layers selected by the parameters
+	 * @param d		Dimension of the Layers
+	 * @param p		Point of the Layers
+	 * @param zoom	Zoom of the Layers
+	 * @param layerIds	The LayerIds of the selected Layers
+	 * @param progress	the defined progressbar
+	 * @return		ArrayList with the information of the BufferedImages
+	 */
 	public ArrayList getLayers(Dimension d, Point p, int zoom, int[] layerIds, JProgressBar progress){
 		ArrayList layers = new ArrayList();
 		for (int i = 0; i < layerIds.length; i++){
@@ -57,6 +60,15 @@ public class Mappy{
 	}
 	
 
+	/**
+	 * Refreshes the selected Layers
+	 * @param upperLeft	Point of the selected Layers
+	 * @param layersToShow	the Array containing the indices of the Layers to show
+	 * @param zoom	the defined zoom
+	 * @param progress	the defined progressbar
+	 * @param layerColors	the defined layerColors
+	 * @param layerColorsAlpha	the predefined layer Colors
+	 */
 	public void refresh(Point upperLeft, int[] layersToShow, int zoom, JProgressBar progress, Color[] layerColors, Color[] layerColorsAlpha){
 		this.zoom = zoom;
 		this.startPoint = upperLeft;
@@ -64,12 +76,24 @@ public class Mappy{
 		this.layerColorsAlpha = layerColorsAlpha;
 		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, zoom, upperLeft);
 	}
+	/**
+	 * @return the current MapLabel as JPanel
+	 */
 	public JPanel getMapLabel(){
 		return map;
 	}
+	/**
+	 * @return the Status of the connection (true: connection is closed)
+	 */
 	public boolean closeDB(){
 		return DB.closeConnection();
 	}
+	/**
+	 * Sets a marker to a defined location
+	 * @param p		Point of the marker
+	 * @param name	name of the marker
+	 * @param zoom	zoom of the marker
+	 */
 	public void setPin(Point p, String name, int zoom){
 		this.zoom = zoom;
 		boolean b = false;
@@ -91,6 +115,11 @@ public class Mappy{
 			}
 		}
 	}
+	/**
+	 * 
+	 * @param p
+	 * @return
+	 */
 	public Integer pinExists(Point p){
 		Integer index = null;
 		if(pins != null){
@@ -107,6 +136,10 @@ public class Mappy{
 		}
 		return index;
 	}
+	/**
+	 * Removes a defined marker
+	 * @param p	Point from where the marker should be removed
+	 */
 	public void removePin(Point p){
 		Integer test = pinExists(p);
 		if(test != null){
@@ -115,6 +148,9 @@ public class Mappy{
 		map.setPins(pins, zoom);
 	}
 	
+	/**
+	 * @return String array with the names of all pins
+	 */
 	public String[] getPositions(){
 		String[] names = null;
 		if(pins != null){
@@ -129,7 +165,10 @@ public class Mappy{
 	}
 
 	/**
-	 * 
+	 * Calculates the distance between a Start point and a marker
+	 * @param start	the Startpoint
+	 * @param name	the name of the marker
+	 * @return		the distance between the two points
 	 */
 	public int getDistance(Point start, Point mapStart, String name){
 		double realDistance = 0;
