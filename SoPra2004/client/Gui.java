@@ -27,7 +27,6 @@ import server.Mappy;
 
 public class Gui extends JFrame {
 	private Mappy mappy;
-	private JLabel labelMap;
 	private String[] layer = {"Wald", "Strasse", "Gewerbegebiet",
 			                  "Industriegebiet", "Wohnhäuser", "Schnaps"};
 	private JList layers;
@@ -39,7 +38,6 @@ public class Gui extends JFrame {
 	private JButton refresh;
 	private JButton chooseAll;
 	private JButton deselect;
-	
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -107,7 +105,7 @@ public class Gui extends JFrame {
 		ArrayList tiles = new ArrayList();
 		tiles.add(image);
 		tiles.add(image);
-		MapLabel map = new MapLabel(tiles);
+		MapLabel map = new MapLabel(tiles, new Point(IOHandler.getSavedStart()));
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 1, 0, 1, 3, 1d, 1d);
 		
 		
@@ -120,6 +118,10 @@ public class Gui extends JFrame {
 		
 		setVisible(true);
 		
+	}
+	
+	void mapDataChanged (ArrayList tiles) {
+		//getTiles(map.getSize(), )
 	}
 
 	/**
@@ -149,8 +151,7 @@ public class Gui extends JFrame {
 	 * 
 	 */
 	protected void listValueChanged(ListSelectionEvent evt) {
-		refresh.setEnabled(true);
-		
+		refresh.setEnabled(true);		
 	}
 
 	void setNewLookAndFeel()
