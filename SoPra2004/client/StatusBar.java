@@ -14,7 +14,6 @@ package client;
  */
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalBorders;
-//import javax.swing.border.Border;
 
 import java.awt.*;
 public class StatusBar extends JPanel {
@@ -38,6 +37,8 @@ public class StatusBar extends JPanel {
 		info = new JLabel();
 		info.setFont(new Font("Verdana", Font.BOLD, 12));
 		state = new JLabel(" Fortschritt");
+		state.setFont(new Font ("Verdana", Font.BOLD, 12));
+		
 		
 		add(position);
 		add(info);
