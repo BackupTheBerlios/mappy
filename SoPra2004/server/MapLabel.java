@@ -7,10 +7,15 @@
 package server;
 
 import java.awt.Graphics;
+import java.awt.*;
+import java.awt.Toolkit;
+import java.awt.image.*;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import javax.swing.GrayFilter;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 
@@ -31,6 +36,15 @@ class MapLabel extends JLabel{
 		this.layerList = layerList;
 		repaint();
 	}
+	
+	public Image filter(Image src){
+		ImageFilter colorfilter =  new ColorChanger(Color.BLACK, Color.RED);//Einfach mal so zum Test
+		ImageProducer imageprod = new FilteredImageSource(src.getSource() ,colorfilter );
+		Image img =Toolkit.getDefaultToolkit().createImage( imageprod );
+		System.out.println("Image gefiltert und erstellt");
+		
+		return src;//img; da es nicht funktioniert gebe ich einfach erstmal das alte zurück
+	}
 	public void paint(Graphics g){
 		if (layerList == null){
 			setText("Keine Ebenen ausgewählt");
@@ -39,6 +53,7 @@ class MapLabel extends JLabel{
 			if (!layerList.isEmpty()){
 				ListIterator i = layerList.listIterator(0);
 				
+
 				while(i.hasNext()){
 					ImageObserver imageObserver = null;
 					
@@ -61,6 +76,7 @@ class MapLabel extends JLabel{
 								startX = startX + currentTile.getSize().width;
 								columns--;
 							}
+
 						}
 						else{
 							columns = temp.getColumns();

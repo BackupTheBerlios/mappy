@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.27 2005/01/11 21:45:22 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.28 2005/01/12 16:32:57 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -36,12 +36,19 @@ public class Gui extends JFrame implements LayersIF {
 	private JButton refresh;
 	private JButton chooseAll;
 	private JButton deselect;
+	private AbstractButton moveEast;
+	private AbstractButton moveWest;
+	private AbstractButton moveNorth;
+	private JButton moveSouth;
 	private Point upperLeft;
 	private int[] layersToShow;
 	private JLabel map;
+	private JPanel mapPanel = new JPanel();
 	private StatusBar sb;
 	private JProgressBar progress = new JProgressBar(0,1);
 	private Time date;
+	
+	
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -121,8 +128,40 @@ public class Gui extends JFrame implements LayersIF {
 		
 		map = mappy.getMapLabel();
 		map.setSize(IOHandler.getSavedMapSize());
-		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 2, 3, 1d, 1d);
-			
+		mapPanel.setLayout(new BorderLayout());
+		moveEast=new DirectionButton("east.gif");
+		moveWest=new DirectionButton("west.gif");
+		moveNorth=new DirectionButton("north.gif");
+		moveSouth=new DirectionButton("south.gif");
+		moveEast.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				mappy.move("east");
+			}
+		});
+		
+		moveWest.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				mappy.move("west");
+			}
+		});
+		
+		moveNorth.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				mappy.move("north");
+			}
+		});
+		
+		moveSouth.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				mappy.move("south");
+			}
+		});
+		mapPanel.add(moveEast, BorderLayout.EAST);
+		mapPanel.add(moveWest, BorderLayout.WEST);
+		mapPanel.add(moveNorth, BorderLayout.NORTH);
+		mapPanel.add(moveSouth, BorderLayout.SOUTH);
+		mapPanel.add(map, BorderLayout.CENTER);
+		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 3, 1d, 1d);			
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);
@@ -204,7 +243,8 @@ public class Gui extends JFrame implements LayersIF {
 		progress.setValue(0);
 		progress.setMaximum(layersToShow.length);
 	}
-
+	
+	
 	void setNewLookAndFeel()
 	{
 	  try {
