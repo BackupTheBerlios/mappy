@@ -11,12 +11,8 @@ import java.awt.Point;
 
 import java.io.File;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JProgressBar;
-import javax.sound.sampled.*;
 
 import server.Mappy;
 
@@ -58,27 +54,15 @@ public class Refresher implements Runnable{
 	 */
 	public void run(){
 		File file = new File("mapload.wav");
-		AudioInputStream ais;
-		AudioFormat format;
-		Clip cl = null;
-		try{
-			ais = AudioSystem.getAudioInputStream(file);
-			format = ais.getFormat();
-			DataLine.Info info = new DataLine.Info(Clip.class, format,
-			((int) ais.getFrameLength() * format.getFrameSize()));
-			
-			cl = (Clip) AudioSystem.getLine(info);
-			cl.open(ais);
-		}
-		catch(Exception e){}
-		cl.start();
-		cl.loop(Clip.LOOP_CONTINUOUSLY);
+		Clip clip = AudioPlayer.getStream(file);
+		clip.start();
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 		
 		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors, layerColorsAlpha);
 		sb.setInfo("Fertig!");
 
 		owner.getWait().setVisible(false);
-		cl.stop();
-		cl.close();
+		clip.stop();
+		clip.close();
 	}
 }
