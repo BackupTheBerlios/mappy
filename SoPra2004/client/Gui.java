@@ -55,7 +55,7 @@ public class Gui extends JFrame {
 	private void initComponents() {
 		
 		GridBagLayout layout = new GridBagLayout();
-		setLayout(layout);
+		getContentPane().setLayout(layout);
 		
 		MenuBar mb = new MenuBar();
 		setJMenuBar(mb);
