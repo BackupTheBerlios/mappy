@@ -30,6 +30,11 @@ class MapLabel extends JLabel{
 	MapLabel(ArrayList layerList){
 		this.layerList = layerList;
 	}
+	
+	public void refresh(ArrayList layerList){
+		this.layerList = layerList;
+		repaint();
+	}
 	public void paint(Graphics g){
 		if (!layerList.isEmpty()){
 			ListIterator i = layerList.listIterator(0);
@@ -45,21 +50,21 @@ class MapLabel extends JLabel{
 				int startY = 0;
 				
 				while (j.hasNext()){
+					Tile currentTile = (Tile)j.next();
 					if (columns > 0){
-						Tile currentTile = (Tile)j.next();
 						if(currentTile.hasImage()){
 							g.drawImage(currentTile.getImage(), startX, startY, imageObserver);
-							startX = startX + 500;
+							startX = startX + currentTile.getSize().width;
 							columns--;
 						}
 						else{
-							startX = startX + 500;
+							startX = startX + currentTile.getSize().width;
 							columns--;
 						}						
 					}
 					else{
 						columns = temp.getColumns();
-						startY = startY + 500;
+						startY = startY + currentTile.getSize().height;
 						startX = 0;
 					}
 				}
