@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.45 2005/01/13 19:14:55 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.46 2005/01/13 19:38:48 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -171,6 +171,7 @@ public class Gui extends JFrame implements LayersIF{
 			}
 		});
 		mapPanel = new JPanel();
+		mapPanel.setBorder(new MetalBorders.Flush3DBorder());
 		mapPanel.setLayout(new BorderLayout());
 		mapPanel.setBounds(20,20,20,20);
 		mapPanel.setBackground(new Color(255,255,255));

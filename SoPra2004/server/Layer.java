@@ -15,7 +15,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.22 2005/01/13 19:15:19 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.23 2005/01/13 19:37:36 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
@@ -96,7 +96,7 @@ public class Layer{
 	    cR[0]= (byte)color.getRed();
 	    cG[0]= (byte)color.getGreen();
 	    cB[0]= (byte)color.getBlue();
-	    cA[255]= (byte)255;
+	    cA[255]= (byte)color.getAlpha();
 	    ByteLookupTable blut = new ByteLookupTable(0, new byte [][] {cR, cG, cB, cA}); 
 	    LookupOp lop = new LookupOp (blut, null);
 	    lop.filter(map, map);
