@@ -9,8 +9,10 @@ package client;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 /**
@@ -68,7 +70,34 @@ public class IOHandler {
 			return new int[0];
 		}
 	}
-	static void saveStartPoint(){
-		
-	}
+	static void saveStartPoint (Point startPoint){
+		File path = new File ("save" + File.separatorChar + "start.mpy");
+		try {
+			if (!path.exists()) {
+				path.mkdir ();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream point = new ObjectOutputStream (file);
+			point.writeObject(startPoint);
+			point.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save StartPoint");
+		}
+  	}
+	static void saveLayers (int[] layers){
+		File path = new File ("save" + File.separatorChar + "layers.mpy");
+		try {
+			if (!path.exists()) {
+				path.mkdir ();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream layer = new ObjectOutputStream (file);
+			layer.writeObject(layers);
+			layer.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save Layers");
+		}
+  	}
 }
