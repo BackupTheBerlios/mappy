@@ -1,12 +1,8 @@
-/*
- * Created on 30.11.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 /**
+ * The Graphical User Interface (GUI) of the Application
+ * 
  * @author Softwarepraktikum 2004/05 Gruppe 2
  */
 import java.awt.*;
@@ -52,6 +48,10 @@ public class Gui extends JFrame implements LayersIF{
 	private Clip btClick;
 	protected MapPopup menu;	
 	
+	/**
+	 * Class constructor to build the GUI
+	 * @param mappy	the Mappy displayed in the GUI
+	 */
 	public Gui(Mappy mappy){
 		super("Mappy");
 		ImageIcon icon=new ImageIcon(getClass().getResource("/images/mappy_icon_15x15.gif"));
@@ -70,7 +70,7 @@ public class Gui extends JFrame implements LayersIF{
 	}
 
 	/**
-	 * 
+	 * initializes the components of the GUI
 	 */
 	private void initComponents(){
 		
@@ -95,6 +95,7 @@ public class Gui extends JFrame implements LayersIF{
 				listValueChanged(evt);
 			}
 		});
+		
 		layersScrollPane = new JScrollPane(layers);
 		layersScrollPane.setWheelScrollingEnabled(true);
 		layersScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -125,8 +126,10 @@ public class Gui extends JFrame implements LayersIF{
 		});
 		zoomToolBar = new JToolBar();
 		zoomToolBar.setFloatable(false);
+		
 		zoomLabel = new JLabel("Zoom: ");
 		zoomLabel.setFont(new Font("Verdana", Font.PLAIN, 11));
+		
 		zoomSlider = new JSlider();
 		zoomSlider.setMinimum(0);
 		zoomSlider.setMaximum(300);
@@ -136,6 +139,7 @@ public class Gui extends JFrame implements LayersIF{
 				zoomSliderChanged();
 			}
 		});
+		
 		zoomToolBar.add(zoomLabel);
 		zoomToolBar.add(zoomSlider);
 		zoomToolBar.setBorder(new MetalBorders.Flush3DBorder());
@@ -154,6 +158,7 @@ public class Gui extends JFrame implements LayersIF{
 		layers.setSelectedIndices(layersToShow);
 		
 		menu = new MapPopup("Punktverwaltung", this);
+		
 		map = mappy.getMapLabel();
 		map.setDoubleBuffered(true);
 		map.setSize(IOHandler.getSavedMapSize());
@@ -186,7 +191,6 @@ public class Gui extends JFrame implements LayersIF{
 				refreshAction();
 			}
 		});
-		
 		moveWest.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				click();
@@ -197,7 +201,6 @@ public class Gui extends JFrame implements LayersIF{
 				refreshAction();
 			}
 		});
-		
 		moveNorth.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				click();
@@ -219,6 +222,7 @@ public class Gui extends JFrame implements LayersIF{
 				refreshAction();
 			}
 		});
+		
 		mapPanel = new JPanel();
 		mapPanel.setOpaque(false);
 		mapPanel.setBorder(new MetalBorders.Flush3DBorder());
@@ -230,6 +234,7 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel.add(moveSouth, BorderLayout.SOUTH);
 		mapPanel.add(map, BorderLayout.CENTER);
 		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 1, 0, 2, 2, 1d, 1d);
+		
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);
@@ -288,15 +293,17 @@ public class Gui extends JFrame implements LayersIF{
 	
 
 	/**
-	 * @param x
-	 * @param y
+	 * Displays the Statusbar at a defined location
+	 * 
+	 * @param x	the defined x-coordinate of the Status Bar
+	 * @param y	the defined y-coordinate of the Status Bar 
 	 */
 	protected void setXY(int x, int y){
 		sb.setXY(x,y);
 	}
 
 	/**
-	 * 
+	 * Defines the actions taking place if Zoom Slider is moved
 	 */
 	protected void zoomSliderChanged(){
 		if(!zoomSlider.getValueIsAdjusting()){
@@ -310,7 +317,7 @@ public class Gui extends JFrame implements LayersIF{
 	}
 
 	/**
-	 * 
+	 * Shows the Close Dialog and defines the actions taking place after the Yes/No-Selection
 	 */
 	protected void showCloseDialog() {
 		try{
@@ -340,14 +347,14 @@ public class Gui extends JFrame implements LayersIF{
 	}
 
 	/**
-	 * 
+	 * Deselects all Layers
 	 */
 	protected void deselectAction(){
 		layers.clearSelection();		
 	}
 
 	/**
-	 * 
+	 * Selects all Layers
 	 */
 	protected void chooseAllAction() {
 		int select = ALLLAYERS.length - 1;
@@ -355,7 +362,7 @@ public class Gui extends JFrame implements LayersIF{
 	}
 
 	/**
-	 * 
+	 * Refreshes the selected Layers and displayes the particular map
 	 */
 	protected void refreshAction(){
 		Point location = getLocation();
@@ -371,7 +378,9 @@ public class Gui extends JFrame implements LayersIF{
 	}
 
 	/**
-	 * @param evt
+	 * Defines the action taking place if a ListItem is selected/deselected
+	 * 
+	 * @param evt	the ListSelectionEvent (either a selection or a deselction)
 	 * 
 	 */
 	protected void listValueChanged(ListSelectionEvent evt) {
@@ -393,40 +402,61 @@ public class Gui extends JFrame implements LayersIF{
 	    SwingUtilities.updateComponentTreeUI(this ); 
 	  } catch(Exception e){e.printStackTrace();}
 	}
+	
+	/**
+	 * Returns all selected Layers
+	 * @return a int-Array listing the indices of all currently selected Layers
+	 */
 	int[] getLayers(){
 		return layersToShow;
 	}
 
 	/**
-	 * @return
+	 * Returns the map
+	 * @return	the current map as a JPanel
 	 */
 	public JPanel getMap() {
 		return map;
 	}
+	/**
+	 * Returns the StatusPanel
+	 * @return the current StatusPanel as a JLabel
+	 */
 	public JLabel getStatusPanel(){
 		return sb.getInfo();
 	}
+	/**
+	 * Returns the progress
+	 * @return	the current progress as a JProgressBar
+	 */
 	public JProgressBar getProgress(){
 		return progress;
 	}
 	/**
-	 * @return Returns the sb.
+	 * Returns the Status Bar
+	 * @return Returns the current Status Bar.
 	 */
 	public StatusBar getSb() {
 		return sb;
 	}
 	/**
-	 * @return Returns the zoomSlider.
+	 * Returns the ZoomSlider
+	 * @return Returns the ZzoomSlider.
 	 */
 	public JSlider getZoomSlider() {
 		return zoomSlider;
 	}
 	/**
-	 * @param upperLeft The upperLeft to set.
+	 * Sets the new upperLeft
+	 * @param upperLeft the new upperLeft-Point.
 	 */
 	public void setUpperLeft(Point upperLeft) {
 		this.upperLeft = upperLeft;
 	}
+	/**
+	 * Returns an Color-Array with the saved colors for the different Layers
+	 * @return	the currently saved colors for the different layers
+	 */
 	public Color[] getLayerColors(){
 		try{
 			return IOHandler.getSavedColorSettings();
@@ -435,25 +465,31 @@ public class Gui extends JFrame implements LayersIF{
 			return LAYERCOLORS;
 		}
 	}
+	/**
+	 * Returns the predefined Colors for the different Layers
+	 * @return	the predefined colors for the different Layers
+	 */
 	public Color[] getLayerColorsAlpha(){
 		return LAYERCOLORS;
 	}
 	/**
-	 * @return Returns the mappy.
+	 *@return Returns the mappy.
 	 */
 	public Mappy getMappy() {
 		return mappy;
 	}
 
 	/**
-	 * @return
+	 * @return the Wait-Dialog
 	 */
 	public Dialog getWait() {
 		return wait;
 	}
 
+	
 	/**
-	 * 
+	 * Sets the Refresh-Button enabled or disabled
+	 * @param b	boolean to set the Refresh-Button enabled/disabled
 	 */
 	public void setRefreshEnabled(boolean b) {
 		refresh.setEnabled(b);
@@ -461,7 +497,6 @@ public class Gui extends JFrame implements LayersIF{
 	
 	/**
 	 * Plays the clicksound
-	 * 
 	 */
 	private void click(){
 		if(btClick!=null){

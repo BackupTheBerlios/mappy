@@ -1,11 +1,9 @@
-/*
- * Created on 18.01.2005
- *
- */
 package client;
 
 /**
- * @author Nicolas Fritsch
+ * Test Class for Settings
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
  */
 public class testSettings {

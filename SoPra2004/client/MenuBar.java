@@ -1,9 +1,3 @@
-/*
- * Created on 15.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.event.ActionEvent;
@@ -15,10 +9,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JProgressBar;
 
 /**
- * @author ba008959
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * The Menubar of the Gui with all its Menues and Items
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *	
  */
 public class MenuBar extends JMenuBar{
 	
@@ -112,23 +106,27 @@ public class MenuBar extends JMenuBar{
 	owner.setJMenuBar(this);
 	}
 	
+	
 	/**
-	 * 
+	 * Sets the zoom to a defined value
+	 * @param zoom	a int-Value as the new zoom-Value
 	 */
 	protected void setZoom(int zoom){
 		owner.getSb().setZoom(zoom);
 		owner.getZoomSlider().setValue(zoom);		
 	}
 
+
 	/**
-	 * 
+	 * Shows the Close Dialog
 	 */
 	protected void closeProgram() {
 		owner.showCloseDialog();
 	}
 
 	/**
-	 * 
+	 * calls the different save methods
+	 * @see IOHandler
 	 */
 	protected void saveSettings(){
 		JProgressBar progress = owner.getProgress();
@@ -148,6 +146,9 @@ public class MenuBar extends JMenuBar{
 		owner.getStatusPanel().setText("Gespeichert!");
 	}
 
+	/**
+	 * Opens the About Dialog
+	 */
 	void openAbout(){
 		AboutDialog about = new AboutDialog ((JFrame)this.getFocusCycleRootAncestor());
 	}

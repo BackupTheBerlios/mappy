@@ -1,9 +1,3 @@
-/*
- * Created on 10.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.Font;
@@ -13,16 +7,19 @@ import javax.swing.JLabel;
 import javax.swing.plaf.metal.MetalBorders;
 
 /**
- * @author DrRSatzteil
+ * Simple Time Class
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Time extends JLabel{
 	
 	private GregorianCalendar now;
 	private DateFormat formater;
 
+	/**
+	 * Class constructor	Sets the time format (incl. font and format of the clock)
+	 */
 	Time(){
 		formater = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM);
 		setBorder(new MetalBorders.Flush3DBorder());
@@ -31,6 +28,9 @@ public class Time extends JLabel{
 		Wait w = new Wait ();
 		w.start();
 	}
+	/**
+	 * refreshs the current time
+	 */
 	public void refresh(){
 		now = new GregorianCalendar();
 		now.setTime(now.getTime());

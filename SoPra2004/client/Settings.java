@@ -180,7 +180,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	
 
 	/**
-	 * The method init sets up the content/components of the settings window
+	 * initializes the components of the JFrame Settings
 	 */
 	private void init() {
 		
@@ -363,8 +363,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	}
 	/**
 	 * changes the Color of the JPanels next to the layer name
-	 * @param i 
-	 * i is the layer level
+	 * @param i i is the layer level
 	 */
 	private void changeLayerColor(int i) {
 		Color newColor = JColorChooser.showDialog(
@@ -375,7 +374,6 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	/**
 	 * Gives the JFrame a minimum size
 	 * 
-	 * @param e
 	 */
 	private void this_componentResized() {
 		Dimension size=this.getSize();

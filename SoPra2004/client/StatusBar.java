@@ -144,7 +144,7 @@ public class StatusBar extends JPanel {
 
 	/**
 	 * Sets the displayed zoom-Value
-	 * @param z	the Zoom-value as an int
+	 * @param zoom	the Zoom-value as an int
 	 */
 	public void setZoom(int zoom){
 		zoomValue = zoom;

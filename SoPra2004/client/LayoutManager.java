@@ -1,9 +1,3 @@
-/*
- * Created on 18.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.Component;
@@ -12,10 +6,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 /**
- * @author DrRSatzteil
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * Layoutmanager for the Client
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *	
  */
 class LayoutManager {
 	static void addComponent (Container cont, GridBagLayout gbl, Component c,

@@ -1,9 +1,3 @@
-/*
- * Created on 21.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.Point;
@@ -15,10 +9,10 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 /**
- * @author ba008268
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * Popup for setting marks on the map
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *	
  */
 public class MapPopup extends JPopupMenu{
 	private Gui owner;
@@ -30,6 +24,11 @@ public class MapPopup extends JPopupMenu{
 	private JMenuItem[] itemForName;
 	private Point mousePoint;
 
+	/**
+	 * Class Constructor builds a PopUp
+	 * @param name	the name of the Popup as a String
+	 * @param owner	the GUI the PopUp belongs to
+	 */
 	MapPopup(String name, Gui owner){
 		super(name);
 		this.owner = owner;

@@ -1,8 +1,3 @@
-//javadoc ready
-/*
- * Created on 07.12.2004
- *
- */
 package client;
 
 import java.awt.BorderLayout;
@@ -30,6 +25,10 @@ public class AboutDialog extends JDialog {
 	private JLabel team;
 	private JLabel mappyVersion;
 	private JButton close;
+	/**
+	 * Class constructor displays the About Dialog in the center of the screen
+	 * @param parent the frame the dialog belongs to
+	 */
 	public AboutDialog(JFrame parent){
 		super(parent, "Über Mappy", true);
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -39,6 +38,10 @@ public class AboutDialog extends JDialog {
 		setResizable (false);
 		initComponents();
 	}
+
+	/**
+	 * initializes the components of the About Dialog
+	 */
 	private void initComponents(){
 		uniIcon = new ImageIcon (getClass().getResource("/images/aboutlogo.gif"));
 		uniLabel = new JLabel (uniIcon);

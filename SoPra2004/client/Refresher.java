@@ -1,9 +1,3 @@
-/*
- * Created on 04.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.Color;
@@ -14,10 +8,10 @@ import javax.swing.JProgressBar;
 import server.Mappy;
 
 /**
- * @author DrRSatzteil
+ * Refresher Class gets the new map
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Refresher implements Runnable{
 	
@@ -32,6 +26,10 @@ public class Refresher implements Runnable{
 	private Gui owner;
 
 
+	/**
+	 * Class Constructor
+	 * @param owner	the GUI the map belongs to
+	 */
 	Refresher(Gui owner){
 		this.owner = owner;
 		this.layersToShow = owner.getLayers();

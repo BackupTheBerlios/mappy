@@ -1,9 +1,3 @@
-//javadoc ready
-
-/*
- * Created on 03.01.2005
- *
- */
 package client;
 
 import java.awt.Color;

@@ -1,8 +1,3 @@
-//javadoc ready
-/*
- * Created on 18.01.2005
- *
- */
 package client;
 
 import javax.swing.JButton;

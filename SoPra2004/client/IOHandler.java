@@ -1,9 +1,3 @@
-/*
- * Created on 18.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.Color;
@@ -21,14 +15,17 @@ import javax.swing.JPanel;
 
 
 /**
- * @author DrRSatzteil
+ * IOHandler for the different options to save
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 
-
 public class IOHandler implements SettingsIF, LayersIF{
+	/**
+	 * Returns the saved Startpoint
+	 * @return	the saved upperLeft Point of the map
+	 */
 	static Point getSavedStart(){
 		if(IOHandler.class.getResource("/save/start.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/start.mpy").getFile());
@@ -59,6 +56,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 		}
 	  
 	}
+	/**
+	 * Returns the saved Layers
+	 * @return	the saved int-Array of the selected Layers
+	 */
 	static int[] getSavedLayers(){
 		if(IOHandler.class.getResource("/save/layers.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/layers.mpy").getFile());
@@ -89,6 +90,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return new int[0];
 		}
 	}
+	/**
+	 * Returns the saved Windowsize
+	 * @return	the saved Dimension of the window
+	 */
 	static Dimension getSavedWindowSize(){
 		if(IOHandler.class.getResource("/save/windowSize.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/windowSize.mpy").getFile());
@@ -118,6 +123,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return new Dimension(850,600);
 		}
 	}
+	/**
+	 * Returns the saved Window Position
+	 * @return	the saved Location of the window
+	 */
 	static Point getSavedWindowPosition(){
 		
 		if(IOHandler.class.getResource("/save/windowPos.mpy")!=null){
@@ -148,6 +157,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return new Point(0,0);
 		}
 	}
+	/**
+	 * Returns the saved Map Size
+	 * @return	the saved Dimension the Map
+	 */
 	static Dimension getSavedMapSize(){
 		
 		if(IOHandler.class.getResource("/save/mapSize.mpy")!=null){
@@ -178,6 +191,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return new Dimension(0,0);
 		}
 	}
+	/**
+	 * Returns the saved Zoom
+	 * @return	the saved Zoom Value as an int
+	 */
 	static int getSavedZoom(){
 		if(IOHandler.class.getResource("/save/zoom.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/zoom.mpy").getFile());
@@ -208,6 +225,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return 0;
 		}
 	}
+	/**
+	 * Returns the saved Database settings
+	 * @return	the saved Database Settings as a String-Array
+	 */
 	static String[] getSavedDbSettings(){
 		if(IOHandler.class.getResource("/save/dbSettings.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/dbSettings.mpy").getFile());
@@ -232,6 +253,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return DB_SETTINGS;
 		}
 	}
+	/**
+	 * Returns the saved Color Settings
+	 * @return	the saved Color Settings as a Color-Array
+	 */
 	static Color[] getSavedColorSettings(){
 		if(IOHandler.class.getResource("/save/colorSettings.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/colorSettings.mpy").getFile());
@@ -256,6 +281,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return LAYERCOLORS;
 		}
 	}
+	/**
+	 * Returns the saved Sound Settings
+	 * @return	the saved Sound Setting as a boolean
+	 */
 	static boolean getSavedSoundSettings(){
 		if(IOHandler.class.getResource("save/soundSettings.mpy")!=null){
 			File path = new File (IOHandler.class.getResource("/save/soundSettings.mpy").getFile());
@@ -287,6 +316,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 	
 	
 	
+	/**
+	 * Saves the current Startpoint 
+	 * @param startPoint	the current upperLeft of the map
+	 */
 	static void saveStartPoint (Point startPoint){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {
@@ -302,6 +335,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save StartPoint");
 		}
   	}
+	/**
+	 * Saves the currently selected Layers
+	 * @param layers	the currently selected Layers
+	 */
 	static void saveLayers(int[] layers){
 		File path = new File ("save" + File.separatorChar + "layers.mpy");
 		try {
@@ -317,6 +354,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save Layers");
 		}
   	}
+	/**
+	 * Saves the current Window Size
+	 * @param window	the current Window
+	 */
 	static void saveWindowSize(JFrame window){
 		File path = new File ("save" + File.separatorChar + "windowSize.mpy");
 		try {
@@ -332,6 +373,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save WindowSize");
 		}
 	}
+	/**
+	 * Saves the current Window Position
+	 * @param window	the current Window
+	 */
 	static void saveWindowPosition(JFrame window){
 		File path = new File ("save" + File.separatorChar + "windowPos.mpy");
 		try {
@@ -347,6 +392,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save WindowPosition");
 		}
 	}
+	/**
+	 * Saves the current Map Size
+	 * @param map	the current JPanel map
+	 */
 	static void saveMapSize(JPanel map){
 		File path = new File ("save" + File.separatorChar + "mapSize.mpy");
 		try {
@@ -362,6 +411,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save MapSize");
 		}
 	}
+	/**
+	 * Saves the currently selected Zoom
+	 * @param zoom	the current zoom Value
+	 */
 	static void saveZoomValue (int zoom){
 		File path = new File ("save" + File.separatorChar + "zoom.mpy");
 		try {
@@ -378,6 +431,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save ZoomFactor");
 		}
   	}
+	/**
+	 * Saves the current Database Settings
+	 * @param dbSettings	the current Database Settings
+	 */
 	static void saveDbSettings (String[] dbSettings){
 		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
 		try {
@@ -393,6 +450,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save database settings");
 		}
   	}
+	/**
+	 * Saves the current Color Settings
+	 * @param colorSettings	the current Color Settings
+	 */
 	static void saveColorSettings (Color[] colorSettings){
 		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
 		try {
@@ -408,6 +469,10 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save Colors");
 		}
   	}
+	/**
+	 * Saves the current Sound Settings
+	 * @param b	the current Sound Setting (enabled/disabled)
+	 */
 	static void saveSoundSettings(boolean b){
 		File path = new File ("save" + File.separatorChar + "soundSettings.mpy");
 		try {
@@ -424,24 +489,36 @@ public class IOHandler implements SettingsIF, LayersIF{
 		}
 	}
 	
+	/**
+	 * delets the save file
+	 */
 	static void deleteColorSettings(){
 		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
 		if (path.exists()){
 			path.delete();
 		}
 	}
+	/**
+	 * delets the save file
+	 */
 	static void deleteDBSettings(){
 		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
 		if (path.exists()){
 			path.delete();
 		}
 	}
+	/**
+	 * delets the save file
+	 */
 	static void deleteSoundSettings(){
 		File path = new File ("save" + File.separatorChar + "soundSettings.mpy");
 		if (path.exists()){
 			path.delete();
 		}
 	}
+	/**
+	 * delets the save file
+	 */
 	static void deleteViewSettings(){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		if (path.exists()){
@@ -468,6 +545,9 @@ public class IOHandler implements SettingsIF, LayersIF{
 			path.delete();
 		}
 	}
+	/**
+	 * delets the save file
+	 */
 	static boolean changesExist(){
 		File path1 = new File ("save" + File.separatorChar + "colorSettings.mpy");
 		File path2 = new File ("save" + File.separatorChar + "dbSettings.mpy");

@@ -1,9 +1,3 @@
-/*
- * Created on 19.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 
@@ -16,13 +10,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
 /**
- * @author DrRSatzteil
- *
- *$Id: AudioPlayer.java,v 1.4 2005/01/21 14:36:07 jesuzz Exp $
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+ * AudioPlayer Class for the different soundfiles 
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+*/
 public class AudioPlayer{
 	
 	static Clip getStream(URL path) throws SoundDisabledException{
