@@ -40,17 +40,18 @@ public class MenuBar extends JMenuBar{
 		
 		// create Menu Items
 		  // File
-		JMenuItem menuItemExit=new JMenuItem("Beenden");
-		JMenuItem menuItemSave=new JMenuItem("Speichern");
+		JMenuItem menuItemExit = new JMenuItem("Beenden");
+		JMenuItem menuItemSave = new JMenuItem("Speichern");
 		  // View 
-		JMenuItem menuItemZoom100=new JMenuItem("Zoom 100%");
-		JMenuItem menuItemZoom200=new JMenuItem("Zoom 200%");
-		JMenuItem menuItemZoom300=new JMenuItem("Zoom 300%");
+		JMenuItem menuItemZoom000 = new JMenuItem("Zoom   0%");
+		JMenuItem menuItemZoom100 = new JMenuItem("Zoom 100%");
+		JMenuItem menuItemZoom200 = new JMenuItem("Zoom 200%");
+		JMenuItem menuItemZoom300 = new JMenuItem("Zoom 300%");
 		  // Help
-		JMenuItem menuItemAbout=new JMenuItem("Über Mappy...");
+		JMenuItem menuItemAbout = new JMenuItem("Über Mappy...");
 		  // Settings
-		JMenuItem menuItemDb=new JMenuItem("Datenbank");
-		JMenuItem menuItemLanguage= new JMenuItem("Sprache");
+		JMenuItem menuItemDb = new JMenuItem("Datenbank");
+		JMenuItem menuItemLanguage = new JMenuItem("Sprache");
 		// add Menu Items
 		  // Settings
 		menuSettings.add(menuItemDb);
@@ -61,6 +62,7 @@ public class MenuBar extends JMenuBar{
 		menuFile.addSeparator();
 		menuFile.add(menuItemExit);
 		  // Anzeige
+		menuView.add(menuItemZoom000);
 		menuView.add(menuItemZoom100);
 		menuView.add(menuItemZoom200);
 		menuView.add(menuItemZoom300);
@@ -84,6 +86,11 @@ public class MenuBar extends JMenuBar{
 			openAbout();
 		}
 	});
+	menuItemZoom000.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			setZoom(0);
+		}
+	});
 	menuItemZoom100.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			setZoom(100);
@@ -105,7 +112,8 @@ public class MenuBar extends JMenuBar{
 	/**
 	 * 
 	 */
-	protected void setZoom(int zoom) {
+	protected void setZoom(int zoom){
+		owner.getSb().setZoom(zoom);
 		owner.getZoomSlider().setValue(zoom);		
 	}
 
