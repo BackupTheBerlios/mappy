@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  * @author fkubis
- * $Id: Tile.java,v 1.6 2004/12/22 01:59:50 drrsatzteil Exp $
+ * $Id: Tile.java,v 1.7 2005/01/12 20:14:26 drrsatzteil Exp $
  */
 public class Tile {
 	private int id;
@@ -68,5 +68,4 @@ public class Tile {
 	public Dimension getSize(){
 		return dim;
 	}
-
 }

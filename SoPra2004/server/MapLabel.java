@@ -6,17 +6,25 @@
  */
 package server;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+<<<<<<< MapLabel.java
+=======
 import java.awt.*;
 import java.awt.Toolkit;
 import java.awt.image.*;
 import java.awt.image.ImageObserver;
+>>>>>>> 1.4
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+<<<<<<< MapLabel.java
+import javax.swing.JPanel;
+=======
 import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+>>>>>>> 1.4
 
 
 /**
@@ -25,15 +33,17 @@ import javax.swing.JLabel;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-class MapLabel extends JLabel{
+class MapLabel extends JPanel{
 	private ArrayList layerList;
 
 	MapLabel(){
 		setDoubleBuffered(true);
+		setOpaque(false);
 	}
 	
 	public void refresh(ArrayList layerList){
 		this.layerList = layerList;
+//		clear();
 		repaint();
 	}
 	
@@ -47,17 +57,17 @@ class MapLabel extends JLabel{
 	}
 	public void paint(Graphics g){
 		if (layerList == null){
-			setText("Keine Ebenen ausgewählt");
 		}
 		else{
+			//g.clearRect(0,0,this.getSize().width, this.getSize().height);
 			if (!layerList.isEmpty()){
 				ListIterator i = layerList.listIterator(0);
 				
 
 				while(i.hasNext()){
-					ImageObserver imageObserver = null;
-					
 					Layer temp = (Layer)i.next();
+					System.out.println(temp.getMap());
+					g.drawImage(temp.getMap(), 0, 0, null);
 					int columns = temp.getColumns();
 					ArrayList tiles = temp.getTiles();
 					ListIterator j = tiles.listIterator(0);

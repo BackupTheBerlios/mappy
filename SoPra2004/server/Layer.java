@@ -6,75 +6,55 @@ package server;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.ArrayList;
-
+import java.awt.image.BufferedImage;
 import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.9 2004/12/22 01:58:53 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.10 2005/01/12 20:12:45 drrsatzteil Exp $
  */
 public class Layer {
-	private int lines = 0;
-	private int columns = 0;
-	private int layerId;		
-	private ArrayList tiles;
-	
-	private Dimension dim;
-	private Point startP;
-	private DBValues DB;
+	private BufferedImage map;
+	private Dimension d;
 		
 	Layer(Dimension d, Point p, int layerId, DBValues DB) {
-		dim 			= d;
-		startP 			= p;
-		this.layerId 	= layerId;
-		this.DB 		= DB;
-		this.tiles		= new ArrayList();
 		
+		map = new BufferedImage(d.width, d.height, BufferedImage.TRANSLUCENT);
+		this.d = d;
+		int tileWidth = 0;
+		int tileHeight = 0;
 		int x = 0;
 		int y = 0;
-		while (y < dim.height){
-			lines++;
-			while (x < dim.width){
-				if (lines == 1){
-					columns++;
+		final Point startPoint = p;
+		Point currentPoint = p;
+		while(d.height > y){
+			while(d.width > x){
+				Tile current = DB.getTile(currentPoint, layerId);
+				tileWidth = current.getSize().width;
+				tileHeight = current.getSize().height;
+				if(current.hasImage() == true){
+					map.getGraphics().drawImage(current.getImage(),x,y,null);
 				}
-				Point currentPoint = new Point (startP.x + x, startP.y + y);
-				Tile temp = DB.getTile(currentPoint, layerId);
-				tiles.add(temp);
-				x += temp.getSize().width;
+				x += tileWidth;
+				currentPoint.setLocation(5500 + x, 5500 + y);
+				System.out.println(currentPoint);
 			}
 			x = 0;
-			y += 500;
+			y += tileHeight;
+			currentPoint.setLocation(5500 + x, 5500 + y);
+			//System.out.println(currentPoint);
 		}
-	}
-	
-	/**
-	 * @return
-	 */
-	public int getColumns() {
-		return columns;
+		map.flush();
 	}
 
-	/**
-	 * @return
-	 */
-	public int getLines() {
-		return lines;
+	public Dimension getDimension(){
+		return d;
 	}
-
 	/**
 	 * @return
 	 */
-	public int getLayerId() {
-		return layerId;
-	}
-
-	/**
-	 * @return
-	 */
-	public ArrayList getTiles() {
-		return tiles;
+	public BufferedImage getMap(){
+		return map;
 	}
 
 }

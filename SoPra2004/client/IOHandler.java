@@ -16,7 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 /**
@@ -47,7 +47,7 @@ public class IOHandler {
 		}
 		else{
 			System.err.println("Failed to load StartPoint");
-			return new Point(5500,5500);
+			return new Point(0,0);
 		}
 	}
 	static int[] getSavedLayers(){
@@ -206,7 +206,7 @@ public class IOHandler {
 			System.err.println("Failed to save WindowPosition");
 		}
 	}
-	static void saveMapSize(JLabel map){
+	static void saveMapSize(JPanel map){
 		File path = new File ("save" + File.separatorChar + "mapSize.mpy");
 		try {
 			if (!path.exists()) {

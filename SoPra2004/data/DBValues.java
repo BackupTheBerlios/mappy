@@ -20,7 +20,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.14 2005/01/04 21:09:16 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.15 2005/01/12 20:12:23 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -64,47 +64,4 @@ public class DBValues {
 		}
 		return new Tile();
 	}
-
-	public BufferedImage getImage(Point start, int type) throws NoImageException {
-    	try {
-    		Statement stmt = this.con.createStatement();
-    		String sql = "";
-    		sql = "SELECT * FROM MapDataTransparent WHERE " +
-    			  "XFrom <= " + (int)start.getX() +
-				  "AND YFrom = " + (int)start.getY()
-				  + " AND Type = " + type;
-    		
-    		sql = "SELECT * FROM MapDataTransparent WHERE ID = 196 LIMIT 1";
-    		System.out.println (sql);
-    		ResultSet res = stmt.executeQuery(sql);
-    		res.next();
-    		int id = res.getInt("ID");
-    		System.err.println("ID des gewählten Datensatzes: " + id);
-    		// Data
-    		// isNull Check einfügen und entsprechenden return wertqa
-    		if (res.getBytes("Data") != null) {
-    			//ImageIcon img = new ImageIcon(res.getBytes("Data"));
-    			//return img;
-    			
-    			BufferedImage bI = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);    			    			
-    			bI = ImageIO.read( res.getUnicodeStream("Data") );
-    			return bI;    			
-    		} else {
-    			throw new NoImageException("Stream aus der DB ist null");
-    		}
-    		
-    	}
-    	catch (Exception e) {
-    		System.err.println("Error: " + e.getMessage());
-    	} 	
-    	
-        return null;
-    }
-    
-    /*
-    public ArrayList getLocationData() {
-    	
-    	
-    }
-    */
 }

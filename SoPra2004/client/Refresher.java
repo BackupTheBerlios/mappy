@@ -42,6 +42,6 @@ public class Refresher implements Runnable{
 	 */
 	public void run() {
 		refToMappy.refresh(upperLeft, layersToShow, progress);
-		sb.setInfo("Karte vollständig geladen");
+		sb.setInfo("Fertig!");
 	}
 }

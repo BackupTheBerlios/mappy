@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.20 2005/01/12 20:15:07 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.21 2005/01/12 20:16:13 drrsatzteil Exp $
  */
 
 
@@ -41,18 +41,6 @@ public class Mappy {
 			progress.setValue(i+1);
 		}
 		return layers;
-	}
-
-	public BufferedImage getMapDemo() {
-		System.err.println("getMapDemo");
-				
-		BufferedImage bI;
-				
-		Map myMap = new Map();
-		bI = myMap.generateMap(new Dimension(), new Point(), (double)100);
-		
-		System.err.println("Ende getMapDemo");
-		return bI;
 	}
 	
 	public void move(String direction){
