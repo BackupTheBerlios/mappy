@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  * @author fkubis
- * $Id: Tile.java,v 1.5 2004/12/21 23:23:34 drrsatzteil Exp $
+ * $Id: Tile.java,v 1.6 2004/12/22 01:59:50 drrsatzteil Exp $
  */
 public class Tile {
 	private int id;
@@ -19,7 +19,7 @@ public class Tile {
 	private Point to;
 	private Dimension dim;
 	private byte[] data;
-	private ImageIcon image;
+	private ImageIcon image = null;
 	
 	public Tile(){
 	}
@@ -28,7 +28,7 @@ public class Tile {
 		this.id	= id;
 		from 	= new Point(XFrom, YFrom);
 		to 		= new Point(XTo, YTo);
-		dim = new Dimension(XTo - XFrom, YTo - YFrom);
+		dim 	= new Dimension(XTo - XFrom, YTo - YFrom);
 		data 	= gif;
 		
 		try {
@@ -43,7 +43,7 @@ public class Tile {
 			image = new ImageIcon(data);
 		} else {
 			throw new NoImageException("Stream aus der DB ist null");
-		}		
+		}
 	}
 	
 	public boolean hasImage() {

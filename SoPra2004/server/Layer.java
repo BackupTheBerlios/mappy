@@ -12,11 +12,11 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.8 2004/12/21 23:23:13 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.9 2004/12/22 01:58:53 drrsatzteil Exp $
  */
 public class Layer {
-	private int lines;
-	private int columns;
+	private int lines = 0;
+	private int columns = 0;
 	private int layerId;		
 	private ArrayList tiles;
 	
@@ -36,7 +36,9 @@ public class Layer {
 		while (y < dim.height){
 			lines++;
 			while (x < dim.width){
-				columns++;
+				if (lines == 1){
+					columns++;
+				}
 				Point currentPoint = new Point (startP.x + x, startP.y + y);
 				Tile temp = DB.getTile(currentPoint, layerId);
 				tiles.add(temp);
