@@ -98,9 +98,7 @@ public class Layer{
 	public Dimension getDimension(){
 		return new Dimension (map.getWidth(), map.getHeight());
 	}
-	/**
-	 * @return
-	 */
+	
 	public BufferedImage getMap(){
 		return map;
 	}
