@@ -411,4 +411,14 @@ public class IOHandler implements SettingsIF, LayersIF{
 			path.delete();
 		}
 	}
+	static boolean changesExist(){
+		File path1 = new File ("save" + File.separatorChar + "colorSettings.mpy");
+		File path2 = new File ("save" + File.separatorChar + "dbSettings.mpy");
+		if(path1.exists() || path2.exists()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
