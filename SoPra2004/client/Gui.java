@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.23 2005/01/10 20:06:51 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.24 2005/01/10 20:37:16 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -41,6 +41,7 @@ public class Gui extends JFrame implements LayersIF {
 	private JLabel map;
 	private StatusBar sb;
 	private JProgressBar progress = new JProgressBar(0,1);
+	private Time date;
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
@@ -119,7 +120,7 @@ public class Gui extends JFrame implements LayersIF {
 		layers.setSelectedIndices(layersToShow);
 		
 		map = mappy.getMapLabel();
-		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 2, 3, 1d, 1d);
 			
 		status = new JPanel();
 		progress = new JProgressBar(0, layersToShow.length);
@@ -128,7 +129,10 @@ public class Gui extends JFrame implements LayersIF {
 		sb.setInfo("Los geht's!");
 		sb.setZoom(100);
 		sb.setPosition(upperLeft.x,upperLeft.y);
+		
+		date = new Time();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 3, 1, 1, 1d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 3, 3, 1, 1, 0d, 0d);
 		
 		refreshAction();
 		setVisible(true);
