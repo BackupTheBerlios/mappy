@@ -14,6 +14,8 @@ package client;
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 
 import java.awt.Color;
