@@ -74,7 +74,7 @@ public class IOHandler {
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {
 			if (!path.exists()) {
-				path.mkdir ();
+				new File("save").mkdir ();
 			}
 			FileOutputStream file = new FileOutputStream (path);
 			ObjectOutputStream point = new ObjectOutputStream (file);
@@ -89,7 +89,7 @@ public class IOHandler {
 		File path = new File ("save" + File.separatorChar + "layers.mpy");
 		try {
 			if (!path.exists()) {
-				path.mkdir ();
+				new File("save").mkdir ();
 			}
 			FileOutputStream file = new FileOutputStream (path);
 			ObjectOutputStream layer = new ObjectOutputStream (file);
