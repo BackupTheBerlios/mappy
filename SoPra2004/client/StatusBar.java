@@ -36,15 +36,15 @@ public class StatusBar extends JPanel {
 		zoom.setFont(new Font("Verdana", Font.BOLD, 12));
 		info = new JLabel();
 		info.setFont(new Font("Verdana", Font.BOLD, 12));
-		state = new JLabel(" Fortschritt");
+		state = new JLabel(" Fortschritt   ");
 		state.setFont(new Font ("Verdana", Font.BOLD, 12));
 		
 		
 		add(position);
-		add(info);
 		add(zoom);
 		add(progress);
 		add(state);
+		add(info);
 	}
 
 	public void setZoom(int z){
@@ -57,5 +57,12 @@ public class StatusBar extends JPanel {
 	
 	public void setPosition(int x, int y){
 		position.setText("x: "+x+" y: "+y + "   ");
+	}
+
+	/**
+	 * @return
+	 */
+	public JLabel getInfo() {
+		return info;
 	}
 }

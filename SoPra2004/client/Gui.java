@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.24 2005/01/10 20:37:16 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.25 2005/01/10 21:00:31 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -54,7 +54,6 @@ public class Gui extends JFrame implements LayersIF {
 		});
 		// Build GUI
 		System.out.print("Building new GUI...");
-		//setSize(500,500);
 		setNewLookAndFeel();
 		initComponents();
 
@@ -180,7 +179,7 @@ public class Gui extends JFrame implements LayersIF {
 	 */
 	protected void refreshAction(){
 		refresh.setEnabled(false);
-		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress));
+		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy, progress, sb));
 		getData.start();
 	}
 
