@@ -8,9 +8,11 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import data.DBValues;
+
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.3 2004/12/18 16:28:24 fkubis Exp $
+ * $Id: Layer.java,v 1.4 2004/12/18 17:23:44 fkubis Exp $
  */
 public class Layer {
 	private int lines;
@@ -20,11 +22,13 @@ public class Layer {
 	
 	private Dimension dim;
 	private Point startP;
+	private DBValues DB;
 		
-	Layer(Dimension d, Point p, int layerId) {
-		dim = d;
-		startP = p;
-		this.layerId = layerId;
+	Layer(Dimension d, Point p, int layerId, DBValues DB) {
+		dim 			= d;
+		startP 			= p;
+		this.layerId 	= layerId;
+		this.DB 		= DB;
 	}
 	
 	public boolean fetchTiles() {
@@ -33,6 +37,12 @@ public class Layer {
 		System.out.println("Layer " + layerId + " Breite: " + dim.getWidth() );
 		System.out.println("Layer " + layerId + " Höhe: " + dim.getHeight() );
 		
+		int i =0;
+		Point actPoint = (Point)startP.clone();		
+		do {
+			tiles.add(DB.getTile(actPoint));
+			i++;
+		} while(i < 10);
 		
 		return false;
 	}

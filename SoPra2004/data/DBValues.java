@@ -14,12 +14,11 @@ import java.sql.Statement;
 
 import javax.imageio.ImageIO;
 import server.NoImageException;
+import server.Tile;
 
 /**
- * @author ba008961
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author fkubis
+ * $Id: DBValues.java,v 1.7 2004/12/18 17:23:44 fkubis Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -33,6 +32,37 @@ public class DBValues {
 		this.connector = new DBConnector();		
 		this.con = this.connector.openDB(this.url, this.user, this.pass); 		
 	}
+	
+	public Tile getTile(Point p) {
+		Tile t = null;
+				
+		try {
+			Statement stmt = this.con.createStatement();
+			String sql = "";
+			/*
+			sql = "SELECT * FROM MapData WHERE " +
+				  "XFrom <= " + (int)start.getX() +
+				  "AND YFrom = " + (int)start.getY()
+				  + " AND Type = " + type;
+			*/
+			sql = "SELECT * FROM MapData WHERE ID = 196 LIMIT 1";
+			System.out.println (sql);
+			ResultSet res = stmt.executeQuery(sql);
+			res.next();
+			int id = res.getInt("ID");
+			System.err.println("ID des gewählten Datensatzes: " + id);
+			
+			t = new Tile(id, res.getInt("XFrom"), res.getInt("XTo"), 
+								res.getInt("YFrom"), res.getInt("YTo"), res.getBytes("Data"));
+		}
+		catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+			// Wenn wir nix getten können brauchen wir noch standard werte für Tile
+			System.exit(1);			
+		}			
+				
+		return t;
+	} 
 	
     //public ImageIcon getImage(Point start, int type) throws NoImageException {
 	public BufferedImage getImage(Point start, int type) throws NoImageException {
@@ -66,7 +96,7 @@ public class DBValues {
     	}
     	catch (Exception e) {
     		System.err.println("Error: " + e.getMessage());
-    	}    	
+    	} 	
     	
         return null;
     }

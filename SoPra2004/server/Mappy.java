@@ -8,7 +8,7 @@ package server;
 
 /**
  * @author fkubis
- * $Id: Mappy.java,v 1.10 2004/12/18 16:28:24 fkubis Exp $
+ * $Id: Mappy.java,v 1.11 2004/12/18 17:23:44 fkubis Exp $
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import data.*;
 
 public class Mappy {
-	private ArrayList tiles;
+	private DBValues DB;
 
 	public Mappy(){
-		tiles = new ArrayList();
+		DB = new DBValues();
 	}
 	
 	public ArrayList getLayers(Dimension d, Point p, int[] layerIds) {
@@ -33,7 +33,7 @@ public class Mappy {
 		ArrayList layers = new ArrayList();
 		
 		for ( int i=0; i<layerIds.length; i++ ) {
-			Layer layer = new Layer(d, p, i);
+			Layer layer = new Layer(d, p, i, DB);
 			if (layer.fetchTiles()) {
 				System.out.println("fetchTiles erfolgreich fuer LayerNr: " + i );
 			} else {
@@ -45,10 +45,12 @@ public class Mappy {
 		return layers;
 	}
 	
+	/*
 	public ArrayList getTiles(Dimension d, Point p){
 		
 		return tiles;
 	}
+	*/
 	
 	private Image getTile(){
 		Image img=null;
