@@ -22,17 +22,15 @@ public class StatusBar extends JPanel {
 	JLabel position=new JLabel("");
 	JLabel info=new JLabel("");
 	JLabel zoom=new JLabel("");
+	private JProgressBar progress;
 	
-	public StatusBar(){
+	public StatusBar(JProgressBar progress){
 		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
 		setBorder(new MetalBorders.Flush3DBorder());
 		
-		position.setHorizontalAlignment(JLabel.LEFT);
-		info.setHorizontalAlignment(JLabel.CENTER);
-		zoom.setHorizontalAlignment(JLabel.RIGHT);
+		this.progress = progress;
 		
-		position.setPreferredSize(new Dimension(110,15));
-		zoom.setPreferredSize(new Dimension(110,15));
+		System.out.println(progress);
 		
 		position.setText("");
 		position.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -44,19 +42,18 @@ public class StatusBar extends JPanel {
 		add(position);
 		add(info);
 		add(zoom);
-		
-		
+		add(progress);	
 	}
+
 	public void setZoom(int z){
-		zoom.setText("Zoom: " +z+ "%");
+		zoom.setText("Zoom: " +z+ "%   ");
 		
 	}
 	public void setInfo(String z){
-		info.setText(z);
+		info.setText(z + "   ");
 	}
 	
 	public void setPosition(int x, int y){
-		position.setText("x: "+x+" y: "+y);
+		position.setText("x: "+x+" y: "+y + "   ");
 	}
-
 }
