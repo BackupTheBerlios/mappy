@@ -8,6 +8,7 @@ package client;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -23,7 +24,7 @@ import javax.swing.JLabel;
 class MapLabel extends JLabel{
 	private ArrayList tiles;
 
-	MapLabel(ArrayList tiles){
+	MapLabel(ArrayList tiles, Point start){
 		this.tiles = tiles;
 	}
 	public void paint(Graphics g){
@@ -33,5 +34,4 @@ class MapLabel extends JLabel{
 			g.drawImage((Image)i.next(), (i.nextIndex()-1)*500, 0, imageObserver);
 		}
 	}
-
 }

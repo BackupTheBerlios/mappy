@@ -16,15 +16,22 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.Point;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import data.*;
 
 public class Mappy {
+	private ArrayList tiles;
+
 	public Mappy(){
+		tiles = new ArrayList();
+	}
+	public ArrayList getTiles(Dimension d, Point p){
 		
+		return tiles;
 	}
 	
-	public Image getMap(){
+	private Image getTile(){
 		Image img=null;
 		DBValues myDBValues = new DBValues();
 		Point point = new Point(0, 0);
@@ -38,7 +45,6 @@ public class Mappy {
 		
 		if (img!=null)System.out.println("Bild wird übergeben...");
 		return img;
-		
 	}
 	
 	public BufferedImage getMapDemo() {
