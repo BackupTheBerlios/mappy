@@ -17,27 +17,32 @@ import javax.sound.sampled.DataLine;
 /**
  * @author DrRSatzteil
  *
- *$Id: AudioPlayer.java,v 1.1 2005/01/19 21:28:26 drrsatzteil Exp $
+ *$Id: AudioPlayer.java,v 1.2 2005/01/20 01:15:42 drrsatzteil Exp $
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class AudioPlayer{
 	
-	static Clip getStream(File path){
+	static Clip getStream(File path) throws SoundDisabledException{
 		AudioInputStream ais;
 		AudioFormat format;
 		Clip cl = null;
-		try{
-			ais = AudioSystem.getAudioInputStream(path);
-			format = ais.getFormat();
-			DataLine.Info info = new DataLine.Info(Clip.class, format,
-			((int) ais.getFrameLength() * format.getFrameSize()));
-			
-			cl = (Clip) AudioSystem.getLine(info);
-			cl.open(ais);
+		if(!IOHandler.getSavedSoundSettings()){
+			try{
+				ais = AudioSystem.getAudioInputStream(path);
+				format = ais.getFormat();
+				DataLine.Info info = new DataLine.Info(Clip.class, format,
+				((int) ais.getFrameLength() * format.getFrameSize()));
+				
+				cl = (Clip) AudioSystem.getLine(info);
+				cl.open(ais);
+			}
+			catch(Exception e){}
 		}
-		catch(Exception e){}
+		else{
+			throw new SoundDisabledException("Sounds sind deaktiviert!");
+		}
 		return cl;
 	}
 }
