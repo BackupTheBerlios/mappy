@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 class MapLabel extends JPanel {
 	private ArrayList layerList;
 	private ArrayList pinList;
-
+	private int zoom;
 	private Point start;
 
 	MapLabel() {
@@ -32,7 +32,8 @@ class MapLabel extends JPanel {
 		setIgnoreRepaint(false);
 	}
 
-	public void refresh(ArrayList layerList, ArrayList pins, Point start) {
+	public void refresh(ArrayList layerList, ArrayList pins, int zoom, Point start) {
+		this.zoom = zoom;
 		this.start = start;
 		this.pinList = pins;
 		this.layerList = layerList;
@@ -51,16 +52,17 @@ class MapLabel extends JPanel {
 			}
 		}
 		if (pinList != null) {
+			double zoomFactor = 4 - (zoom / 100);
 			ListIterator i = pinList.listIterator(0);
 			while (i.hasNext()) {
 				Pin currentPin = (Pin) i.next();
 				Image img = currentPin.getImage();
 				String description = currentPin.getName();
-				int x = currentPin.getPosition().x - start.x - 7;
-				int y = currentPin.getPosition().y - start.y - 7;
+				double x = ((currentPin.getPosition().x - start.x) / zoomFactor) - 7;
+				double y = ((currentPin.getPosition().y - start.y) / zoomFactor) - 7;
 				if (x > 0 && y > 0) {
-					g.drawImage(img, x, y, null);
-					g.drawString(description, x + 17, y + 13);
+					g.drawImage(img, (int)x, (int)y, null);
+					g.drawString(description, (int)x + 17, (int)y + 13);
 				}
 			}
 		}

@@ -53,7 +53,6 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-		//File file1 = new File(getClass().getResource("mapload.wav").getFile());
 		File file = new File("mapload.wav");
 		Clip clip;
 		try {

@@ -8,8 +8,6 @@ package server;
 
 import java.awt.Image;
 import java.awt.Point;
-import java.io.File;
-
 import javax.swing.ImageIcon;
 
 /**
@@ -24,7 +22,7 @@ public class Pin{
 	String name;
 	
 	Pin(Point position, String name){
-		pin = new ImageIcon("images" + File.separatorChar + "mappy_icon_15x15.gif");
+		pin = new ImageIcon(getClass().getResource("/images/mappy_icon_15x15.gif"));
 		this.position = position;
 		this.name = name;
 	}

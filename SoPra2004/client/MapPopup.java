@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 /**
  * @author ba008268
@@ -21,24 +23,72 @@ import javax.swing.*;
 public class MapPopup extends JPopupMenu{
 	private Gui owner;
 	private Point p;
+	private JMenuItem setPin;
+	private JMenuItem delPin;
+	private JMenu distance;
+	private String[] names;
+	private JMenuItem[] itemForName;
+	private Point mousePoint;
 
 	MapPopup(String name, Gui owner){
 		super(name);
 		this.owner = owner;
-		JMenuItem setPin = new JMenuItem("Pin setzen");
+		setPin = new JMenuItem("Markierung setzen");
 		setPin.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				openInpuDialog();
 			}
 		});
-		JMenuItem delPin = new JMenuItem("Pin entfernen");
+		add(setPin);
+		delPin = new JMenuItem("Markierung entfernen");
 		delPin.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				deletePoint();
 			}
 		});
-		add(setPin);
 		add(delPin);
+		addSeparator();
+		distance = new JMenu("Entfernung zu...");
+		distance.addMenuListener(new MenuListener(){
+			public void menuCanceled(MenuEvent arg0){
+			}
+			public void menuDeselected(MenuEvent arg0){
+			}
+			public void menuSelected(MenuEvent arg0){
+				fillMenu();
+			}
+		});
+		add(distance);
+	}
+
+	/**
+	 * 
+	 */
+	protected void fillMenu(){
+		distance.removeAll();
+		names = owner.getMappy().getPositions();
+		itemForName = new JMenuItem[names.length];
+		for(int i = 0; i < names.length; i++){
+			System.out.println (names[i]);
+			itemForName[i] = new JMenuItem(names[i]);
+			itemForName[i].addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent arg0) {
+					getDistance(arg0);
+				}
+				
+			});
+			distance.add(itemForName[i]);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	protected void getDistance(ActionEvent arg0) {
+		String name = ((JMenuItem)arg0.getSource()).getLabel();
+		int distance = owner.getMappy().getDistance(p, name);
+		JOptionPane.showMessageDialog(null, "Die Entfernung zu " + name + " beträgt ca. " + distance + " Meter.", "Distanz", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
@@ -60,6 +110,9 @@ public class MapPopup extends JPopupMenu{
 	protected void openInpuDialog(){
 		if(owner.getMappy().pinExists(p) == null){
 			String name = JOptionPane.showInputDialog("Bitte Namen für Markierung eingeben");
+			if(name.length() == 0){
+				name = "Markierung";
+			}
 			owner.getMappy().setPin(p, name);
 		}
 	}

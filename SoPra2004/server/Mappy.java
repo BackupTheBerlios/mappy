@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.32 2005/01/21 11:44:19 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.33 2005/01/21 14:25:51 drrsatzteil Exp $
  */
 
 
@@ -24,19 +24,27 @@ import javax.swing.JProgressBar;
 
 import data.*;
 
+/**
+ * @author ba008268
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
 public class Mappy{
 	private DBValues DB;
 	private MapLabel map;
 	private Color[] layerColors;
 	private Color[] layerColorsAlpha;
 	private ArrayList pins;
+	private Point startPoint;
+	private int zoom;
 
 	public Mappy(){
 		DB = new DBValues();
 		map = new MapLabel();
 		pins = new ArrayList();
 	}
-	
+
 	public ArrayList getLayers(Dimension d, Point p, int zoom, int[] layerIds, JProgressBar progress){
 		ArrayList layers = new ArrayList();
 		for (int i = 0; i < layerIds.length; i++){
@@ -50,10 +58,11 @@ public class Mappy{
 	
 
 	public void refresh(Point upperLeft, int[] layersToShow, int zoom, JProgressBar progress, Color[] layerColors, Color[] layerColorsAlpha){
-
+		this.zoom = zoom;
+		this.startPoint = upperLeft;
 		this.layerColors = layerColors;
 		this.layerColorsAlpha = layerColorsAlpha;
-		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, upperLeft);
+		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, zoom, upperLeft);
 	}
 	public JPanel getMapLabel(){
 		return map;
@@ -62,11 +71,24 @@ public class Mappy{
 		return DB.closeConnection();
 	}
 	public void setPin(Point p, String name){
+		boolean b = false;
 		Integer test = pinExists(p);
 		if(test == null){
-			pins.add(new Pin(p,name));
+			if(pins != null){
+				ListIterator i = pins.listIterator(0);
+				while (i.hasNext()){
+					Pin temp = (Pin)i.next();
+					if(temp.getName().equals(name)){
+						System.err.println("Pin already exists");
+						b = true;
+					}
+				}
+			}
+			if (b == false){
+				pins.add(new Pin(p,name));
+				map.setPins(pins);
+			}
 		}
-		map.setPins(pins);
 	}
 	public Integer pinExists(Point p){
 		Integer index = null;
@@ -90,5 +112,45 @@ public class Mappy{
 			pins.remove(test.intValue());
 		}
 		map.setPins(pins);
+	}
+	
+	public String[] getPositions(){
+		String[] names = null;
+		if(pins != null){
+			names = new String[pins.size()];
+			ListIterator i = pins.listIterator(0);
+			while (i.hasNext()){
+				Pin temp = (Pin)i.next();
+				names[i.nextIndex()-1] = temp.getName();
+			}
+		}
+		return names;
+	}
+
+	/**
+	 * 
+	 */
+	public int getDistance(Point start, String name){
+		double realDistance = 0;
+		int realD = 0;
+		if(pins != null){
+			ListIterator i = pins.listIterator(0);
+			while (i.hasNext()){
+				Pin temp = (Pin)i.next();
+				System.out.println(temp.getName() + " " + name);
+				if(temp.getName().equals(name)){
+					System.out.println(temp.getName() + " " + name);
+					Point destination = temp.getPosition();
+					double aSquare = (start.x - destination.x)*(start.x - destination.x);
+					double bSquare = (start.y - destination.y)*(start.y - destination.y);
+					double cSquare = aSquare + bSquare;
+					double distanceInPixels = Math.sqrt(cSquare);
+					System.out.println (distanceInPixels);
+					realDistance = (distanceInPixels * 0.5) * (4 - (zoom / 100));
+					realD = (int)realDistance;
+				}
+			}
+		}
+		return realD;
 	}
 }

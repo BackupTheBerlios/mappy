@@ -18,13 +18,13 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.32 2005/01/18 19:36:56 jesuzz Exp $
+ * $Id: Layer.java,v 1.33 2005/01/21 14:25:51 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
 		
 	Layer(Dimension d, Point p, int zoom, int layerId, DBValues DB){
-		float zoomFactor = 4 - ((float)zoom / 100);
+		float zoomFactor = 4 - (zoom / 100);
 		Dimension realDimension = new Dimension();
 		realDimension.setSize(round(d.width * zoomFactor), round(d.height * zoomFactor));
 		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
