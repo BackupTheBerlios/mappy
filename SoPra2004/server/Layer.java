@@ -15,7 +15,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.15 2005/01/12 21:31:25 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.16 2005/01/12 21:41:31 drrsatzteil Exp $
  */
 public class Layer {
 	private BufferedImage map;
@@ -27,9 +27,9 @@ public class Layer {
 		this.d = d;
 		int tileWidth = 0;
 		int tileHeight = 0;
-		int x = 0;
-		int y = 0;
-		final Point startPoint = p;
+		int x = -500;
+		int y = -500;
+		final Point startPoint = new Point (5500,5500);
 		Point currentPoint = p;
 		while(d.height > y){
 			while(d.width > x){
@@ -40,12 +40,12 @@ public class Layer {
 					map.getGraphics().drawImage(current.getImage(),x,y,null);
 				}
 				x += tileWidth;
-				currentPoint.setLocation(startPoint.x + x, startPoint.y + y);
+				currentPoint.setLocation(5500 + x, 5500 + y);
 				System.out.println(currentPoint);
 			}
 			x = 0;
 			y += tileHeight;
-			currentPoint.setLocation(startPoint.x + x, startPoint.y + y);
+			currentPoint.setLocation(5500 + x, 5500 + y);
 			//System.out.println(currentPoint);
 		}
 		map.flush();
