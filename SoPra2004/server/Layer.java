@@ -6,6 +6,7 @@ package server;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.ByteLookupTable;
@@ -17,28 +18,43 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.25 2005/01/14 14:42:53 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.26 2005/01/14 17:18:22 drrsatzteil Exp $
  */
 public class Layer{
 	private BufferedImage map;
 		
-	Layer(Dimension d, Point p, int zoom, int layerId, DBValues DB) {
+	Layer(Dimension d, Point p, int zoom, int layerId, DBValues DB){
+		float zoomFactor = 2 - ((float)zoom / 100);
+		Dimension realDimension = new Dimension();
+		realDimension.setSize(round(d.width * zoomFactor), round(d.height * zoomFactor));
+		System.out.println (d);
+		System.out.println (realDimension);
 		map = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+		
 		ArrayList tiles;
-		tiles = DB.getTiles(p, d, layerId);
+		tiles = DB.getTiles(p, realDimension, layerId);
 		ListIterator i = tiles.listIterator(0);
-		//for (int i = 0; i < tiles.length; i++){
 		while(i.hasNext()){
 			Tile temp = (Tile)i.next();
 			if (temp.hasImage()){
-				/*if(!(zoom == 100)){
-					int resizedX = (int)(tiles[i].getDim().width / (100/zoom));
-					int resizedY = (int)(tiles[i].getDim().height / (zoom / 50));
-					tiles[i].setImage(tiles[i].getImage().getScaledInstance(resizedX, resizedY, Image.SCALE_DEFAULT));
-					
-				}*/
-				int xPaint = temp.getXFrom() - p.x;
-				int yPaint = temp.getYFrom() - p.y;
+				if(!(zoom == 100)){
+					float resizedX = temp.getSize().width / zoomFactor;
+					float resizedY = temp.getSize().height / zoomFactor;
+					temp.setImage(temp.getImage().getScaledInstance(round(resizedX), round(resizedY), Image.SCALE_DEFAULT));
+					temp.setSize(new Dimension (round(resizedX), round(resizedY)));
+					float xFrom = temp.getXFrom();
+					xFrom = xFrom - p.x;
+					xFrom = xFrom / zoomFactor;
+					xFrom = xFrom + p.x;
+					temp.setXFrom(xFrom);
+					float yFrom = temp.getYFrom();
+					yFrom = yFrom - p.y;
+					yFrom = yFrom / zoomFactor;
+					yFrom = yFrom + p.y;
+					temp.setYFrom(yFrom);
+				}
+				int xPaint = round(temp.getXFrom()) - p.x;
+				int yPaint = round(temp.getYFrom()) - p.y;
 				if(xPaint < 0 || yPaint < 0){
 					int xToCut = 0;
 					int yToCut = 0;
@@ -48,8 +64,11 @@ public class Layer{
 					if(yPaint < 0){
 						yToCut = -yPaint;
 					}
+					System.out.println(xToCut + " " + yToCut);
+					System.out.println(xPaint + " " + yPaint);
 					int width = temp.getSize().width;
 					int height = temp.getSize().height;
+					System.out.println(width + " " + height);
 					BufferedImage cutTile = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 					if(xToCut > 0 & yToCut > 0){
 						cutTile.getGraphics().drawImage(temp.getImage(),0,0,null);
@@ -62,8 +81,7 @@ public class Layer{
 					}
 					int newWidth = width - xToCut;
 					int newHeight = height - yToCut;
-					temp.setImage(cutTile.getSubimage(xToCut, yToCut, newWidth, newHeight));
-					temp.setDim(new Dimension(newWidth, newHeight));
+					temp.setImage(cutTile.getSubimage(round(xToCut), round(yToCut), newWidth, newHeight));
 					temp.setXFrom(temp.getXFrom() - xToCut);
 					temp.setYFrom(temp.getYFrom() - yToCut);
 					map.getGraphics().drawImage(temp.getImage(),0,0,null);
@@ -74,6 +92,11 @@ public class Layer{
 			}
 		}
 		map.flush();
+	}
+	
+	private static int round(float value){
+		int rounded = Math.round(value);
+		return rounded;
 	}
 
 	public Dimension getDimension(){
