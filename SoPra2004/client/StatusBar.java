@@ -1,16 +1,10 @@
-/*
- * Created on 15.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 /**
- * @author ba008959
+ * The Status Bar of the GUI with all its Labels
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalBorders;
@@ -98,7 +92,7 @@ public class StatusBar extends JPanel {
 		add(info);
 	}
 	/**
-	 * 
+	 * Sets the Refresh Status
 	 */
 	protected void setRefreshStatus() {
 		if(pointX.getText().length() > 0 && pointY.getText().length() > 0){
@@ -109,7 +103,7 @@ public class StatusBar extends JPanel {
 		}
 	}
 	/**
-	 * 
+	 * Checks the X-Value on its format
 	 */
 	protected void checkX() {
 		try{
@@ -128,7 +122,7 @@ public class StatusBar extends JPanel {
 		}
 	}
 	/**
-	 * 
+	 * Checks the Y-Value on its format
 	 */
 	protected void checkY() {
 		try{
@@ -147,25 +141,41 @@ public class StatusBar extends JPanel {
 		}
 	}
 
+
+	/**
+	 * Sets the displayed zoom-Value
+	 * @param z	the Zoom-value as an int
+	 */
 	public void setZoom(int zoom){
 		zoomValue = zoom;
 	}
+	/**
+	 * Returns the Zoom Value
+	 * @return	the current zoom Value as an int
+	 */
 	public int getZoomValue(){
 		return zoomValue;
+
 	}
+	/**
+	 * Sets an Info Text
+	 * @param z	the defined String for an Info Text
+	 */
 	public void setInfo(String z){
 		info.setText(z + "   ");
 	}
 
 	/**
-	 * @return
+	 * Returns the current Info Text
+	 * @return	the current Info Text as a JLabel
 	 */
 	public JLabel getInfo(){
 		return info;
 	}
 
 	/**
-	 * @return
+	 * Returns the upperLeft of the Map
+	 * @return	the current Point upperLeft of the map
 	 */
 	public Point getUpperLeft() {
 		Point upperLeft = null;
@@ -184,8 +194,9 @@ public class StatusBar extends JPanel {
 	}
 
 	/**
-	 * @param x
-	 * @param y
+	 * Sets the upperLeft of the map
+	 * @param x	the defined x-coordinate of the map
+	 * @param y	the defined y-coordinate of the map
 	 */
 	public void setXY(int x, int y){
 		pointX.setText(new Integer(x).toString());
