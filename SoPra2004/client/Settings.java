@@ -265,7 +265,6 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		dbUrl="jdbc:"+"mysql"+"://"+urlField.getText()+":"+portField.getText()+"/"+dbField.getText();
 		
 		//Window Properties
-		 this.getContentPane().setPreferredSize(new Dimension(350,550));
 		 this.pack();
 		 this.setVisible(true);
 		//Handler
