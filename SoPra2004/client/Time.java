@@ -24,7 +24,6 @@ public class Time extends JLabel{
 	private DateFormat formater;
 
 	Time(){
-		now = new GregorianCalendar();
 		formater = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM);
 		setBorder(new MetalBorders.Flush3DBorder());
 		setFont(new Font("Verdana", Font.PLAIN, 11));
@@ -33,9 +32,11 @@ public class Time extends JLabel{
 		w.start();
 	}
 	public void refresh(){
+		now = new GregorianCalendar();
 		now.setTime(now.getTime());
 		String time = formater.format(now.getTime());
-		setText(" " + time + " ");
+		setText("     " + time + " ");
+		repaint();
 	}
 	
 	class Wait extends Thread{
