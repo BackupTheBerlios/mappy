@@ -30,8 +30,8 @@ public class DBValues {
 	private String user = "projekt";
 	private String pass = "StPlan";
 	
-	public DBValues() {
-		this.connector = new DBConnector();
+	public DBValues() {		
+		this.connector = new DBConnector();		
 		this.con = this.connector.openDB(this.url, this.user, this.pass); 		
 	}
 	
