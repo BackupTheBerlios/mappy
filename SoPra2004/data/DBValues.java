@@ -12,12 +12,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.18 2005/01/13 11:51:42 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.19 2005/01/13 20:11:37 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -32,8 +33,8 @@ public class DBValues {
 		this.con = this.connector.openDB(this.url, this.user, this.pass);
 	}
 	
-	public Tile[] getTiles(Point p, Dimension dim, int type){
-		Tile[] tiles = null;
+	public ArrayList getTiles(Point p, Dimension dim, int type){
+		ArrayList tiles = null;
 		ResultSet r = null;				
 		try{
 			Statement stmt = this.con.createStatement();
@@ -46,11 +47,11 @@ public class DBValues {
 				r = stmt.executeQuery(sql);
 				r.last();
 				int rowCount = r.getRow();
-				tiles = new Tile[rowCount];
+				tiles = new ArrayList();
 				r.beforeFirst();
 				for(int i = 0; i < rowCount; i++){
 					r.next();
-					tiles[i] = new Tile(r.getInt("ID"), r.getInt("XFrom"), r.getInt("XTo"), r.getInt("YFrom"), r.getInt("YTo"), r.getBytes("Data"));
+					tiles.add(new Tile(r.getInt("ID"), r.getInt("XFrom"), r.getInt("XTo"), r.getInt("YFrom"), r.getInt("YTo"), r.getBytes("Data")));
 				}
 			}
 			catch (SQLException e) {

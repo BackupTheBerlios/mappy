@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.46 2005/01/13 19:38:48 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.47 2005/01/13 20:11:37 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -120,6 +120,8 @@ public class Gui extends JFrame implements LayersIF{
 		zoomLabel = new JLabel("Zoom: ");
 		zoomLabel.setFont(new Font("Verdana", Font.BOLD, 12));
 		zoomSlider = new JSlider();
+		zoomSlider.setMinimum(100);
+		zoomSlider.setMaximum(200);
 		zoomSlider.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent ce){
 				zoomSliderChanged();
