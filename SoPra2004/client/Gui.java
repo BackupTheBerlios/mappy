@@ -13,13 +13,14 @@ package client;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import java.awt.*;
-//import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
-
-import java.awt.Color;
-import javax.swing.border.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.metal.MetalBorders;
 
 import server.Mappy;
 
@@ -27,97 +28,131 @@ import server.Mappy;
 public class Gui extends JFrame {
 	private Mappy mappy;
 	private JLabel labelMap;
+	private String[] layer = {"Wald", "Strasse", "Gewerbegebiet",
+			                  "Industriegebiet", "Wohnh‰user", "Schnaps"};
+	private JList layers;
+	private JScrollPane layersScrollPane;
+	private JPanel status;
+	private Image image;
+	private JLabel map;
+	private JToolBar layerButtonBar;
+	private JButton refresh;
+	private JButton chooseAll;
+	private JButton deselect;
 	
 	
 	public Gui(Mappy mappy){
 		super("Mappy");
-		this.mappy=new Mappy();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.mappy = mappy;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		System.out.print("Building new GUI...");
-		this.setSize(500,500);
+		setSize(500,500);
+		setNewLookAndFeel();
+		initComponents();
+	}
+	
+	/**
+	 * 
+	 */
+	private void initComponents() {
 		
-		MenuBar mb=new MenuBar();
-		this.setJMenuBar(mb);
+		GridBagLayout layout = new GridBagLayout();
+		setLayout(layout);
 		
-		this.setNewLookAndFeel();
-
-			
+		MenuBar mb = new MenuBar();
+		setJMenuBar(mb);
 		
-		
-		
-		// ContentPane setup
-		this.getContentPane().setLayout(new BorderLayout());
-		JPanel panelFeatures=new JPanel();
-		JPanel panelMap=new JPanel();
-		JPanel panelStatus=new JPanel();
-		panelStatus.setBorder(new EtchedBorder());
-		panelStatus.setLayout(new FlowLayout(FlowLayout.LEFT,1,0));
-		this.getContentPane().add(panelFeatures, BorderLayout.WEST);
-		this.getContentPane().add(panelMap, BorderLayout.CENTER);
-		this.getContentPane().add(panelStatus, BorderLayout.SOUTH);
-		
-		// Features setup
-		
-		panelFeatures.setLayout(new GridLayout(0,1));
-		panelFeatures.setBorder(new EtchedBorder());
-		JLabel labelFeatures=new JLabel("Kartenfunktionen");
-		Features features=new Features();
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		features.addCheckBox("Wald");
-		panelFeatures.add(features , BorderLayout.WEST);
-		
-		// Map setup
-		// Hier Weiter Machen
-		ImageIcon image=new ImageIcon("uniba.gif");//mappy.getMap();
-		labelMap=new JLabel(image);
-		panelMap.add(labelMap);
-		
-// KUB: Hier muss dass doch irgedwie funzen, bild kommt auf jeden fall,sie konsole
-//      weiﬂ nicht mehr weiter...
-			
-		BufferedImage bi = mappy.getMapDemo();
-		//BufferedImage bi=new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
-		//Graphics2D gfx=bi.createGraphics();
-		/* 
-		gfx.setColor(Color.BLACK); 
-        gfx.drawLine(0,0,50,50); 
-		gfx.drawImage(img,0,0,this);
-		*/
-		//System.out.println(gfx.toString());
-		
-		Icon img = new ImageIcon(bi);
-		
-		JLabel imageLabel = new JLabel(img);
-		panelMap.add(imageLabel);
+		layers = new JList(layer);
+		layers.setFixedCellHeight(25);
+		layers.setFixedCellWidth(150);
+		layers.setBorder(new MetalBorders.Flush3DBorder());
+		layers.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent evt){
+				listValueChanged(evt);
+			}
+		});
+		layersScrollPane = new JScrollPane(layers);
+		layersScrollPane.setWheelScrollingEnabled(true);
+		layersScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)layersScrollPane, 0, 0, 1, 1, 0d, 1d);
 		
 		
 		
+		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
+		layerButtonBar.setFloatable(false);
+		refresh = new JButton ("Aktualisieren");
+		refresh.setEnabled(false);
+		refresh.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				refreshAction();
+			}			
+		});
+		chooseAll = new JButton ("Alles w‰hlen");
+		chooseAll.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				chooseAllAction();
+			}			
+		});
+		deselect = new JButton ("Auswahl aufheben");
+		deselect.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				deselectAction();
+			}
+		});
+		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
 		
-		// Status setup
-		StatusBar sb=new StatusBar();
+		image = mappy.getMapDemo();
+		ArrayList tiles = new ArrayList();
+		tiles.add(image);
+		tiles.add(image);
+		MapLabel map = new MapLabel(tiles);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 1, 0, 1, 3, 1d, 1d);
+		
+		
+		status = new JPanel();
+		StatusBar sb = new StatusBar();
 		sb.setInfo("Los geht's!");
 		sb.setZoom(100);
 		sb.setPosition(143,256);
-		panelStatus.add(sb);
-	
-		pack();
+		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 1, 3, 1, 1, 0d, 0d);
+		
 		setVisible(true);
 		
 	}
-	
+
+	/**
+	 * 
+	 */
+	protected void deselectAction() {
+		layers.clearSelection();		
+	}
+
+	/**
+	 * 
+	 */
+	protected void chooseAllAction() {
+		layers.addSelectionInterval(0,5);
+	}
+
+	/**
+	 * 
+	 */
+	protected void refreshAction() {
+		refresh.setEnabled(false);
+		
+	}
+
+	/**
+	 * @param evt
+	 * 
+	 */
+	protected void listValueChanged(ListSelectionEvent evt) {
+		refresh.setEnabled(true);
+		
+	}
+
 	void setNewLookAndFeel()
 	{
 	  try {
