@@ -21,7 +21,11 @@ import javax.swing.JMenuItem;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class MenuBar extends JMenuBar{
-	public MenuBar(){
+	
+	private Gui owner;
+
+	public MenuBar(Gui owner){
+		this.owner = owner;
 		
 		// Create Menues
 		JMenu menuFile=new JMenu("Datei");
@@ -70,13 +74,28 @@ public class MenuBar extends JMenuBar{
 			System.exit(0);
 		}
 	});
+	menuItemSave.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			saveSettings();
+		}
+	});
 	menuItemAbout.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			openAbout();
 		}
 	});
+	
+	owner.setJMenuBar(this);
 	}
 	
+	/**
+	 * 
+	 */
+	protected void saveSettings() {
+		IOHandler.saveStartPoint(owner.getUpperLeft());
+		IOHandler.saveLayers(owner.getLayers());
+	}
+
 	void openAbout(){
 		AboutDialog about = new AboutDialog ((JFrame)this.getFocusCycleRootAncestor());
 	}
