@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  * @author fkubis
- * $Id: Tile.java,v 1.4 2004/12/21 13:47:59 drrsatzteil Exp $
+ * $Id: Tile.java,v 1.5 2004/12/21 23:23:34 drrsatzteil Exp $
  */
 public class Tile {
 	private int id;
@@ -28,7 +28,7 @@ public class Tile {
 		this.id	= id;
 		from 	= new Point(XFrom, YFrom);
 		to 		= new Point(XTo, YTo);
-		dim = new Dimension(XFrom + XTo, YFrom + YTo);
+		dim = new Dimension(XTo - XFrom, YTo - YFrom);
 		data 	= gif;
 		
 		try {
