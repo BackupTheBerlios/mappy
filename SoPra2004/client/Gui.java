@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.17 2005/01/04 20:17:35 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.18 2005/01/04 21:11:52 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -118,7 +118,7 @@ public class Gui extends JFrame implements LayersIF {
 		layersToShow = IOHandler.getSavedLayers();
 		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
 
-		map = new MapLabel();
+		map = mappy.getMapLabel();
 		refreshAction();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
 		
