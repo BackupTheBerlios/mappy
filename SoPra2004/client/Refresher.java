@@ -53,19 +53,20 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-		File file = new File(getClass().getResource("/mapload.wav").getFile());
+		//File file1 = new File(getClass().getResource("mapload.wav").getFile());
+		File file = new File("mapload.wav");
 		Clip clip;
 		try {
 			clip = AudioPlayer.getStream(file);
-			//clip.start();
-			//clip.loop(Clip.LOOP_CONTINUOUSLY);
+			clip.start();
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 			
 			refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors, layerColorsAlpha);
 			sb.setInfo("Fertig!");
 
 			owner.getWait().setVisible(false);
-			//clip.stop();
-			//clip.close();
+			clip.stop();
+			clip.close();
 		}
 		catch (SoundDisabledException e){
 			System.err.println(e.getMessage());
