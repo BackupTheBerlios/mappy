@@ -12,7 +12,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.4 2004/12/18 17:23:44 fkubis Exp $
+ * $Id: Layer.java,v 1.5 2004/12/18 17:34:42 fkubis Exp $
  */
 public class Layer {
 	private int lines;
@@ -87,6 +87,13 @@ public class Layer {
 	 */
 	public void setLayerId(int i) {
 		layerId = i;
+	}
+
+	/**
+	 * @return
+	 */
+	public ArrayList getTiles() {
+		return tiles;
 	}
 
 }

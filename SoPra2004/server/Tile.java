@@ -5,13 +5,14 @@
 package server;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
 
 /**
  * @author fkubis
- * $Id: Tile.java,v 1.1 2004/12/18 17:23:44 fkubis Exp $
+ * $Id: Tile.java,v 1.2 2004/12/18 17:34:41 fkubis Exp $
  */
 public class Tile {
 	private int id;
@@ -59,8 +60,8 @@ public class Tile {
 		return hasImage;
 	}
 	
-	public ImageIcon getImage() {
-		return image;
+	public Image getImage() {
+		return image.getImage();
 	}
 	
 	/**
