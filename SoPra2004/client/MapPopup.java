@@ -139,7 +139,11 @@ public class MapPopup extends JPopupMenu {
 	private void jumpTo(ActionEvent arg0) {
 		String name = ((JMenuItem) arg0.getSource()).getLabel();
 		Point location = owner.getMappy().getPinLocation(name);
-		owner.setUpperLeft(location);
+		if (location.x - 250 > 0 && location.y - 250 > 0) {
+			owner.setUpperLeft(new Point(location.x - 250, location.y - 250));
+		} else {
+			owner.setUpperLeft(location);
+		}
 		owner.refreshAction();
 	}
 

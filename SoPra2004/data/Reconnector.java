@@ -47,7 +47,8 @@ public class Reconnector implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
-		while (con == null) {
+		int counter = 10;
+		while (counter > 0) {
 			try {
 				con = DriverManager.getConnection(url, user, pass);
 				connector.setCon(con);
@@ -59,7 +60,12 @@ public class Reconnector implements Runnable {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
+			counter--;
 		}
-		System.out.println("Verbindung hergestellt");
+		if (counter > 0) {
+			System.out.println("Verbindung hergestellt");
+		} else {
+			System.err.println("Verbindung kann nicht hergestellt werden");
+		}
 	}
 }
