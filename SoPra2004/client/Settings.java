@@ -254,6 +254,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			
 			bt.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
+
 					if(btClick != null){
 						btClick.setFramePosition(0);
 						btClick.start();
@@ -298,6 +299,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		 this.setVisible(true);
 		//Handler
 		saveBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
+			click();
 			String[] dbSet={urlField.getText(),portField.getText() ,dbField.getText(), usrField.getText(),new String(pwField.getPassword())};	
 			IOHandler.saveDbSettings(dbSet);
 			
@@ -317,6 +319,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 					btClick = AudioPlayer.getStream(clickSound);
 				}
 				catch(SoundDisabledException e1){
+					btClick = null;
 					System.err.println(e1.getMessage());
 				}
 			}
@@ -324,6 +327,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 			}
 		});
 		cancelBt.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){
+			click();
 			dispose();
 		}
 		});
@@ -367,7 +371,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		Color newColor = JColorChooser.showDialog(
 	              null, "Wähle neue Farbe für die Ebene", jp[i].getBackground() );
 	
-	jp[i].setBackground(newColor);
+	if (newColor!=null)jp[i].setBackground(newColor);
 	}
 	/**
 	 * Gives the JFrame a minimum size
@@ -380,6 +384,12 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		if(size.height<550)size.height=550;
 		this.setSize(size);
 		
+	}
+	private void click(){
+		if(btClick!=null){
+			btClick.setFramePosition(0);
+			btClick.start();
+			}
 	}
 
 }
