@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.56 2005/01/18 13:16:56 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.57 2005/01/18 14:29:38 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -209,7 +209,7 @@ public class Gui extends JFrame implements LayersIF{
 		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
 		sb.setZoom(zoomSlider.getValue());
-		sb.setUpperLeft(upperLeft.x, upperLeft.y);
+		//sb.setUpperLeft(upperLeft.x, upperLeft.y);
 		
 		date = new Time();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 1, 2, 1, 2, 1d, 0d);
@@ -221,8 +221,8 @@ public class Gui extends JFrame implements LayersIF{
 			public void componentMoved(ComponentEvent arg0){
 			}
 			public void componentResized(ComponentEvent arg0){
-				if((getSize().width < 800) || (getSize().height < 600)){
-					setSize(800,600);
+				if((getSize().width < 820) || (getSize().height < 600)){
+					setSize(820,600);
 				}
 				refreshAction();
 			}
@@ -248,12 +248,13 @@ public class Gui extends JFrame implements LayersIF{
 			refreshAction();
 		}
 	}
-	
+
 	/**
+	 * @param x
 	 * @param y
 	 */
 	protected void setXY(int x, int y){
-		sb.setUpperLeft(upperLeft.x, upperLeft.y);
+		sb.setXY(x,y);
 	}
 
 	/**

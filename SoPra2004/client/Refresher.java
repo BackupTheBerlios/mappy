@@ -48,10 +48,8 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-		if(upperLeft != null){
-			refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
-			sb.setInfo("Fertig!");
-		}
+		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
+		sb.setInfo("Fertig!");
 		owner.getWait().setVisible(false);
 	}
 }

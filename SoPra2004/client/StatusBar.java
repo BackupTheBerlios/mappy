@@ -31,34 +31,26 @@ public class StatusBar extends JPanel {
 	private JTextField pointY;
 	private JToolBar xPointBar;
 	private JToolBar yPointBar;
-	private MaskFormatter maskFormat;
+	
 	
 	public StatusBar(JProgressBar progress){
 		setLayout(new GridLayout(2,5));
 		setBorder(new MetalBorders.Flush3DBorder());
 		this.progress = progress;
 		
-		try {
-			maskFormat = new MaskFormatter("*****");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		pointX = new JFormattedTextField(maskFormat);
-		pointX.setText(null);
-		pointY = new JFormattedTextField(maskFormat);
-		pointY.setText(null);
+		pointX = new JFormattedTextField();
+		pointY = new JFormattedTextField();
 		
 		xPointBar = new JToolBar();
 		xPointBar.setFloatable(false);
-		xPointBar.add(pointX);
 		xPointBar.add(new JLabel(" X-Wert "));
+		xPointBar.add(pointX);
 		
 		yPointBar = new JToolBar();
 		yPointBar.setFloatable(false);
-		yPointBar.add(pointY);
 		yPointBar.add(new JLabel(" Y-Wert "));
+		yPointBar.add(pointY);
 		
-
 		zoom = new JLabel();
 		zoom.setFont(new Font("Verdana", Font.PLAIN, 11));
 		info = new JLabel();
@@ -111,7 +103,12 @@ public class StatusBar extends JPanel {
 		}
 		return upperLeft;
 	}
-	void setUpperLeft(int x, int y){
+
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public void setXY(int x, int y){
 		pointX.setText(new Integer(x).toString());
 		pointY.setText(new Integer(y).toString());
 	}
