@@ -11,8 +11,10 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.*;
 
@@ -27,7 +29,9 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 	JTabbedPane jTabbedPane= new JTabbedPane();
 	JPanel dbPanel=new JPanel();
 	JPanel colorPanel=new JPanel();
+	JPanel sonstEinst=new JPanel();
 	JPanel buttonPanel=new JPanel();
+	JCheckBox soundCheckBox = new JCheckBox("Ton aus");
 	JTextField urlField=new JTextField();
 	JTextField portField=new JTextField();
 	JTextField dbField=new JTextField();
@@ -121,6 +125,19 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		}
 		LayoutManager.addComponent(colorPanel, layout, saveBt, 0, 22, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(colorPanel, layout, cancelBt, 1, count+1, 1, 1, 0d, 0d);
+		
+		//sonstEinst init
+		sonstEinst.setLayout(layout);
+		LayoutManager.addComponent(sonstEinst, layout, soundCheckBox, 1, 0, 1, 1, 0d, 0d);
+		ItemListener audioListener = new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if(soundCheckBox.isSelected()){
+					
+				}
+			}	
+		};
+		
+		
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(jTabbedPane, BorderLayout.CENTER);
 		buttonPanel.add(saveBt);
@@ -131,6 +148,7 @@ public class Settings extends JFrame implements SettingsIF, LayersIF {
 		this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		jTabbedPane.add(dbPanel, "Datenbank");
 		jTabbedPane.add(colorPanel, "Farben");
+		jTabbedPane.add(sonstEinst, "sonstige Einstellungen");
 		this.setVisible(true);
 		dbUrl="jdbc:"+"mysql"+"://"+urlField.getText()+":"+portField.getText()+"/"+dbField.getText();
 		
