@@ -8,9 +8,7 @@ package server;
 
 /**
  * @author fkubis
- * $Id: Mappy.java,v 1.9 2004/12/18 16:00:40 fkubis Exp $
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * $Id: Mappy.java,v 1.10 2004/12/18 16:28:24 fkubis Exp $
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -36,7 +34,12 @@ public class Mappy {
 		
 		for ( int i=0; i<layerIds.length; i++ ) {
 			Layer layer = new Layer(d, p, i);
-			layers.add(layer); 
+			if (layer.fetchTiles()) {
+				System.out.println("fetchTiles erfolgreich fuer LayerNr: " + i );
+			} else {
+				System.err.println("fetchTiles Fehler für LayerNr " + i );
+			}
+			layers.add(layer);
 		}
 		
 		return layers;
