@@ -12,7 +12,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.7 2004/12/21 13:46:53 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.8 2004/12/21 23:23:13 drrsatzteil Exp $
  */
 public class Layer {
 	private int lines;
@@ -42,6 +42,7 @@ public class Layer {
 				tiles.add(temp);
 				x += temp.getSize().width;
 			}
+			x = 0;
 			y += 500;
 		}
 	}
