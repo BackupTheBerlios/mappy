@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.48 2005/01/14 01:20:45 jesuzz Exp $
+ * $Id: Gui.java,v 1.49 2005/01/14 14:04:12 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -52,7 +52,7 @@ public class Gui extends JFrame implements LayersIF{
 	private Time date;
 	private JSlider zoomSlider;
 	private JToolBar zoomToolBar;
-	private JLabel zoomLabel;	
+	private JLabel zoomLabel;
 	
 	
 	public Gui(Mappy mappy){
@@ -131,6 +131,8 @@ public class Gui extends JFrame implements LayersIF{
 		});
 		zoomToolBar.add(zoomLabel);
 		zoomToolBar.add(zoomSlider);
+		zoomToolBar.setBorder(new MetalBorders.Flush3DBorder());
+		
 		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
@@ -147,10 +149,10 @@ public class Gui extends JFrame implements LayersIF{
 		map = mappy.getMapLabel();
 		map.setDoubleBuffered(true);
 		map.setSize(IOHandler.getSavedMapSize());
-		moveEast=new DirectionButton("east.gif");
-		moveWest=new DirectionButton("west.gif");
-		moveNorth=new DirectionButton("north.gif");
-		moveSouth=new DirectionButton("south.gif");
+		moveEast = new DirectionButton("east.gif");
+		moveWest = new DirectionButton("west.gif");
+		moveNorth = new DirectionButton("north.gif");
+		moveSouth = new DirectionButton("south.gif");
 		moveEast.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("east");
@@ -178,7 +180,7 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel.setBorder(new MetalBorders.Flush3DBorder());
 		mapPanel.setLayout(new BorderLayout());
 		mapPanel.setBounds(20,20,20,20);
-		mapPanel.setBackground(new Color(255,255,255));
+		mapPanel.setBackground(new Color(120,12,12));
 		mapPanel.add(moveEast, BorderLayout.EAST);
 		mapPanel.add(moveWest, BorderLayout.WEST);
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
@@ -196,7 +198,7 @@ public class Gui extends JFrame implements LayersIF{
 		progress.setStringPainted(true);
 		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
-		sb.setZoom(50);
+		sb.setZoom(100);
 		sb.setPosition(upperLeft.x,upperLeft.y);
 		
 		date = new Time();
@@ -215,6 +217,7 @@ public class Gui extends JFrame implements LayersIF{
 	protected void zoomSliderChanged(){
 		if(!zoomSlider.getValueIsAdjusting()){
 			System.out.println("Zoomwert: " + zoomSlider.getValue());
+			refresh.setEnabled(true);
 		}
 		else{
 			sb.setZoom(zoomSlider.getValue());
@@ -275,7 +278,12 @@ public class Gui extends JFrame implements LayersIF{
 		refresh.setEnabled(true);
 		layersToShow = layers.getSelectedIndices();
 		progress.setValue(0);
-		progress.setMaximum(layersToShow.length);
+		if(layersToShow.length > 0){
+			progress.setMaximum(layersToShow.length);
+		}
+		else{
+			progress.setMaximum(1);
+		}
 	}
 	
 	

@@ -24,12 +24,15 @@ public class StatusBar extends JPanel {
 	private JProgressBar progress;
 	private JLabel state;
 	private JLabel zoomLabel;
+	private JTextField pointX;
 	
 	public StatusBar(JProgressBar progress){
 		setLayout(new GridLayout(2,5));
 		setBorder(new MetalBorders.Flush3DBorder());
-		
 		this.progress = progress;
+		
+		
+		pointX = new JTextField();
 		position = new JLabel();
 		position.setFont(new Font("Verdana", Font.PLAIN, 11));
 		zoom = new JLabel();
@@ -39,7 +42,8 @@ public class StatusBar extends JPanel {
 		state = new JLabel(" Fortschritt   ");
 		state.setFont(new Font ("Verdana", Font.PLAIN, 11));
 		
-		add(new JLabel(""));
+		
+		add(pointX);
 		add(new JLabel(""));
 		add(new JLabel(""));
 		add(new JLabel(""));

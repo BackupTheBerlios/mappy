@@ -13,14 +13,10 @@ import javax.swing.JButton;
  */
 public class DirectionButton extends JButton{
 
-	  public DirectionButton( String file )
-	  {
-	    super( new ImageIcon(file) );
+	  public DirectionButton( String file ){
+	  	super( new ImageIcon(file) );
 	    setContentAreaFilled( false );
 	    setBorderPainted( false );
 	    setFocusPainted( false );
 	  }
-	}
-
-
-
+}

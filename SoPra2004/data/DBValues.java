@@ -18,7 +18,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.19 2005/01/13 20:11:37 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.20 2005/01/14 14:04:12 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -41,7 +41,7 @@ public class DBValues {
 			String sql;
 			sql = "SELECT * FROM MapDataTransparent WHERE (XTo - " + p.x +
 			") >= 0 AND XFrom < " + (p.x + dim.width) + " AND (YTo - " + p.y + ") >= 0 AND YFrom < " + (p.y + dim.height)
-			+ " AND Type = " + type + " ORDER BY ID";
+			+ " AND Type = " + type;
 						
 			try{
 				r = stmt.executeQuery(sql);
