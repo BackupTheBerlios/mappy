@@ -115,11 +115,7 @@ public class Mappy{
 			}
 		}
 	}
-	/**
-	 * 
-	 * @param p
-	 * @return
-	 */
+
 	public Integer pinExists(Point p){
 		Integer index = null;
 		if(pins != null){

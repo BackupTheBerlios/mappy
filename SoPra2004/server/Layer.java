@@ -1,7 +1,4 @@
-/*
- * Created on 18.12.2004
- *
- */
+
 package server;
 
 import java.awt.Color;
@@ -17,8 +14,10 @@ import java.util.ListIterator;
 import data.DBValues;
 
 /**
- * @author fkubis
- * $Id: Layer.java,v 1.33 2005/01/21 14:25:51 drrsatzteil Exp $
+ * Class for the ...
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *
  */
 public class Layer{
 	private BufferedImage map;

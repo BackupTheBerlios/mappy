@@ -1,16 +1,10 @@
-/*
- * Created on 14.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package server;
 
 /**
- * @author ba008961
+ * Exceptionhandler if there is no image
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class NoImageException extends Exception {
 	  public NoImageException()

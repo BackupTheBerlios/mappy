@@ -1,9 +1,3 @@
-/*
- * Created on 18.12.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package server;
 
 import java.awt.Graphics;
@@ -15,10 +9,10 @@ import java.util.ListIterator;
 import javax.swing.JPanel;
 
 /**
- * @author DrRSatzteil
+ * Creats a Label out of the different Buffered images
  * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *
  */
 class MapLabel extends JPanel {
 	private ArrayList layerList;
@@ -26,12 +20,22 @@ class MapLabel extends JPanel {
 	private int zoom;
 	private Point start;
 
+	/**
+	 * Class constructor
+	 */
 	MapLabel() {
 		setDoubleBuffered(true);
 		setOpaque(false);
 		setIgnoreRepaint(false);
 	}
 
+	/**
+	 * Refreshes the Label
+	 * @param layerList	Layers to be refreshed
+	 * @param pins		Markers to be refreshed
+	 * @param zoom		defined zoom
+	 * @param start		defined Startpoint
+	 */
 	public void refresh(ArrayList layerList, ArrayList pins, int zoom, Point start) {
 		this.zoom = zoom;
 		this.start = start;
@@ -40,6 +44,9 @@ class MapLabel extends JPanel {
 		repaint();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.Component#paint(java.awt.Graphics)
+	 */
 	public void paint(Graphics g) {
 		if (layerList == null) {
 		} else {
@@ -69,6 +76,11 @@ class MapLabel extends JPanel {
 		}
 	}
 
+	/**
+	 * Sets the markers in the Label
+	 * @param pins	Markers to be set
+	 * @param zoom	Zoom to be set
+	 */
 	public void setPins(ArrayList pins, int zoom){
 		this.zoom = zoom;
 		pinList = pins;

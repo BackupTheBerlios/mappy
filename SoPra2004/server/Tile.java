@@ -1,7 +1,4 @@
-/*
- * Created on 18.12.2004
- *
- */
+
 package server;
 
 import java.awt.Dimension;
@@ -9,8 +6,10 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
- * @author fkubis
- * $Id: Tile.java,v 1.10 2005/01/14 17:18:26 drrsatzteil Exp $
+ * Class Tile to build up Tiles for the Map
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *
  */
 public class Tile {
 	private Dimension dim;
@@ -23,6 +22,15 @@ public class Tile {
 	public Tile(){
 	}
 	
+	/**
+	 * Class constructor for building a Tile
+	 * @param id	id of the Tile
+	 * @param xFrom	x-value where the Tile starts
+	 * @param xTo	x-value where the Tile ends
+	 * @param yFrom	y-value where the Tile starts
+	 * @param yTo	y-value where the Tile ends
+	 * @param gif	byte[] of the gif
+	 */
 	public Tile(int id, int xFrom, int xTo, int yFrom, int yTo, byte[] gif) {		
 		dim = new Dimension(xTo - xFrom, yTo - yFrom);
 		this.xFrom = xFrom;
@@ -37,6 +45,11 @@ public class Tile {
 		}
 	}
 	
+	/**
+	 * Creates a image
+	 * @param gif	the gif from which the image should be painted
+	 * @throws NoImageException
+	 */
 	private void createImage(byte[] gif) throws NoImageException{		
 		if (gif != null) {
 			image = new ImageIcon(gif).getImage();
@@ -45,6 +58,10 @@ public class Tile {
 		}
 	}
 	
+	/**
+	 * Boolean Test if there is a image
+	 * @return	true if there is a image, else false
+	 */
 	public boolean hasImage() {
 		if(image != null){
 			return true;
@@ -54,9 +71,17 @@ public class Tile {
 		}
 	}
 	
+	/**
+	 * Returns the current image
+	 * @return	the current immage
+	 */
 	public Image getImage() {
 		return image;
 	}
+	/**
+	 * Returns the siye of the Image
+	 * @return	the Siye as a Dimension of  the current image
+	 */
 	public Dimension getSize(){
 		return dim;
 	}
