@@ -18,7 +18,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.7 2004/12/18 17:23:44 fkubis Exp $
+ * $Id: DBValues.java,v 1.8 2004/12/18 17:37:21 fkubis Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -56,7 +56,7 @@ public class DBValues {
 								res.getInt("YFrom"), res.getInt("YTo"), res.getBytes("Data"));
 		}
 		catch (Exception e) {
-			System.err.println("Error: " + e.getMessage());
+			System.err.println("Error in getTile. Fehler beim fetchen aus der DB: " + e.getMessage());
 			// Wenn wir nix getten können brauchen wir noch standard werte für Tile
 			System.exit(1);			
 		}			
