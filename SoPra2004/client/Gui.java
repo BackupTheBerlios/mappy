@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.18 2005/01/04 21:11:52 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.19 2005/01/04 21:25:05 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -145,13 +145,15 @@ public class Gui extends JFrame implements LayersIF {
 	 * 
 	 */
 	protected void chooseAllAction() {
-		layers.addSelectionInterval(0,ALLLAYERS.length);
+		int select = ALLLAYERS.length - 1;
+		layers.addSelectionInterval(0,select);
 	}
 
 	/**
 	 * 
 	 */
 	protected void refreshAction(){
+		refresh.setEnabled(false);
 		waiting.setVisible(true);
 		Thread getData = new Thread(new Refresher(upperLeft, layersToShow, mappy));
 		getData.start();
