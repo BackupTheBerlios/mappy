@@ -26,6 +26,22 @@ public class Mappy {
 	public Mappy(){
 		tiles = new ArrayList();
 	}
+	
+	public ArrayList getLayers(Dimension d, Point p, int[] layerIds) {
+		// ArrayList mit Layern
+		// die layer haben Zeilen und Spalten und eine ArrayList mit Tiles
+		// die Tiles sind fertig eingefärbt und so ...
+		
+		ArrayList layers = new ArrayList();
+		
+		for ( int i=0; i<layerIds.length; i++ ) {
+			Layer layer = new Layer(d, p, i);
+			layers.add(layer); 
+		}
+		
+		return layers;
+	}
+	
 	public ArrayList getTiles(Dimension d, Point p){
 		
 		return tiles;
