@@ -52,14 +52,15 @@ class MapLabel extends JPanel {
 			}
 		}
 		if (pinList != null) {
-			double zoomFactor = 4 - (zoom / 100);
+			double zoomFactor = 4 - (zoom/100);
 			ListIterator i = pinList.listIterator(0);
 			while (i.hasNext()) {
 				Pin currentPin = (Pin) i.next();
 				Image img = currentPin.getImage();
 				String description = currentPin.getName();
-				double x = ((currentPin.getPosition().x - start.x) / zoomFactor) - 7;
-				double y = ((currentPin.getPosition().y - start.y) / zoomFactor) - 7;
+				System.out.println (start.x);
+				double x = ((currentPin.getPosition().x - start.x) / zoomFactor - 7);
+				double y = ((currentPin.getPosition().y - start.y) / zoomFactor - 7);
 				if (x > 0 && y > 0) {
 					g.drawImage(img, (int)x, (int)y, null);
 					g.drawString(description, (int)x + 17, (int)y + 13);
@@ -68,8 +69,8 @@ class MapLabel extends JPanel {
 		}
 	}
 
-	public void setPins(ArrayList pins) {
-		
+	public void setPins(ArrayList pins, int zoom){
+		this.zoom = zoom;
 		pinList = pins;
 		repaint();
 	}

@@ -164,7 +164,7 @@ public class Gui extends JFrame implements LayersIF{
 		map.setSize(IOHandler.getSavedMapSize());
 		map.addMouseListener(new MouseListener(){
 			public void mouseClicked(MouseEvent arg0){
-				menu.setPinPoint(new Point(arg0.getX(), arg0.getY()));
+				menu.setPinPoint(new Point(arg0.getX(), arg0.getY()), sb.getZoomValue());
 				menu.show(arg0.getComponent(), arg0.getX(), arg0.getY());
 			}
 			public void mousePressed(MouseEvent arg0) {

@@ -14,10 +14,9 @@ import java.awt.event.KeyListener;
 public class StatusBar extends JPanel {
 	
 	private JLabel info;
-	private JLabel zoom;
+	private JLabel zoomLabel;
 	private JProgressBar progress;
 	private JLabel state;
-	private JLabel zoomLabel;
 	private JTextField pointX;
 	private JTextField pointY;
 	private JToolBar xPointBar;
@@ -73,8 +72,8 @@ public class StatusBar extends JPanel {
 		yPointBar.add(new JLabel(" Y-Wert "));
 		yPointBar.add(pointY);
 		
-		zoom = new JLabel();
-		zoom.setFont(new Font("Verdana", Font.PLAIN, 11));
+		zoomLabel = new JLabel();
+		zoomLabel.setFont(new Font("Verdana", Font.PLAIN, 11));
 		info = new JLabel();
 		info.setFont(new Font("Verdana", Font.PLAIN, 11));
 		state = new JLabel(" Fortschritt   ");
@@ -86,7 +85,7 @@ public class StatusBar extends JPanel {
 		add(new JLabel(""));
 		add(new JLabel(""));
 		add(yPointBar);
-		add(zoom);
+		add(zoomLabel);
 		add(progress);
 		add(state);
 		add(info);
@@ -148,6 +147,7 @@ public class StatusBar extends JPanel {
 	 */
 	public void setZoom(int zoom){
 		zoomValue = zoom;
+		zoomLabel.setText(" Zoom: " + zoom + "%");
 	}
 	/**
 	 * Returns the Zoom Value

@@ -22,7 +22,7 @@ public class MapPopup extends JPopupMenu{
 	private JMenu distance;
 	private String[] names;
 	private JMenuItem[] itemForName;
-	private Point mousePoint;
+	private int zoom;
 
 	/**
 	 * Class Constructor builds a PopUp
@@ -35,7 +35,7 @@ public class MapPopup extends JPopupMenu{
 		setPin = new JMenuItem("Markierung setzen");
 		setPin.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				openInpuDialog();
+				openInputDialog();
 			}
 		});
 		add(setPin);
@@ -85,7 +85,6 @@ public class MapPopup extends JPopupMenu{
 	 * 
 	 */
 	protected void getDistance(ActionEvent arg0) {
-		owner.getMappy().refreshPins(owner.getSb().getUpperLeft(), owner.getSb().getZoomValue());
 		String name = ((JMenuItem)arg0.getSource()).getLabel();
 		int distance = owner.getMappy().getDistance(p, name);
 		JOptionPane.showMessageDialog(null, "Die Entfernung zu " + name + " beträgt ca. " + distance + " Meter.", "Distanz", JOptionPane.PLAIN_MESSAGE);
@@ -97,25 +96,27 @@ public class MapPopup extends JPopupMenu{
 	protected void deletePoint() {
 		if(owner.getMappy().pinExists(p) != null){
 			owner.getMappy().removePin(p);
-			owner.getMappy().refreshPins(owner.getSb().getUpperLeft(), owner.getSb().getZoomValue());
 		}
 	}
 
-	void setPinPoint(Point p){
+	void setPinPoint(Point p, int zoom){
+		p.x = p.x * (4 - zoom/100);
+		p.y = p.y * (4 - zoom/100);
+		System.out.println(p.x + " TEST " + p.y);
 		Point mapPoint = owner.getSb().getUpperLeft();
 		this.p = new Point(mapPoint.x + p.x, mapPoint.y + p.y);
-		owner.getMappy().refreshPins(owner.getSb().getUpperLeft(), owner.getSb().getZoomValue());
+		this.zoom = zoom;
 	}
 	/**
 	 * 
 	 */
-	protected void openInpuDialog(){
+	protected void openInputDialog(){
 		if(owner.getMappy().pinExists(p) == null){
 			String name = JOptionPane.showInputDialog("Bitte Namen für Markierung eingeben");
 			if(name.length() == 0){
 				name = "Markierung";
 			}
-			owner.getMappy().setPin(p, name);
+			owner.getMappy().setPin(p, name, zoom);
 		}
 	}
 }

@@ -7,7 +7,7 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.34 2005/01/21 14:42:57 drrsatzteil Exp $
+ *$Id: Mappy.java,v 1.35 2005/01/21 16:11:49 drrsatzteil Exp $
  */
 
 
@@ -64,18 +64,14 @@ public class Mappy{
 		this.layerColorsAlpha = layerColorsAlpha;
 		map.refresh(this.getLayers(map.getSize(), upperLeft, zoom, layersToShow, progress), pins, zoom, upperLeft);
 	}
-	public void refreshPins(Point upperLeft, int zoom){
-		startPoint = upperLeft;
-		this.zoom = zoom;
-		map.setPins(pins);
-	}
 	public JPanel getMapLabel(){
 		return map;
 	}
 	public boolean closeDB(){
 		return DB.closeConnection();
 	}
-	public void setPin(Point p, String name){
+	public void setPin(Point p, String name, int zoom){
+		this.zoom = zoom;
 		boolean b = false;
 		Integer test = pinExists(p);
 		if(test == null){
@@ -91,6 +87,7 @@ public class Mappy{
 			}
 			if (b == false){
 				pins.add(new Pin(p,name));
+				map.setPins(pins, zoom);
 			}
 		}
 	}
@@ -115,6 +112,7 @@ public class Mappy{
 		if(test != null){
 			pins.remove(test.intValue());
 		}
+		map.setPins(pins, zoom);
 	}
 	
 	public String[] getPositions(){
@@ -149,7 +147,7 @@ public class Mappy{
 					double cSquare = aSquare + bSquare;
 					double distanceInPixels = Math.sqrt(cSquare);
 					System.out.println (distanceInPixels);
-					realDistance = (distanceInPixels * 0.5) * (4 - (zoom / 100));
+					realDistance = (distanceInPixels * 0.5);// * (4 - (zoom / 100));
 					realD = (int)realDistance;
 				}
 			}
