@@ -14,6 +14,7 @@ public interface SettingsIF {
 	String DB_NAME="SoPraDB";
 	String DB_USR="projekt";
 	String DB_PW="StPlan";
+	String[] DB_SETTINGS={DB_URL,DB_PORT,DB_NAME,DB_USR,DB_PW };
 	
 
 }

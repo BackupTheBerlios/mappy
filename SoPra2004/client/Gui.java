@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.59 2005/01/18 16:02:16 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.60 2005/01/18 19:36:56 jesuzz Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -387,6 +387,14 @@ public class Gui extends JFrame implements LayersIF{
 		this.upperLeft = upperLeft;
 	}
 	public Color[] getLayerColors(){
+		try{
+			return IOHandler.getSavedColorSettings();
+		}
+		catch (Exception e){
+			return LAYERCOLORS;
+		}
+	}
+	public Color[] getLayerColorsAlpha(){
 		return LAYERCOLORS;
 	}
 	/**

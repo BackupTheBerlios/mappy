@@ -6,6 +6,7 @@
  */
 package client;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
@@ -25,7 +26,7 @@ import javax.swing.JPanel;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class IOHandler {
+public class IOHandler implements SettingsIF, LayersIF{
 	static Point getSavedStart(){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		if(path.exists()){
@@ -202,6 +203,54 @@ public class IOHandler {
 			return 0;
 		}
 	}
+	static String[] getSavedDbSettings(){
+		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream dbSettings = new ObjectInputStream (file);
+				String[] dbSet = (String[])dbSettings.readObject();
+				dbSettings.close();
+				return dbSet;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load database settings, using default settings");
+				return DB_SETTINGS;
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load database settings, using default settings");
+				return DB_SETTINGS;
+			}
+		}
+		else{
+			System.err.println("Failed to load database settings, using default settings");
+			return DB_SETTINGS;
+		}
+	}
+	static Color[] getSavedColorSettings(){
+		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream colorSettings = new ObjectInputStream (file);
+				Color[] colorSet = (Color[])colorSettings.readObject();
+				colorSettings.close();
+				return colorSet;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load Colors, using default1");
+				return LAYERCOLORS;
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load Colors, using default2");
+				return LAYERCOLORS;
+			}
+		}
+		else{
+			System.err.println("Failed to load colors, using default3");
+			return LAYERCOLORS;
+		}
+	}
 	static void saveStartPoint (Point startPoint){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {
@@ -291,6 +340,36 @@ public class IOHandler {
 		}
 		catch ( IOException e ) {
 			System.err.println("Failed to save ZoomFactor");
+		}
+  	}
+	static void saveDbSettings (String[] dbSettings){
+		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream zoomProperties = new ObjectOutputStream (file);
+			zoomProperties.writeObject(dbSettings);
+			zoomProperties.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save database settings");
+		}
+  	}
+	static void saveColorSettings (Color[] colorSettings){
+		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream colors = new ObjectOutputStream (file);
+			colors.writeObject(colorSettings);
+			colors.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save Colors");
 		}
   	}
 }
