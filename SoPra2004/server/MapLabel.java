@@ -31,15 +31,6 @@ class MapLabel extends JPanel{
 		this.layerList = layerList;
 		repaint();
 	}
-	
-	/*public Image filter(Image src){
-		ImageFilter colorfilter =  new ColorChanger(Color.BLACK, Color.RED);//Einfach mal so zum Test
-		ImageProducer imageprod = new FilteredImageSource(src.getSource() ,colorfilter );
-		Image img =Toolkit.getDefaultToolkit().createImage( imageprod );
-		System.out.println("Image gefiltert und erstellt");
-		
-		return src;//img; da es nicht funktioniert gebe ich einfach erstmal das alte zurück
-	}*/
 	public void paint(Graphics g){
 		if (layerList == null){
 		}
@@ -48,7 +39,6 @@ class MapLabel extends JPanel{
 				ListIterator i = layerList.listIterator(0);
 				while(i.hasNext()){
 					Layer temp = (Layer)i.next();
-					System.out.println(temp.getMap());
 					g.drawImage(temp.getMap(), 0, 0, null);
 				}
 			}

@@ -6,41 +6,31 @@ package server;
 
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Point;
 import javax.swing.ImageIcon;
 
 /**
  * @author fkubis
- * $Id: Tile.java,v 1.7 2005/01/12 20:14:26 drrsatzteil Exp $
+ * $Id: Tile.java,v 1.8 2005/01/12 22:57:18 drrsatzteil Exp $
  */
 public class Tile {
-	private int id;
-	private Point from;
-	private Point to;
 	private Dimension dim;
-	private byte[] data;
-	private ImageIcon image = null;
+	private Image image = null;
 	
 	public Tile(){
 	}
 	
 	public Tile(int id, int XFrom, int XTo, int YFrom, int YTo, byte[] gif) {		
-		this.id	= id;
-		from 	= new Point(XFrom, YFrom);
-		to 		= new Point(XTo, YTo);
 		dim 	= new Dimension(XTo - XFrom, YTo - YFrom);
-		data 	= gif;
-		
 		try {
-			createImage();
+			createImage(gif);
 		} catch (NoImageException e) {
 			System.err.println("createImage der Tile: " + e.getMessage());
 		}
 	}
 	
-	private void createImage() throws NoImageException {		
-		if (data != null) {
-			image = new ImageIcon(data);
+	private void createImage(byte[] gif) throws NoImageException {		
+		if (gif != null) {
+			image = new ImageIcon(gif).getImage();
 		} else {
 			throw new NoImageException("Stream aus der DB ist null");
 		}
@@ -56,14 +46,7 @@ public class Tile {
 	}
 	
 	public Image getImage() {
-		return image.getImage();
-	}
-	
-	/**
-	 * @param icon
-	 */
-	public void setImage(ImageIcon icon) {
-		image = icon;
+		return image;
 	}
 	public Dimension getSize(){
 		return dim;

@@ -7,20 +7,16 @@
 package data;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.imageio.ImageIO;
-
-import server.NoImageException;
 import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.15 2005/01/12 20:12:23 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.16 2005/01/12 22:56:48 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;

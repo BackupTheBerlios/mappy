@@ -15,7 +15,7 @@ import data.DBValues;
 
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.17 2005/01/12 22:09:26 drrsatzteil Exp $
+ * $Id: Layer.java,v 1.18 2005/01/12 22:57:00 drrsatzteil Exp $
  */
 public class Layer {
 	private BufferedImage map;
@@ -74,12 +74,7 @@ public class Layer {
 	    cA[255]= (byte)255;
 	    ByteLookupTable blut = new ByteLookupTable(0, new byte [][] {cR, cG, cB, cA}); 
 	    LookupOp lop = new LookupOp (blut, null);
-	    //BufferedImage test = new BufferedImage (500, 500, BufferedImage.TRANSLUCENT);
-	    //test.getGraphics().drawImage(BufferedImageArray[i],0,0,null);
-	    //BufferedImageArray[i] = test;
 	    lop.filter(map, map);
-	    //System.out.println (BufferedImageArray[i]);
-	    //System.out.println (test);
 	}
 
 }
