@@ -4,12 +4,15 @@
  */
 package server;
 
+import java.awt.Dimension;
+import java.awt.Point;
+
 /**
  * @author fkubis
- * $Id: Layer.java,v 1.1 2004/12/18 15:52:54 fkubis Exp $
+ * $Id: Layer.java,v 1.2 2004/12/18 16:00:40 fkubis Exp $
  */
 public class Layer {
-	Layer() {
+	Layer(Dimension d, Point p, int layerId) {
 		
 	}
 }

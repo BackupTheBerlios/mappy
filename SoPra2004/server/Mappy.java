@@ -7,8 +7,8 @@
 package server;
 
 /**
- * @author ba008959
- *
+ * @author fkubis
+ * $Id: Mappy.java,v 1.9 2004/12/18 16:00:40 fkubis Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
