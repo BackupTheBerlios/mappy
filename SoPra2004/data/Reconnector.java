@@ -1,22 +1,13 @@
-/*
- * Created on 20.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 /**
- * @author DrRSatzteil
+ * Reconnector Class for rebuilding a connection
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
  *
- *$Id: Reconnector.java,v 1.1 2005/01/20 01:14:56 drrsatzteil Exp $
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Reconnector implements Runnable{
 	Connection con;
@@ -25,6 +16,13 @@ public class Reconnector implements Runnable{
 	private String pass;
 	private DBConnector connector;
 
+	/**
+	 * Class constructor
+	 * @param url	the url of the Database
+	 * @param user	the user of the Database
+	 * @param pass	the password to the defined user of the Database
+	 * @param connector	the DBconnector whcih should be reconnected
+	 */
 	Reconnector(String url, String user, String pass, DBConnector connector){
 		this.connector = connector;
 		this.con = connector.getCon();

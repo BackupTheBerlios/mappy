@@ -1,9 +1,3 @@
-/*
- * Created on 30.11.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package data;
 
 import java.awt.Dimension;
@@ -17,8 +11,10 @@ import java.util.ArrayList;
 import server.Tile;
 
 /**
- * @author fkubis
- * $Id: DBValues.java,v 1.25 2005/01/20 01:40:12 drrsatzteil Exp $
+ * The Values of our Database
+ * 
+ * @author Softwarepraktikum 2004/05 Gruppe 2
+ *
  */
 public class DBValues{
 	private DBConnector connector;
@@ -29,11 +25,21 @@ public class DBValues{
 	private String pass = "StPlan";
 	private PreparedStatement pstmt;
 	
+	/**
+	 * Class constructor
+	 */
 	public DBValues(){
 		Thread connect = new Thread(new CreateConnection(this));
 		connect.start();
 	}
 	
+	/**
+	 * Returns the current Tiles
+	 * @param p		Point of the Tiles
+	 * @param dim	Dimension of the Tiles
+	 * @param type	int-Value of the defined Layer
+	 * @return	Arraylist with the current Tiles
+	 */
 	public ArrayList getTiles(Point p, Dimension dim, int type){
 		ArrayList tiles = null;
 		ResultSet r = null;
@@ -77,9 +83,7 @@ public class DBValues{
 		}
 		return tiles;
 	}
-	/**
-	 * 
-	 */
+	
 	private ArrayList tryToReconnect(Point p, Dimension dim, int type) {
 		if(connector != null){
 			con = connector.reconnect();
@@ -97,34 +101,74 @@ public class DBValues{
 		return null;
 	}
 	
+	/**
+	 * Returns the status of the connection
+	 * @return	boolean of the connection-Status (true: Connection is closed)
+	 */
 	public boolean closeConnection(){
 		return connector.closeDB(con);
 	}
 
+	/**
+	 * Returns the connection
+	 * @return	the current Connection
+	 */
 	public Connection getCon() {
 		return con;
 	}
+	/**
+	 * Sets a Connection
+	 * @param con	the defined Connection
+	 */
 	public void setCon(Connection con) {
 		this.con = con;
 	}
+	/**
+	 * Returns the Connector
+	 * @return	the current DBConnector
+	 */
 	public DBConnector getConnector() {
 		return connector;
 	}
+	/**
+	 * Sets a DBConnector
+	 * @param connector	the defined DBConnector
+	 */
 	public void setConnector(DBConnector connector) {
 		this.connector = connector;
 	}
+	/**
+	 * Returns a prepared Statement
+	 * @return	the current prepared Statement
+	 */
 	public PreparedStatement getPstmt() {
 		return pstmt;
 	}
+	/**
+	 * Sets a Prepared Statement
+	 * @param pstmt	the defined Prepared Statement
+	 */
 	public void setPstmt(PreparedStatement pstmt) {
 		this.pstmt = pstmt;
 	}
+	/**
+	 * Returns the current password of the Database
+	 * @return current password as String
+	 */
 	public String getPass() {
 		return pass;
 	}
+	/**
+	 * Returns the current URL of the Database
+	 * @return current URL as String
+	 */
 	public String getUrl() {
 		return url;
 	}
+	/**
+	 * Returns the current User of the Database
+	 * @return current User as String
+	 */
 	public String getUser() {
 		return user;
 	}
