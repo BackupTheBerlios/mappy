@@ -251,6 +251,33 @@ public class IOHandler implements SettingsIF, LayersIF{
 			return LAYERCOLORS;
 		}
 	}
+	static boolean getSavedSoundSettings(){
+		File path = new File ("save" + File.separatorChar + "soundSettings.mpy");
+		if(path.exists()){
+			try{
+				FileInputStream file = new FileInputStream (path);
+				ObjectInputStream soundSettings = new ObjectInputStream (file);
+				Boolean b = (Boolean)soundSettings.readObject();
+				boolean bool = b.booleanValue();
+				return bool;
+			}
+			catch (IOException e){
+				System.err.println ("Failed to load soundSettings. Sounds enabled");
+				return false;
+			}
+			catch (ClassNotFoundException e){
+				System.err.println ("Failed to load soundSettings. Sounds enabled");
+				return false;
+			}
+		}
+		else{
+			System.err.println("Failed to load soundSettings. Sounds enabled");
+			return false;
+		}
+	}
+	
+	
+	
 	static void saveStartPoint (Point startPoint){
 		File path = new File ("save" + File.separatorChar + "start.mpy");
 		try {
@@ -372,6 +399,21 @@ public class IOHandler implements SettingsIF, LayersIF{
 			System.err.println("Failed to save Colors");
 		}
   	}
+	static void saveSoundSettings(boolean b){
+		File path = new File ("save" + File.separatorChar + "soundSettings.mpy");
+		try {
+			if (!path.exists()) {
+				new File("save").mkdir();
+			}
+			FileOutputStream file = new FileOutputStream (path);
+			ObjectOutputStream sound = new ObjectOutputStream (file);
+			sound.writeObject(new Boolean(b));
+			sound.close();
+		}
+		catch ( IOException e ) {
+			System.err.println("Failed to save soundSettings");
+		}
+	}
 	
 	static void deleteColorSettings(){
 		File path = new File ("save" + File.separatorChar + "colorSettings.mpy");
@@ -381,6 +423,12 @@ public class IOHandler implements SettingsIF, LayersIF{
 	}
 	static void deleteDBSettings(){
 		File path = new File ("save" + File.separatorChar + "dbSettings.mpy");
+		if (path.exists()){
+			path.delete();
+		}
+	}
+	static void deleteSoundSettings(){
+		File path = new File ("save" + File.separatorChar + "soundSettings.mpy");
 		if (path.exists()){
 			path.delete();
 		}
@@ -414,7 +462,8 @@ public class IOHandler implements SettingsIF, LayersIF{
 	static boolean changesExist(){
 		File path1 = new File ("save" + File.separatorChar + "colorSettings.mpy");
 		File path2 = new File ("save" + File.separatorChar + "dbSettings.mpy");
-		if(path1.exists() || path2.exists()){
+		File path3 = new File ("save" + File.separatorChar + "soundSettings.mpy");
+		if(path1.exists() || path2.exists() || path3.exists()){
 			return true;
 		}
 		else{
