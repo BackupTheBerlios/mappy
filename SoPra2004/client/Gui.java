@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.19 2005/01/04 21:25:05 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.20 2005/01/10 18:17:40 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -69,8 +69,7 @@ public class Gui extends JFrame implements LayersIF {
 		GridBagLayout layout = new GridBagLayout();
 		getContentPane().setLayout(layout);
 		
-		MenuBar mb = new MenuBar();
-		setJMenuBar(mb);
+		MenuBar mb = new MenuBar(this);
 		
 		layers = new JList(layer);
 		layers.setFixedCellHeight(25);
@@ -117,7 +116,9 @@ public class Gui extends JFrame implements LayersIF {
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
 		layerList = mappy.getLayers(getSize(), upperLeft, layersToShow);
-
+		
+		layers.setSelectedIndices(layersToShow);
+		
 		map = mappy.getMapLabel();
 		refreshAction();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)map, 2, 0, 1, 3, 1d, 1d);
@@ -127,7 +128,7 @@ public class Gui extends JFrame implements LayersIF {
 		StatusBar sb = new StatusBar();
 		sb.setInfo("Los geht's!");
 		sb.setZoom(100);
-		sb.setPosition(143,256);
+		sb.setPosition(upperLeft.x,upperLeft.y);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 3, 1, 1, 1d, 0d);
 		
 		setVisible(true);
@@ -185,5 +186,12 @@ public class Gui extends JFrame implements LayersIF {
 	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    SwingUtilities.updateComponentTreeUI(this ); 
 	  } catch( Exception e ) { e.printStackTrace(); }
+	}
+	
+	Point getUpperLeft(){
+		return upperLeft;
+	}
+	int[] getLayers(){
+		return layersToShow;
 	}
 }
