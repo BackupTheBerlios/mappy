@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JProgressBar;
 
 /**
  * @author ba008959
@@ -97,12 +98,20 @@ public class MenuBar extends JMenuBar{
 	/**
 	 * 
 	 */
-	protected void saveSettings() {
+	protected void saveSettings(){
+		JProgressBar progress = owner.getProgress();
+		progress.setMaximum(5);
 		IOHandler.saveStartPoint(owner.getUpperLeft());
+		progress.setValue(1);
 		IOHandler.saveLayers(owner.getLayers());
+		progress.setValue(2);
 		IOHandler.saveWindowSize(owner);
+		progress.setValue(3);
 		IOHandler.saveWindowPosition(owner);
+		progress.setValue(4);
 		IOHandler.saveMapSize(owner.getMap());
+		progress.setValue(5);
+		owner.getStatusPanel().setText("Gespeichert!");
 	}
 
 	void openAbout(){

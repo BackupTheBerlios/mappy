@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.42 2005/01/13 12:36:54 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.43 2005/01/13 12:45:33 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -173,7 +173,7 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel = new JPanel();
 		mapPanel.setLayout(new BorderLayout());
 		mapPanel.setBounds(20,20,20,20);
-		//mapPanel.setBackground(new Color(0xFF000000));
+		mapPanel.setBackground(new Color(255,255,255));
 		mapPanel.add(moveEast, BorderLayout.EAST);
 		mapPanel.add(moveWest, BorderLayout.WEST);
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
@@ -294,5 +294,11 @@ public class Gui extends JFrame implements LayersIF{
 	 */
 	public JPanel getMap() {
 		return map;
+	}
+	public JLabel getStatusPanel(){
+		return sb.getInfo();
+	}
+	public JProgressBar getProgress(){
+		return progress;
 	}
 }
