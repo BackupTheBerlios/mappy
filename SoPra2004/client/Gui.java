@@ -30,72 +30,26 @@ public class Gui extends JFrame {
 	public Gui(Mappy mappy){
 		super("Mappy");
 		this.mappy=new Mappy();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		System.out.print("Building new GUI...");
 		this.setSize(500,500);
 		
-		// Create new MenuBar
-		JMenuBar menuBar=new JMenuBar();
-		
-		// Add MenuBar to Frame
-		this.setJMenuBar(menuBar);
-		
-		// Create Menues
-		JMenu menuFile=new JMenu("Datei");
-		JMenu menuView=new JMenu("Anzeige");		
-		JMenu menuHelp=new JMenu("Hilfe");
-		JMenu menuSettings=new JMenu("Einstellungen");
-		
-		// Add Menues to MenuBar
-		menuBar.add(menuFile);
-		menuBar.add(menuView);
-		menuBar.add(menuHelp);
-		
-		// create Menu Items
-		  // File
-		JMenuItem menuItemExit=new JMenuItem("Beenden");
-		JMenuItem menuItemSave=new JMenuItem("Speichern");
-		  // View 
-		JMenuItem menuItemZoom100=new JMenuItem("Zoom 100%");
-		JMenuItem menuItemZoom200=new JMenuItem("Zoom 200%");
-		JMenuItem menuItemZoom300=new JMenuItem("Zoom 300%");
-		  // Help
-		JMenuItem menuItemAbout=new JMenuItem("Über Mappy...");
-		  // Settings
-		JMenuItem menuItemDb=new JMenuItem("Datenbank");
-		JMenuItem menuItemLanguage= new JMenuItem("Sprache");
-		// add Menu Items
-		  // Settings
-		menuSettings.add(menuItemDb);
-		menuSettings.add(menuItemLanguage);
-		  // File
-		menuFile.add(menuSettings);
-		menuFile.add(menuItemSave);
-		menuFile.addSeparator();
-		menuFile.add(menuItemExit);
-		  // Anzeige
-		menuView.add(menuItemZoom100);
-		menuView.add(menuItemZoom200);
-		menuView.add(menuItemZoom300);
-		  // Hilfe
-		menuHelp.add(menuItemAbout);
+		MenuBar mb=new MenuBar();
+		this.setJMenuBar(mb);
 		
 		this.setNewLookAndFeel();
 
 			
 		
-		menuItemExit.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				dispose();
-			}
-		});
+		
 		
 		// ContentPane setup
 		this.getContentPane().setLayout(new BorderLayout());
 		JPanel panelFeatures=new JPanel();
 		JPanel panelMap=new JPanel();
 		JPanel panelStatus=new JPanel();
-		Border etchedBdr = BorderFactory.createEtchedBorder(Color.BLACK, Color.BLACK);
-		panelStatus.setBorder(etchedBdr);
+		panelStatus.setBorder(new EtchedBorder());
+		panelStatus.setLayout(new FlowLayout(FlowLayout.LEFT,1,0));
 		this.getContentPane().add(panelFeatures, BorderLayout.WEST);
 		this.getContentPane().add(panelMap, BorderLayout.CENTER);
 		this.getContentPane().add(panelStatus, BorderLayout.SOUTH);
@@ -103,24 +57,46 @@ public class Gui extends JFrame {
 		// Features setup
 		
 		panelFeatures.setLayout(new GridLayout(0,1));
-		panelFeatures.setBackground(Color.BLUE);
+		panelFeatures.setBorder(new EtchedBorder());
 		JLabel labelFeatures=new JLabel("Kartenfunktionen");
-		panelFeatures.add(labelFeatures);
-		
+		Features features=new Features();
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		features.addCheckBox("Wald");
+		panelFeatures.add(features , BorderLayout.WEST);
 		
 		// Map setup
 		// Hier Weiter Machen
-		ImageIcon image=mappy.getMap();
+		ImageIcon image=new ImageIcon("uniba.gif");//mappy.getMap();
 		labelMap=new JLabel(image);
 		panelMap.add(labelMap);
+		Image img=mappy.getMap();//
+		BufferedImage bi=new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gfx=bi.createGraphics();
+		gfx.drawImage(img,0,0,this);
+		System.out.println(img.getWidth(this));
+		//panelMap.paint(gfx);
 		
 		
 		// Status setup
-		
-		JLabel labelDbStatus= new JLabel("Sie sind mit keiner Datenbank verbunden!");
-		panelStatus.setBackground(Color.RED);
-		panelStatus.add(labelDbStatus);
-		
+		StatusBar sb=new StatusBar();
+		sb.setInfo("Los geht's!");
+		sb.setZoom(100);
+		sb.setPosition(143,256);
+		panelStatus.add(sb);
+	
 		pack();
 		setVisible(true);
 		
