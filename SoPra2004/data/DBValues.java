@@ -6,6 +6,7 @@
  */
 package data;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.16 2005/01/12 22:56:48 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.17 2005/01/13 11:24:13 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -31,33 +32,35 @@ public class DBValues {
 		this.con = this.connector.openDB(this.url, this.user, this.pass);
 	}
 	
-	public Tile getTile(Point p, int type){
-		Tile t = null;
+	public Tile[] getTiles(Point p, Dimension dim, int type){
+		Tile[] tiles = null;
 		ResultSet r = null;				
 		try{
 			Statement stmt = this.con.createStatement();
 			String sql;
-			sql = "SELECT * " 
-				+ "FROM MapDataTransparent " 
-				+ "WHERE " 
-				+ "XFrom <= " + (int)p.x + " AND " + (int)p.x + " <= XTo "  
-				+ "AND YFrom <= " + (int)p.y + " AND " + (int)p.y + " <= YTo "
-				+ "AND Type = " + type;
+			sql = "SELECT * FROM MapDataTransparent WHERE (XTo - " + p.x +
+			") >= 0 AND XFrom < " + (p.x + dim.width) + " AND (YTo - " + p.y + ") >= 0 AND YFrom < " + (p.y + dim.height)
+			+ " AND Type = " + type + " ORDER BY ID";
 						
-			try {
+			try{
 				r = stmt.executeQuery(sql);
-				r.next();
-				System.out.println("ID des gewählten Datensatzes: " + r.getInt("ID"));
-				t = new Tile(r.getInt("ID"), r.getInt("XFrom"), r.getInt("XTo"), r.getInt("YFrom"), r.getInt("YTo"), r.getBytes("Data"));
-				return t;
+				r.last();
+				int rowCount = r.getRow();
+				System.out.println(rowCount);
+				tiles = new Tile[rowCount];
+				r.beforeFirst();
+				for(int i = 0; i < rowCount; i++){
+					r.next();
+					tiles[i] = new Tile(r.getInt("ID"), r.getInt("XFrom"), r.getInt("XTo"), r.getInt("YFrom"), r.getInt("YTo"), r.getBytes("Data"));
+				}
 			}
 			catch (SQLException e) {
 				System.err.println("SQL Exception: " + e.getMessage());	
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("SQL Exception: " + e.getMessage() + "Verdammt");
+			System.err.println("SQL Exception: " + e.getMessage());
 		}
-		return new Tile();
+		return tiles;
 	}
 }
