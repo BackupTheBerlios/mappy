@@ -33,11 +33,11 @@ public class Refresher implements Runnable{
 
 	Refresher(Gui owner){
 		this.owner = owner;
-		this.upperLeft = owner.getUpperLeft();
 		this.layersToShow = owner.getLayers();
 		this.refToMappy = owner.getMappy();
 		this.progress = owner.getProgress();
 		this.sb = owner.getSb();
+		this.upperLeft = sb.getUpperLeft();
 		this.layerColors = owner.getLayerColors();
 		this.zoom = owner.getZoomSlider().getValue();
 		sb.setInfo("Aktualisiere Karte");
@@ -48,8 +48,10 @@ public class Refresher implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-		refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
+		if(upperLeft != null){
+			refToMappy.refresh(upperLeft, layersToShow, zoom, progress, layerColors);
+			sb.setInfo("Fertig!");
+		}
 		owner.getWait().setVisible(false);
-		sb.setInfo("Fertig!");
 	}
 }

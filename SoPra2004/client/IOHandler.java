@@ -47,7 +47,7 @@ public class IOHandler {
 		}
 		else{
 			System.err.println("Failed to load StartPoint");
-			return new Point(4000,3000);
+			return new Point(0,0);
 		}
 	}
 	static int[] getSavedLayers(){
@@ -86,16 +86,16 @@ public class IOHandler {
 			}
 			catch (IOException e){
 				System.err.println ("Failed to load WindowSize");
-				return new Dimension(600,600);
+				return new Dimension(800,600);
 			}
 			catch (ClassNotFoundException e){
 				System.err.println ("Failed to load WindowSize");
-				return new Dimension(600,600);
+				return new Dimension(800,600);
 			}
 		}
 		else{
 			System.err.println("Failed to load WindowSize");
-			return new Dimension(600,600);
+			return new Dimension(800,600);
 		}
 	}
 	static Point getSavedWindowPosition(){

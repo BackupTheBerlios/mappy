@@ -133,7 +133,7 @@ public class MenuBar extends JMenuBar{
 	protected void saveSettings(){
 		JProgressBar progress = owner.getProgress();
 		progress.setMaximum(6);
-		IOHandler.saveStartPoint(owner.getUpperLeft());
+		IOHandler.saveStartPoint(owner.getSb().getUpperLeft());
 		progress.setValue(1);
 		IOHandler.saveLayers(owner.getLayers());
 		progress.setValue(2);

@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.55 2005/01/17 21:20:23 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.56 2005/01/18 13:16:56 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -151,7 +151,7 @@ public class Gui extends JFrame implements LayersIF{
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("east");
 				upperLeft.x = upperLeft.x + 300;
-				sb.setPosition(upperLeft.x, upperLeft.y);
+				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
 				refreshAction();
 			}
@@ -161,7 +161,7 @@ public class Gui extends JFrame implements LayersIF{
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("west");
 				upperLeft.x = upperLeft.x - 300;
-				sb.setPosition(upperLeft.x, upperLeft.y);
+				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
 				refreshAction();
 			}
@@ -171,7 +171,7 @@ public class Gui extends JFrame implements LayersIF{
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("north");
 				upperLeft.y = upperLeft.y - 300;
-				sb.setPosition(upperLeft.x, upperLeft.y);
+				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
 				refreshAction();
 			}
@@ -181,7 +181,7 @@ public class Gui extends JFrame implements LayersIF{
 			public void actionPerformed(ActionEvent evt){
 				mappy.move("south");
 				upperLeft.y = upperLeft.y + 300;
-				sb.setPosition(upperLeft.x, upperLeft.y);
+				setXY(upperLeft.x, upperLeft.y);
 				progress.setValue(0);
 				refreshAction();
 			}
@@ -209,13 +209,29 @@ public class Gui extends JFrame implements LayersIF{
 		sb = new StatusBar(progress);
 		sb.setInfo("Los geht's!");
 		sb.setZoom(zoomSlider.getValue());
-		sb.setPosition(upperLeft.x,upperLeft.y);
+		sb.setUpperLeft(upperLeft.x, upperLeft.y);
 		
 		date = new Time();
 		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 1, 2, 1, 2, 1d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 2, 3, 1, 1, 0d, 0d);
 		
+		addComponentListener(new ComponentListener(){
+			public void componentHidden(ComponentEvent arg0){
+			}
+			public void componentMoved(ComponentEvent arg0){
+			}
+			public void componentResized(ComponentEvent arg0){
+				if((getSize().width < 800) || (getSize().height < 600)){
+					setSize(800,600);
+				}
+				refreshAction();
+			}
+			public void componentShown(ComponentEvent arg0){
+			}
+		});
+		
 		setVisible(true);
+		
 		
 		wait = new Dialog(this, "Bitte Warten", true);
 		wait.setVisible(false);
@@ -226,13 +242,20 @@ public class Gui extends JFrame implements LayersIF{
 		wait.pack();
 		Point location = getLocation();
 		Dimension size = getSize();
-		wait.setLocation(location.x + size.width/2 - wait.getSize().width/2 + 70, location.y + size.height/2 - wait.getSize().height/2);
+		wait.setLocation(location.x + size.width/2 - wait.getSize().width/2, location.y + size.height/2 - wait.getSize().height/2);
 		
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();
 		}
 	}
 	
+	/**
+	 * @param y
+	 */
+	protected void setXY(int x, int y){
+		sb.setUpperLeft(upperLeft.x, upperLeft.y);
+	}
+
 	/**
 	 * 
 	 */
@@ -289,6 +312,7 @@ public class Gui extends JFrame implements LayersIF{
 	 * 
 	 */
 	protected void refreshAction(){
+		progress.setValue(0);
 		refresh.setEnabled(false);
 		Thread getData = new Thread(new Refresher(this));
 		getData.start();
@@ -317,10 +341,6 @@ public class Gui extends JFrame implements LayersIF{
 	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    SwingUtilities.updateComponentTreeUI(this ); 
 	  } catch(Exception e){e.printStackTrace();}
-	}
-	
-	Point getUpperLeft(){
-		return upperLeft;
 	}
 	int[] getLayers(){
 		return layersToShow;
