@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.28 2005/01/12 16:32:57 jesuzz Exp $
+ * $Id: Gui.java,v 1.29 2005/01/12 20:11:29 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -42,6 +42,7 @@ public class Gui extends JFrame implements LayersIF {
 	private JButton moveSouth;
 	private Point upperLeft;
 	private int[] layersToShow;
+	private JPanel map;
 	private JLabel map;
 	private JPanel mapPanel = new JPanel();
 	private StatusBar sb;
@@ -184,7 +185,6 @@ public class Gui extends JFrame implements LayersIF {
 			refreshAction();
 		}
 		setVisible(true);
-		
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class Gui extends JFrame implements LayersIF {
 	/**
 	 * @return
 	 */
-	public JLabel getMap() {
+	public JPanel getMap() {
 		return map;
 	}
 }

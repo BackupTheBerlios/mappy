@@ -7,15 +7,15 @@
 package server;
 /**
  *
- *$Id: Mappy.java,v 1.19 2005/01/12 16:32:57 jesuzz Exp $
+ *$Id: Mappy.java,v 1.20 2005/01/12 20:15:07 drrsatzteil Exp $
  */
 
 
-import java.awt.image.BufferedImage;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import data.*;
@@ -62,7 +62,7 @@ public class Mappy {
 		map.refresh(this.getLayers(map.getSize(), upperLeft, layersToShow, progress));
 
 	}
-	public MapLabel getMapLabel(){
+	public JPanel getMapLabel(){
 		return map;
 	}
 }
