@@ -8,7 +8,7 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.37 2005/01/12 23:47:15 jesuzz Exp $
+ * $Id: Gui.java,v 1.38 2005/01/13 11:51:42 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -30,7 +30,6 @@ import server.Mappy;
 public class Gui extends JFrame implements LayersIF{
 	private Mappy mappy;
 	private String[] layer = ALLLAYERS;
-	private int zoom=50;
 	private int clickCounter=1;
 	private JList layers;
 	private JScrollPane layersScrollPane;
@@ -51,7 +50,7 @@ public class Gui extends JFrame implements LayersIF{
 	private StatusBar sb;
 	private JProgressBar progress = new JProgressBar(0,1);
 	private Time date;
-	private JSlider zoomSlider=new JSlider();
+	private JSlider zoomSlider;
 	private JLabel zoomLabel=new JLabel("Zoom: ");	
 	
 	
@@ -64,7 +63,7 @@ public class Gui extends JFrame implements LayersIF{
 				showCloseDialog();
 			}
 		});
-		// Build GUI
+		//Build GUI
 		System.out.print("Building new GUI...");
 		setNewLookAndFeel();
 		initComponents();
@@ -93,10 +92,7 @@ public class Gui extends JFrame implements LayersIF{
 		layersScrollPane = new JScrollPane(layers);
 		layersScrollPane.setWheelScrollingEnabled(true);
 		layersScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)layersScrollPane, 0, 0, 1, 1, 1d, 1d);
-		
-		Legend legend = new Legend();
-		LayoutManager.addComponent(getContentPane(), layout, (Component)legend, 1, 0, 1, 1, 0d, 1d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)layersScrollPane, 0, 0, 1, 1, 0d, 1d);
 		
 		layerButtonBar = new JToolBar(JToolBar.VERTICAL);
 		layerButtonBar.setFloatable(false);
@@ -118,28 +114,19 @@ public class Gui extends JFrame implements LayersIF{
 				deselectAction();
 			}
 		});
+		zoomSlider = new JSlider();
+		zoomSlider.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent ce){
+				zoomSliderChanged();
+			}
+		});
 		LayoutManager.addComponent(getContentPane(), layout, (Component)refresh, 0, 1, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)chooseAll, 0, 2, 1, 1, 0d, 0d);
 		LayoutManager.addComponent(getContentPane(), layout, (Component)deselect, 0, 3, 1, 1, 0d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomSlider, 3, 2, 1, 1,0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomSlider, 3, 2, 1, 1, 0d, 0d);
 		zoomLabel.setHorizontalAlignment(JLabel.RIGHT);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomLabel, 2, 2, 1, 1,0d, 0d);
-		zoomSlider.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent ce){
-				if(zoom==zoomSlider.getValue()){
-				if(clickCounter==2){
-				//Hier kommt dann der methodenaufruf
-				System.out.println("Zoomwert: "+zoomSlider.getValue());
-				clickCounter=1;
-				}
-				else{
-					clickCounter++;
-				}
-				
-				}
-				zoom=zoomSlider.getValue();
-			}
-		});
+		LayoutManager.addComponent(getContentPane(), layout, (Component)zoomLabel, 2, 2, 1, 1, 0d, 0d);
+		
 		upperLeft = IOHandler.getSavedStart();
 		layersToShow = IOHandler.getSavedLayers();
 		
@@ -183,7 +170,8 @@ public class Gui extends JFrame implements LayersIF{
 		mapPanel.add(moveNorth, BorderLayout.NORTH);
 		mapPanel.add(moveSouth, BorderLayout.SOUTH);
 		mapPanel.add(map, BorderLayout.CENTER);
-		LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 2, 0d, 1d);			
+		//LayoutManager.addComponent(getContentPane(), layout, mapPanel, 2, 0, 2, 2, 0d, 1d);
+		LayoutManager.addComponent(getContentPane(), layout, map, 1, 0, 3, 2, 1d, 1d);
 		status = new JPanel();
 		if(layersToShow.length != 0){
 			progress = new JProgressBar(0, layersToShow.length);
@@ -199,8 +187,8 @@ public class Gui extends JFrame implements LayersIF{
 		sb.setPosition(upperLeft.x,upperLeft.y);
 		
 		date = new Time();
-		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 3, 1, 1, 1d, 0d);
-		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 3, 3, 1, 1, 0d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)sb, 2, 2, 1, 2, 1d, 0d);
+		LayoutManager.addComponent(getContentPane(), layout, (Component)date, 2, 3, 2, 1, 0d, 0d);
 		
 		if(map.getSize().height != 0 && map.getSize().width != 0){
 			refreshAction();
@@ -208,6 +196,18 @@ public class Gui extends JFrame implements LayersIF{
 		setVisible(true);
 	}
 	
+	/**
+	 * 
+	 */
+	protected void zoomSliderChanged(){
+		if(!zoomSlider.getValueIsAdjusting()){
+			System.out.println("Zoomwert: " + zoomSlider.getValue());
+		}
+		else{
+			sb.setZoom(zoomSlider.getValue());
+		}
+	}
+
 	/**
 	 * 
 	 */

@@ -17,7 +17,7 @@ import server.Tile;
 
 /**
  * @author fkubis
- * $Id: DBValues.java,v 1.17 2005/01/13 11:24:13 drrsatzteil Exp $
+ * $Id: DBValues.java,v 1.18 2005/01/13 11:51:42 drrsatzteil Exp $
  */
 public class DBValues {
 	private DBConnector connector;
@@ -46,7 +46,6 @@ public class DBValues {
 				r = stmt.executeQuery(sql);
 				r.last();
 				int rowCount = r.getRow();
-				System.out.println(rowCount);
 				tiles = new Tile[rowCount];
 				r.beforeFirst();
 				for(int i = 0; i < rowCount; i++){
