@@ -41,8 +41,10 @@ public interface LayersIF {
 										new Color(0xffF0E68C),
 										new Color(0xaaC1CDC1, true),
 										new Color(0xffE0EEE0),
+
 										new Color(0xaaCD5B45, true),
-										new Color(0x22FF7256, true),
+										new Color(0x66FF7256, true),
+
 										new Color(0xff00CD66),
 										new Color(0xff8B4500),
 										new Color(0xff333333),

@@ -31,7 +31,7 @@ public class MenuBar extends JMenuBar{
 		JMenu menuFile=new JMenu("Datei");
 		JMenu menuView=new JMenu("Anzeige");		
 		JMenu menuHelp=new JMenu("Hilfe");
-		JMenu menuSettings=new JMenu("Einstellungen");
+
 		
 		// Add Menues to MenuBar
 		this.add(menuFile);
@@ -50,14 +50,12 @@ public class MenuBar extends JMenuBar{
 		  // Help
 		JMenuItem menuItemAbout = new JMenuItem("Über Mappy...");
 		  // Settings
-		JMenuItem menuItemDb = new JMenuItem("Datenbank");
+		JMenuItem menuItemSettings = new JMenuItem("Einstellungen...");
 		JMenuItem menuItemLanguage = new JMenuItem("Sprache");
 		// add Menu Items
 		  // Settings
-		menuSettings.add(menuItemDb);
-		menuSettings.add(menuItemLanguage);
+		menuFile.add(menuItemSettings);
 		  // File
-		menuFile.add(menuSettings);
 		menuFile.add(menuItemSave);
 		menuFile.addSeparator();
 		menuFile.add(menuItemExit);
@@ -79,6 +77,11 @@ public class MenuBar extends JMenuBar{
 	menuItemSave.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			saveSettings();
+		}
+	});
+	menuItemSettings.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			new Settings();
 		}
 	});
 	menuItemAbout.addActionListener(new ActionListener(){
