@@ -9,6 +9,7 @@ package client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -69,6 +70,14 @@ public class MenuBar extends JMenuBar{
 			System.exit(0);
 		}
 	});
+	menuItemAbout.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			openAbout();
+		}
+	});
+	}
 	
+	void openAbout(){
+		AboutDialog about = new AboutDialog ((JFrame)this.getFocusCycleRootAncestor());
 	}
 }
