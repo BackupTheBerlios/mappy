@@ -8,15 +8,13 @@ package client;
 
 /**
  * @author ba008959
- * $Id: Gui.java,v 1.13 2004/12/18 17:38:42 drrsatzteil Exp $
+ * $Id: Gui.java,v 1.14 2004/12/19 19:49:29 drrsatzteil Exp $
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -51,11 +49,6 @@ public class Gui extends JFrame {
 		System.out.print("Building new GUI...");
 		setSize(500,500);
 		setNewLookAndFeel();
-		addWindowStateListener(new WindowStateListener(){
-			public void windowStateChanged(WindowEvent evt){
-				mapDataChanged();
-			}
-		});
 		initComponents();
 	}
 	
@@ -129,11 +122,6 @@ public class Gui extends JFrame {
 		setVisible(true);
 		
 	}
-	
-	void mapDataChanged () {
-		
-	}
-
 	/**
 	 * 
 	 */

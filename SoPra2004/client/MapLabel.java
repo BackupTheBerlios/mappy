@@ -24,6 +24,8 @@ import server.Tile;
  */
 class MapLabel extends JLabel{
 	private ArrayList layerList;
+	
+	int TEST = 0;
 
 	MapLabel(ArrayList layerList){
 		this.layerList = layerList;
@@ -37,12 +39,12 @@ class MapLabel extends JLabel{
 				
 				Layer temp = (Layer)i.next();
 				int columns = temp.getColumns();
-				ArrayList tiles = temp.getTiles(); 
+				ArrayList tiles = temp.getTiles();
 				ListIterator j = tiles.listIterator(0);
+				int startX = 0;
+				int startY = 0;
 				
 				while (j.hasNext()){
-					int startX = 0;
-					int startY = 0;
 					if (columns > 0){
 						Tile currentTile = (Tile)j.next();
 						if(currentTile.hasImage()){
@@ -57,7 +59,7 @@ class MapLabel extends JLabel{
 					}
 					else{
 						columns = temp.getColumns();
-						startY++;
+						startY = startY + 500;
 						startX = 0;
 					}
 				}
